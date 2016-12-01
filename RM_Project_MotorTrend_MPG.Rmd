@@ -1,0 +1,154 @@
+---
+title: "Regression Models Project - Motor Trend Data 'mtcars' Miles Per Gallon Analysis"
+author: "james c walmsley"
+date: "12/1/2016"
+output: pdf_document
+---
+# EXECUTIVE SUMMARY
+
+
+
+
+
+
+# Problem Statement / Define the Question(s)
+        You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a   set of variables and miles per gallon (MPG) (outcome). They are particularly interested         in the following two questions:
+                Q1 “Is an automatic or manual transmission better for MPG”
+                Q2 "Quantify the MPG difference between automatic and manual transmissions"
+# Planned Approach -
+        Experimental Design Considerations
+                Simple linear comparison to:
+                Multivariate incrementing by additional variable 
+                Coefficients 
+                Residuals
+                        Influence
+                        Leverage
+                Correlation
+                        Deviance
+        Descriptive
+                head
+                summary
+        Exploratory
+                lm - simple
+                lm - multivariate
+                lm - nested
+                lm - remove the intercept (-1)
+                lm - step function 
+        Inferential
+                Null Hypothesis
+                Alternative Hypothesis
+                Power or Alpha
+                Confidence Interval = .95, one or two sided?
+                pValue
+                
+        Predictive (test)?
+                ????
+        Causal ~ NA
+        Mechanistic ~ NA
+
+# Software Environment
+        System / session Info:
+```{r, echo=TRUE}
+sessionInfo()
+```
+
+# Data Processing / Cleaning
+        Download, read & Date Downloaded
+```{r, echo=TRUE}
+'insert code'
+```
+        
+        Raw Data - what is the available data = Motor Trend 'mtcars' data set
+```{r, echo=TRUE}
+head(mtcars,10)
+str(mtcars)
+```
+
+# Processed Data
+        Transformations / modifications / changes / etc.
+        CodeBook (how you processed the data)
+                Explicit steps
+                        1
+                        2
+                        3 etc.
+
+# Exploratory Analysis w/ Processed Data
+        State the H0 & Ha hypothesis here
+                Comparisons
+                Causality?
+                Multivariate
+                Nested Analysis
+                Summaries
+                Boxplots
+                Histograms
+                Rug
+                Barplot
+                ABline (h/v)
+                Scatterplot
+                Multiple scatter plots
+                Graphing - base, lattice, ggpplot2
+                Heatmap
+                K-Means
+                Dimension Reduction
+                        PCA
+                        SVD
+                Figures: Exploratory
+
+# Statistical Modeling, Regression & Model Fit
+        Simple Linear Regression
+        Multivariate Linear Regression
+        Reference Variable ??
+        Coefficients / Slope
+        Standard Error
+        T-Vales
+        pValues
+        Residuals
+                Leverage
+                Influence
+        Hatvalues
+        
+
+# Assumptions Main:
+        A     
+        B
+        C
+
+# Preliminary Findings: Quesions of Interest: & Interpretation of
+        Results
+                A
+                B
+                C
+
+# Inference
+        Hypothesis testing
+        Set Seed if necessary
+        One or Two Sided
+        Power?
+        Confidence Intervals
+        Standard Error
+        Variance
+        p-Values
+        Residual Plots with diagnostics see Appendix
+
+# Conclusions / Recommendations  
+        A
+        B
+        C
+                Challenge the results ?
+                Measures of uncertainty 'e'
+# What are some possible alternative analyses?
+        ???
+
+# Appendix A
+        Plots with Code
+                Histograms
+                Pairs
+                QQ Plots
+                Box Plots
+                Residuals vs Fitted?
+                Error Rates?
+
+===
+End 
+===
+
