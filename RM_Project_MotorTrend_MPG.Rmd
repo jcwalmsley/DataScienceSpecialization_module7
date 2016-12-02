@@ -182,7 +182,6 @@ head(mtcars)
         B
 ---
 # Appendix A
-        Plots with Code
                 Pairs
 ```{r, echo=FALSE}
 pairs(mpg ~ ., data = mtcars)
