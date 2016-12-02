@@ -8,14 +8,14 @@ output: pdf_document
         ## Add after completing analysis
 
 ---
-# Problem Statement & Question(s) to be answered
+# Problem statement & questions to be answered
         ## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
         ## They are particularly interested in the following two questions:
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 ---
-# Planned Approach
+# Planned approach
         Descriptive
                 any(is.na)
                 head(data)
@@ -45,13 +45,13 @@ output: pdf_document
         Causal ~ NA
         Mechanistic ~ NA
 ---
-# Software Environment
+# Software environment
         System / session Info:
 ```{r, echo=FALSE}
 sessionInfo()
 ```
 ---
-# Access the Data:
+# Access the data:
         Note on where to get this data:  
 <!--         Clean the Environment -->
 <!--         Download -->
@@ -62,7 +62,7 @@ sessionInfo()
 <!-- 'insert code' -->
 <!-- ``` -->
 ---       
-# Raw Data Overview: 
+# Raw data overview: 
         Motor Trend 'mtcars' data set
 ```{r, echo=TRUE}
 rm(list = ls())
@@ -71,7 +71,7 @@ any(is.na(mtcars))
 head(mtcars,5)
 ```
 ---
-# Process data:
+# Process the data:
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
@@ -85,7 +85,7 @@ str(mtcars)
 head(mtcars)
 ```
 ---
-# Exploratory Analysis
+# Exploratory analysis
         Histograms
         Boxplots
         Rug
@@ -120,7 +120,7 @@ head(mtcars)
                         SVD
                 Figures: Exploratory
 ---
-# Statistical Modeling, Regression & Model Fit
+# Statistical modeling, regression & model fit
         Simple Linear Regression
         Multivariate Linear Regression
                 lm - simple
@@ -147,15 +147,15 @@ head(mtcars)
                 ?
                 ?
 ---
-# Assumptions Main:
+# Assumptions:
         A     
         B
         C
 ---
-# Preliminary Findings: Quesions of Interest: & Interpretation of Results;
-                A
-                B
-                C
+# Preliminary findings: quesions of interest: & interpretation of results;
+        A
+        B
+        C
 ---
 # Inference
         Hypothesis testing
@@ -171,7 +171,7 @@ head(mtcars)
         p-Values
         Residual Plots with diagnostics see Appendix
 ---
-# Conclusions / Recommendations  
+# Conclusions / recommendations  
         A
         B
         C
