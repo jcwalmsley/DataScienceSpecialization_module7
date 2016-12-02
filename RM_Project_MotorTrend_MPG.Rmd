@@ -22,18 +22,36 @@ output: pdf_document
                 str(data)
                 summary(data)
         Exploratory
-                Simple linear comparisons
-                Multivariate
-                        Additive
-                        Multiplicative
-                        Missing
-                        Steped
-                        Coefficients 
-                        Residuals
-                                Influence
-                                Leverage
-                        Deviance
-                        Anova
+                Pairs
+                Histograms
+                Boxplots
+                QQ plots
+        OLS Ordinary least squares
+                General least squares for linear equations
+        Regression to the mean - Simple linear regression
+        Statistical linear regression
+                Basic - w additive Gaussian error
+                Interpretation of regression coefficients (intercept, slope)
+                Regression - prediction
+        Residuals
+                Residual variation
+                Influence
+                Leverage
+                Estimate residual variation
+                R squared
+        Regression inference
+        
+        
+        
+        Multivariate regression analysis
+                The linear model
+                Two variable simple linear regression (additive) / (multiplicative)
+                Coefficients
+                Fitted values, residuals and residual variation
+                Coefficients 
+        Residuals
+                Deviance
+                Anova
         Inferential
                 Null Hypothesis
                 Alternative Hypothesis
@@ -46,21 +64,17 @@ output: pdf_document
         Mechanistic ~ NA
 ---
 #Software environment
-        System / session Info:
-```{r, echo=FALSE}
+        System - session Info:
+```{r, echo=TRUE}
 sessionInfo()
 ```
 ---
 #Accessing this data
-        Note on where to get this data:  
-<!--         Clean the Environment -->
-<!--         Download -->
-<!--         Read -->
-<!--         Record Date Downloaded -->
-<!-- ```{r, echo=TRUE} -->
-<!-- rm(list =ls()) -->
-<!-- 'insert code' -->
-<!-- ``` -->
+        Note on where to get this data: 
+```{r, echo=TRUE}
+library(datasets); data("mtcars")
+head(mtcars)
+```
 ---       
 # Raw data overview: 
         Motor Trend 'mtcars' data set
@@ -77,7 +91,6 @@ head(mtcars,5)
                 2 change variable labels in columns 8 & 9;      
                         a Note for column header 8 = vs; V = V block motor, & S = Straight block motor;  
                         b Note for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
-        
 ```{r, echo=TRUE}
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
@@ -171,12 +184,39 @@ head(mtcars)
 # Appendix A
         Plots with Code
                 Pairs
+```{r, echo=FALSE}
+pairs(mpg ~ ., data = mtcars)
+```
                 Histograms
+```{r, echo=FALSE}
+#hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
+data("mtcars")
+require(ggplot2)
+require(dplyr)
+```
                 Box Plots
+```{r, echo=FALSE}
+boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission")
+```
                 QQ Plots
+```{r, echo=FALSE}
+#qqPlot(fit, main="Q-Q plot")
+```
                 Fitted
+```{r}
+
+```
                 Residuals
+```{r, echo=FALSE}
+#plot(resid(fit1))
+#abline(h=0)
+```
                 Residuals vs Fitted
+```{r, echo=FALSE}
+
+
+```
+
 
 ===
 END
