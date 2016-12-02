@@ -12,37 +12,45 @@ output: pdf_document
 
 
 # Problem Statement / Define the Question(s)
-        You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a   set of variables and miles per gallon (MPG) (outcome). They are particularly interested         in the following two questions:
+        You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a   set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
                 Q1 “Is an automatic or manual transmission better for MPG”
                 Q2 "Quantify the MPG difference between automatic and manual transmissions"
 # Planned Approach -
         Experimental Design Considerations
-                Simple linear comparison to:
-                Multivariate incrementing by additional variable 
+                Simple linear comparisons
+                Multivariate
+                        Additive
+                        Multiplicative
+                        Missing
+                        Steped
                 Coefficients 
                 Residuals
                         Influence
                         Leverage
                 Correlation
-                        Deviance
+                Deviance
         Descriptive
-                head
+                str
                 summary
         Exploratory
-                lm - simple
-                lm - multivariate
-                lm - nested
-                lm - remove the intercept (-1)
-                lm - step function 
+                Boxplots
+                Histograms
+                Rug
+                Barplots
+                Scatterplots
+                Multiple plots
+                Graphing - base, lattice, ggpplot2
+                ABline (h/v)
+                Fitted lines
+        
         Inferential
                 Null Hypothesis
                 Alternative Hypothesis
                 Power or Alpha
                 Confidence Interval = .95, one or two sided?
                 pValue
-                
-        Predictive (test)?
-                ????
+                R^2
+        Predictive >
         Causal ~ NA
         Mechanistic ~ NA
 
@@ -97,7 +105,11 @@ str(mtcars)
 # Statistical Modeling, Regression & Model Fit
         Simple Linear Regression
         Multivariate Linear Regression
-        Reference Variable ??
+                lm - simple
+                lm - multivariate
+                lm - nested
+                lm - remove the intercept (-1)
+                lm - step function 
         Coefficients / Slope
         Standard Error
         T-Vales
@@ -105,9 +117,17 @@ str(mtcars)
         Residuals
                 Leverage
                 Influence
+        Confidence Intervals
+        Residuals
         Hatvalues
-        
-
+        dfbetas
+        Influence Measures
+        Anova
+                Chisq
+        Ancova
+        GLM
+                ?
+                ?
 # Assumptions Main:
         A     
         B
@@ -120,20 +140,17 @@ str(mtcars)
 
 # Inference
         Hypothesis testing
-        Set Seed if necessary
+        Set Seed, if required
         One or Two Sided Test
-        Power?
-        Confidence Intervals
+        Power / Alpha
+        Beta = (1 - Alpha)
+        Confidence Intervals (.95 one sided, .975 two sided)
         Standard Error
         Variance
+        student's T-score
+        Z-score
         p-Values
         Residual Plots with diagnostics see Appendix
-        Anova
-                Chisq
-        Ancova
-        Hatvalues
-        dfbetas
-        Influence Measures
 
 # Conclusions / Recommendations  
         A
@@ -146,12 +163,13 @@ str(mtcars)
 
 # Appendix A
         Plots with Code
-                Histograms
                 Pairs
-                QQ Plots
+                Histograms
                 Box Plots
-                Residuals vs Fitted?
-                Error Rates?
+                QQ Plots
+                Fitted
+                Residuals
+                Residuals vs Fitted
 
 ===
 END OF DOCUMENT
