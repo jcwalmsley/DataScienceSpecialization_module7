@@ -9,13 +9,13 @@ output: pdf_document
 
 ---
 #Problem statement & questions to be answered:
-        ## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
+        ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that; 
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
         ## They are particularly interested in the following two questions:
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 ---
-#Analysis plan:
+#Analysis considerations:
         Descriptive
                 any(is.na)
                 head(data)
@@ -40,25 +40,25 @@ output: pdf_document
                 Estimate residual variation
                 R squared
         Regression inference
-        
-        
-        
+                Parameters
+                Confidence intervals
+                Prediction
         Multivariate regression analysis
-                The linear model
+                Linear models
                 Two variable simple linear regression (additive) / (multiplicative)
-                Coefficients
+                Summary coefficients
                 Fitted values, residuals and residual variation
-                Coefficients 
-        Residuals
-                Deviance
-                Anova
-        Inferential
-                Null Hypothesis
-                Alternative Hypothesis
-                Power or Alpha
-                Confidence Interval = .95, one or two sided?
-                pValue
-                R^2
+                Summary coefficients
+                Model Adjustment
+        GLMs
+                Linear
+                Logistic
+                Poisson
+                Binary GLMs
+                        Odds
+                        Fitting
+        Poisson
+                Count data
         Predictive ~ NA
         Causal ~ NA
         Mechanistic ~ NA
@@ -70,7 +70,7 @@ sessionInfo()
 ```
 ---
 #Accessing this data:
-        How to get this data: 
+        Getting the data: 
 ```{r Get data, echo=TRUE}
 library(datasets)
 data("mtcars")
@@ -142,7 +142,7 @@ str(mtcars); head(mtcars)
         Anova
                 Chisq
         Ancova
-        GLM
+        GLMs
 ---
 # Preliminary findings: quesions of interest: & interpretation of results:
         A
@@ -151,8 +151,8 @@ str(mtcars); head(mtcars)
 ---
 # Inference:
         Assumptions:
-                A     
-                B
+                A Variables other than transmission type may influence MPG ratings   
+                B 
                 C
         State H0 & Ha hypothesis'here
         Set Seed, if required

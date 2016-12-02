@@ -22,3 +22,19 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+
+Residuals
+Leverage
+Influence
+Deviance
+Anova
+Inferential
+Null Hypothesis
+Alternative Hypothesis
+Power or Alpha
+Confidence Interval = .95, one or two sided?
+pValue
+R^2
