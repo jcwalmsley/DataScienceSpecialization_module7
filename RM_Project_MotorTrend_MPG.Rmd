@@ -10,12 +10,12 @@ output: pdf_document
 
 
 # Problem Statement & Question(s) to be answered
-## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars;  
-## They are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). 
+## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
+## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
 
 ## They are particularly interested in the following two questions:
                 
-        ## Q1 “Is an automatic or manual transmission better for MPG”
+        ## Q1 “Is an automatic or manual transmission better for 'mpg'”
         ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 
 # Planned Approach
@@ -45,7 +45,7 @@ output: pdf_document
                 Confidence Interval = .95, one or two sided?
                 pValue
                 R^2
-        Predictive >
+        Predictive ~ NA
         Causal ~ NA
         Mechanistic ~ NA
 
@@ -67,21 +67,21 @@ sessionInfo()
         
 # Raw Data overview: 
 Motor Trend 'mtcars' data set
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 rm(list = ls())
 data("mtcars")
-is.na(mtcars)
-head(mtcars,10)
+any(is.na(mtcars))
+head(mtcars,5)
 ```
 
-# Pre-Process the data:
+# Process data:
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
                         a Note for column header 8 = vs; V = V block motor, & S = Straight block motor;  
                         b Note for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
         
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 str(mtcars)
