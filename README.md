@@ -6,5 +6,5 @@ output: pdf_document
 #Regression Models Course Project on Motor Trend Data = 'mtcars'
         Multivariate analysis of transmission type influence on fuel ratings; "mpg" 
                 Data set from Motor Trend Data = 'mtcars'
-                Data dim = 32 observations, 11 varialbes
+                Data dim = 32 observations, 11 variables
 #Author: james walmsley
