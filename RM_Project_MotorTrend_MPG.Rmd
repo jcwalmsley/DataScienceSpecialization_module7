@@ -5,39 +5,35 @@ date: "12/1/2016"
 output: pdf_document
 ---
 #EXECUTIVE SUMMARY
+        ## Add after completing analysis
 
-## Add after completion of analysis
-
-
+---
 # Problem Statement & Question(s) to be answered
-## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
-## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
-
-## They are particularly interested in the following two questions:
-                
-        ## Q1 “Is an automatic or manual transmission better for 'mpg'”
-        ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
-
+        ## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
+        ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
+        ## They are particularly interested in the following two questions:
+                ## Q1 “Is an automatic or manual transmission better for 'mpg'”
+                ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
+---
 # Planned Approach
-
-## Experimental Design Considerations
-        Correlation
-        Deviance
         Descriptive
-                is.na
-                str
-                summary
+                any(is.na)
+                head(data)
+                str(data)
+                summary(data)
         Exploratory
-        Simple linear comparisons
-        Multivariate
-                Additive
-                Multiplicative
-                Missing
-                Steped
-        Coefficients 
-        Residuals
-                Influence
-                Leverage
+                Simple linear comparisons
+                Multivariate
+                        Additive
+                        Multiplicative
+                        Missing
+                        Steped
+                        Coefficients 
+                        Residuals
+                                Influence
+                                Leverage
+                        Deviance
+                        Anova
         Inferential
                 Null Hypothesis
                 Alternative Hypothesis
@@ -48,14 +44,15 @@ output: pdf_document
         Predictive ~ NA
         Causal ~ NA
         Mechanistic ~ NA
-
+---
 # Software Environment
-System / session Info:
+        System / session Info:
 ```{r, echo=FALSE}
 sessionInfo()
 ```
-
+---
 # Access the Data:
+        Note on where to get this data:  
 <!--         Clean the Environment -->
 <!--         Download -->
 <!--         Read -->
@@ -64,16 +61,16 @@ sessionInfo()
 <!-- rm(list =ls()) -->
 <!-- 'insert code' -->
 <!-- ``` -->
-        
-# Raw Data overview: 
-Motor Trend 'mtcars' data set
+---       
+# Raw Data Overview: 
+        Motor Trend 'mtcars' data set
 ```{r, echo=TRUE}
 rm(list = ls())
 data("mtcars")
 any(is.na(mtcars))
 head(mtcars,5)
 ```
-
+---
 # Process data:
         Transformations;  
                 1 factor variables 8:11;  
@@ -87,7 +84,7 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars
 str(mtcars)
 head(mtcars)
 ```
-
+---
 # Exploratory Analysis
         Histograms
         Boxplots
@@ -122,7 +119,7 @@ head(mtcars)
                         PCA
                         SVD
                 Figures: Exploratory
-
+---
 # Statistical Modeling, Regression & Model Fit
         Simple Linear Regression
         Multivariate Linear Regression
@@ -149,16 +146,17 @@ head(mtcars)
         GLM
                 ?
                 ?
+---
 # Assumptions Main:
         A     
         B
         C
-
+---
 # Preliminary Findings: Quesions of Interest: & Interpretation of Results;
                 A
                 B
                 C
-
+---
 # Inference
         Hypothesis testing
         Set Seed, if required
@@ -172,16 +170,17 @@ head(mtcars)
         Z-score
         p-Values
         Residual Plots with diagnostics see Appendix
-
+---
 # Conclusions / Recommendations  
         A
         B
         C
                 Challenge the results ?
                 Measures of uncertainty 'e'
+---
 # What are some possible alternative analyses?
         ???
-
+---
 # Appendix A
         Plots with Code
                 Pairs
