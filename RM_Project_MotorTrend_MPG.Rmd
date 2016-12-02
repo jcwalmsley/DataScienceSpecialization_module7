@@ -5,7 +5,7 @@ date: "12/1/2016"
 output: pdf_document
 ---
 # EXECUTIVE SUMMARY
-
+        Information to be added!
 
 
 
@@ -113,8 +113,7 @@ str(mtcars)
         B
         C
 
-# Preliminary Findings: Quesions of Interest: & Interpretation of
-        Results
+# Preliminary Findings: Quesions of Interest: & Interpretation of Results;
                 A
                 B
                 C
@@ -122,13 +121,17 @@ str(mtcars)
 # Inference
         Hypothesis testing
         Set Seed if necessary
-        One or Two Sided
+        One or Two Sided Test
         Power?
         Confidence Intervals
         Standard Error
         Variance
         p-Values
         Residual Plots with diagnostics see Appendix
+        Anova
+        Ancova
+        Hatvalues
+        Influence Measures
 
 # Conclusions / Recommendations  
         A
@@ -149,6 +152,6 @@ str(mtcars)
                 Error Rates?
 
 ===
-End 
+END OF DOCUMENT
 ===
 
