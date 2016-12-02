@@ -69,7 +69,7 @@ output: pdf_document
 sessionInfo()
 ```
 ---
-#Accessing this data:
+#Accessing data:
         Getting the data: 
 ```{r Get data, echo=TRUE}
 library(datasets)
@@ -83,7 +83,7 @@ head(mtcars)
 rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
 ```
 ---
-# Process the data:
+# Processing the data:
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
@@ -174,43 +174,49 @@ str(mtcars); head(mtcars)
                 1 Challenge the results ?
                 2 Measures of uncertainty 'e'
 ---
-# What are some possible alternative analyses?:
+# What are some possible alternative analyses?
         A
         B
 ---
 # Appendix A
                 Pairs
-```{r Pairs plot, echo=FALSE}
+```{r Pairs plot, echo=FALSE, fig.height=5.5, fig.width=5.5}
 pairs(mpg ~ ., data = mtcars)
 ```
+---                
                 Histograms
-```{r Hist plot, echo=FALSE}
+```{r Hist plot, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE}
 data("mtcars"); require(ggplot2); require(dplyr);
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
+---                
                 Box Plots
-```{r Box plot, echo=FALSE}
+```{r Box plot, echo=FALSE, fig.height=4, fig.width=4}
 boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Boxplot MPG")
 ```
+---                
                 QQ Plots
-```{r QQ plot, echo=FALSE}
+```{r QQ plot, echo=FALSE, fig.height=4, fig.width=4}
 #qqPlot(fit?, main="Q-Q plot")
 ```
+---                
                 Fitted
-```{r Fitted plot}
+```{r Fitted plot, fig.height=4, fig.width=4}
 
 ```
+---                
                 Residuals
-```{r Residual plot, echo=FALSE}
+```{r Residual plot, echo=FALSE, fig.height=4, fig.width=4}
 #plot(resid(fit?))
 #abline(h=0)
 ```
+---                
                 Residuals vs Fitted
-```{r Residuals vs Fitted plot, echo=FALSE}
+```{r Residuals vs Fitted plot, echo=FALSE, fig.height=4, fig.width=4}
 # To be decided
 
 ```
-
+---
 
 ===
 END
