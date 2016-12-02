@@ -7,4 +7,4 @@ output: pdf_document
         Multivariate analysis of transmission type influence on fuel ratings; "mpg" 
                 Data set from Motor Trend Data = 'mtcars'
                 Data dim = 32 observations, 11 variables
-###Author: james walmsley
+###Authored by: james c walmsley
