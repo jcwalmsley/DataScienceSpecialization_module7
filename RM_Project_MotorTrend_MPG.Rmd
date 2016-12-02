@@ -4,18 +4,18 @@ author: "james c walmsley"
 date: "12/1/2016"
 output: pdf_document
 ---
-#Executive Summary
+#Executive Summary:
         ## Add after completing analysis
 
 ---
-#Problem statement & questions to be answered
+#Problem statement & questions to be answered:
         ## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
         ## They are particularly interested in the following two questions:
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 ---
-#Analysis plan
+#Analysis plan:
         Descriptive
                 any(is.na)
                 head(data)
@@ -63,21 +63,23 @@ output: pdf_document
         Causal ~ NA
         Mechanistic ~ NA
 ---
-#Software environment
+#Software environment:
         System - session Info:
 ```{r, echo=TRUE}
 sessionInfo()
 ```
 ---
-#Accessing this data
-        Note on where to get this data: 
-```{r, echo=TRUE}
-library(datasets); data("mtcars"); head(mtcars)
+#Accessing this data:
+        How to get this data: 
+```{r Get data, echo=TRUE}
+library(datasets)
+data("mtcars")
+head(mtcars)  
 ```
 ---       
 # Raw data overview: 
-        Motor Trend 'mtcars' data set
-```{r, echo=TRUE}
+        Motor Trend 'mtcars' data set:
+```{r Data overview, echo=TRUE}
 rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
 ```
 ---
@@ -87,13 +89,13 @@ rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
                 2 change variable labels in columns 8 & 9;      
                         a Note; for column header 8 = vs; V = V block motor, & S = Straight block motor;  
                         b Note; for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
-```{r, echo=TRUE}
+```{r Process data, echo=TRUE}
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 str(mtcars); head(mtcars)
 ```
 ---
-# Exploratory analysis
+# Exploratory analysis:
         Histograms
         Boxplots
         Rug
@@ -113,7 +115,7 @@ str(mtcars); head(mtcars)
                 SVD
         Figures: Exploratory see Appendix A
 ---
-# Statistical modeling, regression & model fit
+# Statistical modeling, regression & model fit:
         Assumptions:
                 A     
                 B
@@ -142,12 +144,12 @@ str(mtcars); head(mtcars)
         Ancova
         GLM
 ---
-# Preliminary findings: quesions of interest: & interpretation of results;
+# Preliminary findings: quesions of interest: & interpretation of results:
         A
         B
         C
 ---
-# Inference
+# Inference:
         Assumptions:
                 A     
                 B
@@ -165,46 +167,46 @@ str(mtcars); head(mtcars)
         p-Values
         Residual Plots with diagnostics see Appendix
 ---
-# Conclusions / recommendations  
+# Conclusions / recommendations:  
         A
         B
         C
                 1 Challenge the results ?
                 2 Measures of uncertainty 'e'
 ---
-# What are some possible alternative analyses?
+# What are some possible alternative analyses?:
         A
         B
 ---
 # Appendix A
                 Pairs
-```{r, echo=FALSE}
+```{r Pairs plot, echo=FALSE}
 pairs(mpg ~ ., data = mtcars)
 ```
                 Histograms
-```{r, echo=FALSE}
-data("mtcars"); require(ggplot2); require(dplyr)
+```{r Hist plot, echo=FALSE}
+data("mtcars"); require(ggplot2); require(dplyr);
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
                 Box Plots
-```{r, echo=FALSE}
-boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission")
+```{r Box plot, echo=FALSE}
+boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Boxplot MPG")
 ```
                 QQ Plots
-```{r, echo=FALSE}
-#qqPlot(fit, main="Q-Q plot")
+```{r QQ plot, echo=FALSE}
+#qqPlot(fit?, main="Q-Q plot")
 ```
                 Fitted
-```{r}
+```{r Fitted plot}
 
 ```
                 Residuals
-```{r, echo=FALSE}
-#plot(resid(fit1))
+```{r Residual plot, echo=FALSE}
+#plot(resid(fit?))
 #abline(h=0)
 ```
                 Residuals vs Fitted
-```{r, echo=FALSE}
+```{r Residuals vs Fitted plot, echo=FALSE}
 # To be decided
 
 ```
