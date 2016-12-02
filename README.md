@@ -1,6 +1,10 @@
-# RM_proj_MPG_MotorTrendData
-## JHU BSPH data specialization, regression models course project
-## Analysis of vehicle type of transmission on the miles per gallon "mpg" fuel ratings including multivariate influences
-### Motor Trend Data = mtcars
-### Data = 32 observations, 11 varialbes
-#### Project author = james walmsley
+---
+output: pdf_document
+---
+#JHU BSPH Data Science Specialization
+
+#Regression Models Course Project on Motor Trend Data = 'mtcars'
+        Multivariate analysis of transmission type influence on fuel ratings; "mpg" 
+                Data set from Motor Trend Data = 'mtcars'
+                Data dim = 32 observations, 11 varialbes
+#Author: james walmsley
