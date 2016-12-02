@@ -4,18 +4,18 @@ author: "james c walmsley"
 date: "12/1/2016"
 output: pdf_document
 ---
-#EXECUTIVE SUMMARY
+#Executive Summary
         ## Add after completing analysis
 
 ---
-# Problem statement & questions to be answered
+#Problem statement & questions to be answered
         ## Assuming you work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") you know that; 
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
         ## They are particularly interested in the following two questions:
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 ---
-# Planned approach
+#Analysis plan
         Descriptive
                 any(is.na)
                 head(data)
@@ -45,13 +45,13 @@ output: pdf_document
         Causal ~ NA
         Mechanistic ~ NA
 ---
-# Software environment
+#Software environment
         System / session Info:
 ```{r, echo=FALSE}
 sessionInfo()
 ```
 ---
-# Access the data:
+#Accessing this data
         Note on where to get this data:  
 <!--         Clean the Environment -->
 <!--         Download -->
@@ -93,34 +93,23 @@ head(mtcars)
         Scatterplots
         Multiple plots
         Graphing - base, lattice, ggpplot2
-        ABline (h/v)
+        ABlines (h/v)
         Confidence intervals
         Standard error
         Variance
         Fitted lines
-        
-        State the H0 & Ha hypothesis here
-                Comparisons
-                Causality?
-                Multivariate
-                Nested Analysis
-                Summaries
-                Boxplots
-                Histograms
-                Rug
-                Barplot
-                ABline (h/v)
-                Scatterplot
-                Multiple scatter plots
-                Graphing - base, lattice, ggpplot2
-                Heatmap
-                K-Means
-                Dimension Reduction
-                        PCA
-                        SVD
-                Figures: Exploratory
+        Heatmap
+        K-Means
+        Dimension Reduction
+                PCA
+                SVD
+        Figures: Exploratory see Appendix A
 ---
 # Statistical modeling, regression & model fit
+        Assumptions:
+                A     
+                B
+                C
         Simple Linear Regression
         Multivariate Linear Regression
                 lm - simple
@@ -144,13 +133,6 @@ head(mtcars)
                 Chisq
         Ancova
         GLM
-                ?
-                ?
----
-# Assumptions:
-        A     
-        B
-        C
 ---
 # Preliminary findings: quesions of interest: & interpretation of results;
         A
@@ -158,7 +140,11 @@ head(mtcars)
         C
 ---
 # Inference
-        Hypothesis testing
+        Assumptions:
+                A     
+                B
+                C
+        State H0 & Ha hypothesis'here
         Set Seed, if required
         One or Two Sided Test
         Power / Alpha
@@ -175,11 +161,12 @@ head(mtcars)
         A
         B
         C
-                Challenge the results ?
-                Measures of uncertainty 'e'
+                1 Challenge the results ?
+                2 Measures of uncertainty 'e'
 ---
 # What are some possible alternative analyses?
-        ???
+        A
+        B
 ---
 # Appendix A
         Plots with Code
