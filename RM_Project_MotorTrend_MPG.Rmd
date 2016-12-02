@@ -5,7 +5,7 @@ date: "12/1/2016"
 output: pdf_document
 ---
 # EXECUTIVE SUMMARY
-        Information to be added!
+        Information to be added on completion of analsis!
 
 
 
@@ -30,17 +30,21 @@ output: pdf_document
                 Correlation
                 Deviance
         Descriptive
+                is.na
                 str
                 summary
         Exploratory
-                Boxplots
                 Histograms
+                Boxplots
                 Rug
                 Barplots
                 Scatterplots
                 Multiple plots
                 Graphing - base, lattice, ggpplot2
                 ABline (h/v)
+                Confidence intervals
+                Standard error
+                Variance
                 Fitted lines
         
         Inferential
@@ -61,24 +65,39 @@ sessionInfo()
 ```
 
 # Data Processing / Cleaning
-        Download, read & Date Downloaded
-```{r, echo=TRUE}
-'insert code'
-```
+<!--         Clean the Environment -->
+<!--         Download -->
+<!--         Read -->
+<!--         Record Date Downloaded -->
+<!-- ```{r, echo=TRUE} -->
+<!-- rm(list =ls()) -->
+<!-- 'insert code' -->
+<!-- ``` -->
         
         Raw Data - what is the available data = Motor Trend 'mtcars' data set
 ```{r, echo=TRUE}
+rm(list = ls())
+data("mtcars")
 head(mtcars,10)
 str(mtcars)
+head(mtcars)
 ```
 
 # Processed Data
         Transformations / modifications / changes / etc.
         CodeBook (how you processed the data)
                 Explicit steps
-                        1
-                        2
-                        3 etc.
+                        1 factor variables 8:11
+```{r, echo=TRUE}
+data("mtcars")
+mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+str(mtcars)
+head(mtcars)
+```
+
+# 1 Note for column vs; V = V block motor, & S = Straight block motor 
+# 2 Note for column am; A = automatic transmission = A, & M = manual transmission
+
 
 # Exploratory Analysis w/ Processed Data
         State the H0 & Ha hypothesis here
@@ -172,6 +191,6 @@ str(mtcars)
                 Residuals vs Fitted
 
 ===
-END OF DOCUMENT
+END
 ===
 
