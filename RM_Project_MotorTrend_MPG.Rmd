@@ -213,7 +213,7 @@ boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gal
 ```
                 Residuals vs Fitted
 ```{r, echo=FALSE}
-
+# To be decided
 
 ```
 
