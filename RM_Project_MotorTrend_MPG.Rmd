@@ -72,30 +72,25 @@ sessionInfo()
 #Accessing this data
         Note on where to get this data: 
 ```{r, echo=TRUE}
-library(datasets); data("mtcars")
-head(mtcars)
+library(datasets); data("mtcars"); head(mtcars)
 ```
 ---       
 # Raw data overview: 
         Motor Trend 'mtcars' data set
 ```{r, echo=TRUE}
-rm(list = ls())
-data("mtcars")
-any(is.na(mtcars))
-head(mtcars,5)
+rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
 ```
 ---
 # Process the data:
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
-                        a Note for column header 8 = vs; V = V block motor, & S = Straight block motor;  
-                        b Note for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
+                        a Note; for column header 8 = vs; V = V block motor, & S = Straight block motor;  
+                        b Note; for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
 ```{r, echo=TRUE}
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
-str(mtcars)
-head(mtcars)
+str(mtcars); head(mtcars)
 ```
 ---
 # Exploratory analysis
@@ -188,10 +183,8 @@ pairs(mpg ~ ., data = mtcars)
 ```
                 Histograms
 ```{r, echo=FALSE}
-#hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
-data("mtcars")
-require(ggplot2)
-require(dplyr)
+data("mtcars"); require(ggplot2); require(dplyr)
+hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
                 Box Plots
 ```{r, echo=FALSE}
