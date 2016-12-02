@@ -129,8 +129,10 @@ str(mtcars)
         p-Values
         Residual Plots with diagnostics see Appendix
         Anova
+                Chisq
         Ancova
         Hatvalues
+        dfbetas
         Influence Measures
 
 # Conclusions / Recommendations  
