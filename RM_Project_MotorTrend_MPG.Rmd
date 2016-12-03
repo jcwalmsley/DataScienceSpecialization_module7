@@ -5,7 +5,7 @@ date: "12/1/2016"
 output: 
   pdf_document: 
     fig_caption: yes
-    fig_crop: no
+    fig_crop: yes
     fig_height: 6
 ---
 
@@ -24,15 +24,15 @@ output:
 
 #Grading - Criteria (remove on completion)  
 
-Did the student interpret the coefficients correctly?
-Did the student do some exploratory data analyses?
-Did the student fit multiple models and detail their strategy for model selection?
-Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?
-Did the student do a residual plot and some diagnostics?
-Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?
-Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?
-Did the report include an executive summary?
-Was the report done in Rmd (knitr)?
+Did the student interpret the coefficients correctly?  
+Did the student do some exploratory data analyses?  
+Did the student fit multiple models and detail their strategy for model selection?  
+Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?  
+Did the student do a residual plot and some diagnostics?  
+Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?  
+Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?  
+Did the report include an executive summary?  
+Was the report done in Rmd (knitr)?  
 
 ---
 
@@ -94,26 +94,26 @@ sessionInfo()
 
 #Accessing data:
         Getting the data: 
-```{r Get data, echo=TRUE}
-rm(list=ls()); library(UsingR); library(datasets); head(mtcars)  
+```{r Get data, echo=FALSE,}
+rm(list=ls()); data("mtcars") 
 ```
 ---       
 
 #Raw data overview: 
         Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE}
-any(is.na(mtcars)); head(mtcars,5)
+any(is.na(mtcars)); colnames(mtcars)
 ```
 ---
 
-#Processing the data:  
+#Processing data:  
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
                         a Note; for column header 8 = vs; variable names = V-block, & S-block;  
                         b Note; for column header 9 = am; variable names = A-type = A, & M-type;
 ---                        
-```{r Process data, echo=TRUE}
+```{r Process data, echo=FALSE}
 data(mtcars)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); head(mtcars)
 ```
@@ -121,8 +121,8 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
 
 #Exploratory analysis:  
         Histograms    
-        Boxplots    
         Rug    
+        Boxplots    
         Barplots    
         Scatterplots  
         Multiple plots  
@@ -171,9 +171,9 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
 ---
 
 #Preliminary findings: quesions of interest: & interpretation of results:
-A
-B
-C
+        A
+        B
+        C
 
 ---
 #Inference:
@@ -203,12 +203,12 @@ C
                 2 Measures of uncertainty 'e'
 ---
 
-#What are some possible alternative analyses?
+#Are there any possible viable alternative analyses?
         A
         B
 ---
 
-#Appendix A
+#Appendix A, Figures / Plots
         
         #Pairs
 ---
@@ -231,7 +231,7 @@ hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", x
 ---
 
 ```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
-boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Boxplot MPG")
+boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
 ```
 ---                
         
