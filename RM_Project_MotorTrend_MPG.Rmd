@@ -100,11 +100,11 @@ rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
-                        a Note; for column header 8 = vs; V = V block motor, & S = Straight block motor;  
-                        b Note; for column header 9 = am; A = automatic transmission = A, & M = manual transmission;  
-```{r Process data, echo=TRUE}
+                        a Note; for column header 8 = vs; variable names = V-block, & S-block;  
+                        b Note; for column header 9 = am; variable names = A-type = A, & M-typr;  
+```{r, Process data, echo=TRUE}
 data("mtcars")
-mtcars$vs <- factor(mtcars$vs, labels = c("V", "S")); mtcars$am <- factor(mtcars$am, labels = c("A", "M")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 str(mtcars); head(mtcars)
 ```
 ---
@@ -193,39 +193,39 @@ str(mtcars); head(mtcars)
 ---
 # Appendix A
                 Pairs
-```{r Pairs plot, echo=FALSE, fig.height=5.5, fig.width=5.5}
+```{r, Pairs plot, echo=FALSE, fig.height=5.5, fig.width=5.5}
 pairs(mpg ~ ., data = mtcars)
 ```
 ---                
                 Histograms
-```{r Hist plot, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE}
+```{r, Hist plot, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE}
 data("mtcars"); require(ggplot2); require(dplyr);
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
 ---                
                 Box Plots
-```{r Box plot, echo=FALSE, fig.height=4, fig.width=4}
+```{r, Box plot, echo=FALSE, fig.height=4, fig.width=4}
 boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Boxplot MPG")
 ```
 ---                
                 QQ Plots
-```{r QQ plot, echo=FALSE, fig.height=4, fig.width=4}
+```{r, QQ plot, echo=FALSE, fig.height=4, fig.width=4}
 #qqPlot(fit?, main="Q-Q plot")
 ```
 ---                
                 Fitted
-```{r Fitted plot, fig.height=4, fig.width=4}
+```{r, Fitted plot, fig.height=4, fig.width=4}
 
 ```
 ---                
                 Residuals
-```{r Residual plot, echo=FALSE, fig.height=4, fig.width=4}
+```{r, Residual plot, echo=FALSE, fig.height=4, fig.width=4}
 #plot(resid(fit?))
 #abline(h=0)
 ```
 ---                
                 Residuals vs Fitted
-```{r Residuals vs Fitted plot, echo=FALSE, fig.height=4, fig.width=4}
+```{r, Residuals vs Fitted plot, echo=FALSE, fig.height=4, fig.width=4}
 # To be decided
 
 ```
