@@ -15,7 +15,7 @@ output: pdf_document
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
 ---
-Grading - Criteria (remove on completion)
+#Grading - Criteria (remove on completion)
 
 Did the student interpret the coefficients correctly?
 Did the student do some exploratory data analyses?
