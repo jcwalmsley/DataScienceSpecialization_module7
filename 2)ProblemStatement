@@ -1,0 +1,5 @@
+    ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that;   
+    ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
+    ## They are particularly interested in the following two questions:  
+            ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
+            ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
