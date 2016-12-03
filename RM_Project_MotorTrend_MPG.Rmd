@@ -115,8 +115,7 @@ any(is.na(mtcars)); head(mtcars,5)
 ---                        
 ```{r Process data, echo=TRUE}
 data(mtcars)
-mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
-str(mtcars); head(mtcars)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); head(mtcars)
 ```
 ---
 
