@@ -2,133 +2,146 @@
 title: "Regression Models Project - Motor Trend Data 'mtcars' Miles Per Gallon Analysis"
 author: "james c walmsley"
 date: "12/1/2016"
-output: pdf_document
+output: 
+  pdf_document: 
+    fig_caption: yes
+    fig_crop: no
+    fig_height: 6
 ---
-#Executive Summary:
-        ## Add after completing analysis
+
+#Executive Summary:  
+        ## Add after completing analysis  
 
 ---
-#Problem statement & questions to be answered:
-        ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that; 
-        ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome. 
-        ## They are particularly interested in the following two questions:
-                ## Q1 “Is an automatic or manual transmission better for 'mpg'”
-                ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
----
-#Grading - Criteria (remove on completion)
 
-<!-- Did the student interpret the coefficients correctly? -->
-<!-- Did the student do some exploratory data analyses? -->
-<!-- Did the student fit multiple models and detail their strategy for model selection? -->
-<!-- Did the student answer the questions of interest or detail why the question(s) is (are) not answerable? -->
-<!-- Did the student do a residual plot and some diagnostics? -->
-<!-- Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly? -->
-<!-- Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures? -->
-<!-- Did the report include an executive summary? -->
-<!-- Was the report done in Rmd (knitr)? -->
+#Problem statement & questions to be answered:  
+        ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that;   
+        ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
+        ## They are particularly interested in the following two questions:  
+                ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
+                ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
+---
+
+#Grading - Criteria (remove on completion)  
+
+Did the student interpret the coefficients correctly?
+Did the student do some exploratory data analyses?
+Did the student fit multiple models and detail their strategy for model selection?
+Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?
+Did the student do a residual plot and some diagnostics?
+Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?
+Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?
+Did the report include an executive summary?
+Was the report done in Rmd (knitr)?
 
 ---
+
 #Analysis considerations:
-        Descriptive
-                any(is.na)
-                head(data)
-                str(data)
-                summary(data)
-        Exploratory
-                Pairs
-                Histograms
-                Boxplots
-                QQ plots
-        OLS Ordinary least squares
-                General least squares for linear equations
-        Regression to the mean - Simple linear regression
-        Statistical linear regression
-                Basic - w additive Gaussian error
-                Interpretation of regression coefficients (intercept, slope)
-                Regression - prediction
-        Residuals
-                Residual variation
-                Influence
-                Leverage
-                Estimate residual variation
-                R squared
-        Regression inference
-                Parameters
-                Confidence intervals
-                Prediction
-        Multivariate regression analysis
-                Linear models
-                Two variable simple linear regression (additive) / (multiplicative)
-                Summary coefficients
-                Fitted values, residuals and residual variation
-                Summary coefficients
-                Model Adjustment
-        GLMs
-                Linear
-                Logistic
-                Poisson
-                Binary GLMs
-                        Odds
-                        Fitting
-        Poisson
-                Count data
-        Predictive ~ NA
-        Causal ~ NA
-        Mechanistic ~ NA
+        Descriptive  
+                any(is.na)  
+                head(data)  
+                str(data)  
+                summary(data)  
+        Exploratory  
+                Pairs  
+                Histograms  
+                Boxplots  
+                QQ plots  
+        OLS Ordinary least squares  
+                General least squares for linear equations  
+        Regression to the mean - Simple linear regression  
+        Statistical linear regression  
+                Basic - w additive Gaussian error  
+                Interpretation of regression coefficients (intercept, slope)  
+                Regression - prediction  
+        Residuals  
+                Residual variation  
+                Influence  
+                Leverage  
+                Estimate residual variation  
+                R squared  
+        Regression inference  
+                Parameters  
+                Confidence intervals  
+                Prediction  
+        Multivariate regression analysis  
+                Linear models  
+                Two variable simple linear regression (additive) / (multiplicative)  
+                Summary coefficients  
+                Fitted values, residuals and residual variation  
+                Summary coefficients  
+                Model Adjustment  
+        GLMs  
+                Linear  
+                Logistic  
+                Poisson  
+                Binary GLMs  
+                        Odds  
+                        Fitting  
+        Poisson  
+                Count data  
+        Predictive ~ NA  
+        Causal ~ NA  
+        Mechanistic ~ NA  
 ---
+
 #Software environment:
         System - session Info:
-```{r, echo=TRUE}
+```{r Session Info, echo=TRUE}
 sessionInfo()
 ```
 ---
+
 #Accessing data:
         Getting the data: 
 ```{r Get data, echo=TRUE}
-library(datasets)
-data("mtcars")
-head(mtcars)  
+rm(list=ls()); library(UsingR); library(datasets); head(mtcars)  
 ```
 ---       
-# Raw data overview: 
+
+#Raw data overview: 
         Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE}
-rm(list = ls()); data("mtcars"); any(is.na(mtcars)); head(mtcars,5)
+any(is.na(mtcars)); head(mtcars,5)
 ```
 ---
-# Processing the data:
+
+#Processing the data:  
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
                         a Note; for column header 8 = vs; variable names = V-block, & S-block;  
-                        b Note; for column header 9 = am; variable names = A-type = A, & M-typr;  
-```{r, Process data, echo=TRUE}
-data("mtcars")
+                        b Note; for column header 9 = am; variable names = A-type = A, & M-type;
+---                        
+```{r Process data, echo=TRUE}
+data(mtcars)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 str(mtcars); head(mtcars)
 ```
 ---
-# Exploratory analysis:
-        Histograms
-        Boxplots
-        Rug
-        Barplots
-        Scatterplots
-        Multiple plots
-        Graphing - base, lattice, ggpplot2
-        ABlines (h/v)
-        Confidence intervals
-        Standard error
-        Variance
-        Fitted lines
-        Heatmap
-        K-Means
-        Dimension Reduction
-                PCA
-                SVD
-        Figures: Exploratory see Appendix A
----
-# Statistical modeling, regression & model fit:
+
+#Exploratory analysis:  
+        Histograms    
+        Boxplots    
+        Rug    
+        Barplots    
+        Scatterplots  
+        Multiple plots  
+        Graphing - base, lattice, ggpplot2  
+        ABlines (h/v)   
+        Confidence intervals  
+        Standard error  
+        Variance  
+        Fitted lines  
+        Heatmap  
+        K-Means  
+        Dimension Reduction  
+                PCA  
+                SVD  
+        Figures: Exploratory see Appendix A  
+---  
+
+#Statistical modeling, regression & model fit:
         Assumptions:
                 A     
                 B
@@ -157,76 +170,105 @@ str(mtcars); head(mtcars)
         Ancova
         GLMs
 ---
-# Preliminary findings: quesions of interest: & interpretation of results:
-        A
-        B
-        C
+
+#Preliminary findings: quesions of interest: & interpretation of results:
+A
+B
+C
+
 ---
-# Inference:
+#Inference:
         Assumptions:
                 A Variables other than transmission type may influence MPG ratings   
                 B 
                 C
         State H0 & Ha hypothesis'here
-        Set Seed, if required
-        One or Two Sided Test
-        Power / Alpha
-        Beta = (1 - Alpha)
-        Confidence Intervals (.95 one sided, .975 two sided)
-        Standard Error
-        Variance
-        student's T-score
-        Z-score
-        p-Values
-        Residual Plots with diagnostics see Appendix
+                Set Seed, if required
+                One or Two Sided Test
+                Power / Alpha
+                Beta = (1 - Alpha)
+                Confidence Intervals (.95 one sided, .975 two sided)
+                Standard Error
+                Variance
+                student's T-score
+                Z-score
+                p-Values
+                Residual Plots with diagnostics see Appendix
 ---
-# Conclusions / recommendations:  
+
+#Conclusions / recommendations:  
         A
         B
         C
                 1 Challenge the results ?
                 2 Measures of uncertainty 'e'
 ---
-# What are some possible alternative analyses?
+
+#What are some possible alternative analyses?
         A
         B
 ---
-# Appendix A
-                Pairs
-```{r, Pairs plot, echo=FALSE, fig.height=5.5, fig.width=5.5}
+
+#Appendix A
+        
+        #Pairs
+---
+
+```{r Pairs plot, echo=FALSE, fig.height=6, fig.width=6}
 pairs(mpg ~ ., data = mtcars)
 ```
 ---                
-                Histograms
-```{r, Hist plot, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE}
-data("mtcars"); require(ggplot2); require(dplyr);
+        
+        #Histograms
+---
+
+```{r Hist plot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+data("mtcars"); library(ggplot2); library(dplyr);
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
 ---                
-                Box Plots
-```{r, Box plot, echo=FALSE, fig.height=4, fig.width=4}
+        
+        #Box Plots
+---
+
+```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
 boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Boxplot MPG")
 ```
 ---                
-                QQ Plots
-```{r, QQ plot, echo=FALSE, fig.height=4, fig.width=4}
+        
+        #QQ Plots
+---
+
+```{r QQ plot, echo=FALSE, fig.height=5, fig.width=5}
 #qqPlot(fit?, main="Q-Q plot")
 ```
 ---                
-                Fitted
-```{r, Fitted plot, fig.height=4, fig.width=4}
+        
+        #Fitted
 
+---
+
+```{r Fitted plot, fig.height=5, fig.width=5}
+#To be inserted
 ```
 ---                
-                Residuals
-```{r, Residual plot, echo=FALSE, fig.height=4, fig.width=4}
+        
+        #Residuals
+
+---
+
+```{r Residual plot, echo=FALSE, fig.height=5, fig.width=5}
 #plot(resid(fit?))
 #abline(h=0)
 ```
 ---                
-                Residuals vs Fitted
-```{r, Residuals vs Fitted plot, echo=FALSE, fig.height=4, fig.width=4}
-# To be decided
+        
+        #Residuals vs Fitted
+
+---
+
+```{r Residuals vs Fitted plot, echo=FALSE, fig.height=5, fig.width=5}
+# To be inserted
 
 ```
 ---
