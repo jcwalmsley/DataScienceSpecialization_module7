@@ -44,7 +44,7 @@ YES Was the report done in Rmd (knitr) with pdf output?
 
 ---
 
-# III. Analysis Considerations Outline:
+# III. Analysis Considerations:
         Descriptive  
         Exploratory  
         OLS Ordinary least squares
