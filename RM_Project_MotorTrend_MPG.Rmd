@@ -175,11 +175,6 @@ pairs(mpg ~ ., data = mtcarsProc)
 ## Histograms
 ---
 
-```{r Histogram Figure 0, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
-data(mtcarsProc)
-mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb);
-hist(mtcarsProc$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "Histogram mtcars$mpg", xlim = range(5:40))
-```
 ### OR
 ```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data(mtcarsProc)
