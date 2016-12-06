@@ -38,3 +38,13 @@ Power or Alpha
 Confidence Interval = .95, one or two sided?
 pValue
 R^2
+
+myHist <- function(mu){
+        mse <- mean((mtcarsProc$mpg - mu)^2)
+        g <- ggplot(mtcarsProc, aes(x = mpg)) + geom_histogram(fill = "salmon", colour\ = "black", binwidth = 1)
+        #        g <- g + geom_vline(xintercept = mu, size = 3)
+        #        g <- g + ggtitle(paste("mu = ", mu, ", MSE = ", round(mse, 2), sep = ""))
+        g <- g + geom_vline(xintercept = mean((mtcarsProc$mpg[,am=="Auto"]), size = 1)
+                            #        g <- g + geom_vline(xintercept = mean(mtcarsProc$mpg[mtcarsProc$am=="manual"]), size = 3)
+}
+g

@@ -91,7 +91,8 @@ any(is.na(mtcars)); colnames(mtcars)
 ---                        
 ```{r Process data, echo=FALSE}
 data(mtcars)
-mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); head(mtcars)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); mtcarsProc <- mtcars; head(mtcarsProc)
+
 ```
 ---
 
@@ -107,8 +108,7 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
         Simple Linear Regression
 ---
 ```{r SimpleLinearRegression, echo=TRUE}
-rm(list = ls()); data("mtcars")
-fslrm <- lm(mpg ~ factor(am), data = mtcars); fslrm
+fslrm <- lm(mpg ~ factor(am), data = mtcarsProc); fslrm
 coef(summary(fslrm))
 ```
 ---        
@@ -162,33 +162,55 @@ coef(summary(fslrm))
         B
 ---
 
-# XIV. Appendix A, 
-## Exploratory Analysis Visual Analysis
+# XIV. Appendix A, "Visual Analysis Plots""
 
-# Figure 1, Pairs
+Figure 1, Pairs
 ---
 
 ```{r Pairs plot, echo=FALSE, fig.height=6, fig.width=6}
-data("mtcars")
-pairs(mpg ~ ., data = mtcars)
+pairs(mpg ~ ., data = mtcarsProc)
 ```
 ---                
         
-        # Figure 2, Histograms
+Figure 2, Histograms
 ---
 
-```{r Hist plot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
-data("mtcars")
-hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
+```{r Hist plot1, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+data(mtcarsProc)
+mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb);
+hist(mtcarsProc$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "Histogram mtcars$mpg", xlim = range(5:40))
+```
+# OR
+```{r Hist plot2, echo=FALSE, fig.height=5, fig.width=5}
+data(mtcarsProc)
+par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
+hist(mtcarsProc$mpg[mtcarsProc$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
+abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Auto"]), col="red", lwd = 4)
+hist(mtcarsProc$mpg[mtcarsProc$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40));
+abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Manual"]), col="blue", lwd = 4)
+```
+
+
+
+```{r Hist Plot 3, echo=FALSE, fig.height=5, fig.width=5}
+mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb)
+data(mtcarsProc)
+head(mtcarsProc)
+g <- ggplot(mtcarsProc, aes(x = mpg, fill = am))
+g <- g + geom_histogram(colour = "black", binwidth = 3)
+g <- g + geom_vline(xintercept = mean((mtcarsProc$mpg[mtcarsProc$am == "Auto"]), size = 1)) 
+g <- g + geom_vline(xintercept = mean((mtcarsProc$mpg[mtcarsProc$am == "Manual"]), size = 1)) 
+g <- g + facet_grid(. ~ am)
+g
 ```
 ---                
         
-        # Figure 3, Box Plot
+Figure 3, Box Plot
 ---
 
 ```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
-data("mtcars")
-boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
+data("mtcarsProc")
+boxplot(mpg ~ am, data = mtcarsProc, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
 ```
 ---                
 ===
@@ -196,46 +218,33 @@ boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gal
 
 
 
-        # Figure 4, QQ Plot
+Figure 4, QQ Plot
 ---
 
 ```{r QQ plot, echo=FALSE, fig.height=5, fig.width=5}
-data("mtcars")
+data("mtcarsProc")
 #qqPlot(fit?, main="Q-Q plot")
 ```
 ---                
         
-        # Figure 5, Single Variable Linear Model Regression plot
+Figure 5, Single Variable Linear Model Regression plot
 ```{r SingleVarLMfit, echo=FALSE}
-data("mtcars")
-f1 <- lm(mpg ~ factor(am), data = mtcars)
+data("mtcarsProc")
+f1 <- lm(mpg ~ factor(am), data = mtcarsProc)
 coef(summary(f1))
 library(ggplot2)
 
 ```
 
 ---
-        # Figure 6, Bivariate Linear Model Regression plot
+Figure 6, Bivariate Linear Model Regression plot
 ```{r}
-data("mtcars")
-f2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+data("mtcarsProc")
+f2 <- lm(mpg ~ factor(am) + wt, data = mtcarsProc)
 coef(summary(f2))
-f3 <- lm(mpg ~ factor(am) * wt, data = mtcars)
+f3 <- lm(mpg ~ factor(am) * wt, data = mtcarsProc)
 coef(summary(f3))
-
-
-
-
-
-
-library(ggplot2)
-
-
-
-
-
 ```
-
 
 ---
 
@@ -243,7 +252,7 @@ library(ggplot2)
 #To be inserted
 ```
 ---
-        # Figure 7, Multivariate Linear Model(s) plot
+Figure 7, Multivariate Linear Model(s) plot
 
 ---
 
@@ -252,7 +261,7 @@ library(ggplot2)
 ```
 ---                
         
-        # Figure 8, Residuals plot
+Figure 8, Residuals plot
 
 ---
 
@@ -262,7 +271,7 @@ library(ggplot2)
 ```
 ---                
         
-        # Figure 9, Residuals vs Fitted
+Figure 9, Residuals vs Fitted
 
 ---
 
@@ -272,7 +281,7 @@ library(ggplot2)
 ```
 ---
         
-        # Figure 10, GLM
+Figure 10, GLM
 
 
 
