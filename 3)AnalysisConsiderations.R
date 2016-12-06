@@ -1,16 +1,20 @@
 #Analysis considerations:
 Descriptive
-any(is.na)
-head(data)
-str(data)
-summary(data)
+any(is.na)y
+head(data)y
+str(data)y
+summary(data)y
+---
 Exploratory
-Pairs
-Histograms
-Boxplots
-QQ plots
+Pairs,y
+Histograms,y
+Boxplots,y
+QQ plots,??
+
 OLS Ordinary least squares
-General least squares for linear equations
+
+General least squares 'for' linear equations
+
 Regression to the mean - Simple linear regression
 Statistical linear regression
 Basic - w additive Gaussian error

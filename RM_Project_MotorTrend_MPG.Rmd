@@ -23,7 +23,7 @@ output:
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 ---
 
-# Grading - Criteria (remove on completion of work)!!!  
+# Grading - Criteria (remove on completion)!!!  
 
 Did the student interpret the coefficients correctly?  
 
@@ -48,18 +48,13 @@ YES Was the report done in Rmd (knitr) with pdf output?
 # III. Analysis Considerations:
         Descriptive  
         Exploratory  
-        OLS Ordinary least squares
         Regression to the mean - Simple linear regression  
-        Statistical linear regression  
-        Residuals  
-        Regression inference  
         Multivariable regression analysis  
         Adjustments
         Residuals, variation, diagnostics
         Multiple variables & model selection
         GLMs
         Binary GLMs
-        Count data
 ---
 
 # IV. Software Environment:
@@ -92,9 +87,10 @@ any(is.na(mtcars)); colnames(mtcars)
 ---                        
 ```{r Process data, echo=FALSE}
 data(mtcars)
-mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-eng", "S-eng")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 ```
+
 ---
 
 # VIII. Exploratory Analysis:  
@@ -104,24 +100,44 @@ head(mtcars,3)
 
 # IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A Multivarite intercorrelation may exist   
+                A Correlation may exist among multiple variables
                 B
                 C
-        Ordinary Least Squares ~ na
         Simple Linear Regression
-```{r SimpleLinearRegression, echo=TRUE}
-data("mtcars")
-fslrm <- lm(mpg ~ factor(am)) 
+```{r SimpleLinearRegression, echo=FALSE}
+fslrm <- lm(mpg ~ am, data = mtcars) 
 coef(summary(fslrm))
+plot(fslrm)
 ```
+
 ---        
-        Statistical linear regression  
-                Interpretation of regression coefficients (intercept, slope)  
-                Regression - prediction  
         Multivariate Linear Regression
-                lm - simple
                 lm - multivariate
+```{r MLR, echo=TRUE,}
+mlr1 <- lm(mpg ~ ., data = mtcars)
+coef(summary(mlr1))
+plot(mlr1)
+```
+                
+                
                 lm - nested
+```{r Nested, echo=TRUE}
+data("mtcars")
+names(mtcars)
+fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
+fn2 <- update(fn1, mpg ~ cyl + disp + hp)
+fn3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
+fn4 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt)
+fn5 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec)
+fn6 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs)
+fn7 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
+fn8 <- update(fn1,mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear)
+fn9 <- update(fn1,mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
+anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9) 
+
+```
+
+                
                 lm - remove the intercept (-1)
                 lm - step function 
 ---
