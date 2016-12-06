@@ -100,7 +100,7 @@ head(mtcars,3)
 
 # IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A Correlation may exist among multiple variables
+                A Correlation exists among multiple variables
                 B
                 C
         Simple Linear Regression
