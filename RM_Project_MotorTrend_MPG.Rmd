@@ -104,19 +104,18 @@ head(mtcars,3)
 
 # IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A Multivarite intercorrelation exists   
+                A Multivarite intercorrelation may exist   
                 B
                 C
+        Ordinary Least Squares ~ na
         Simple Linear Regression
-        See Appendix A, Figures 5:? 
----
 ```{r SimpleLinearRegression, echo=TRUE}
-fslrm <- lm(mpg ~ factor(am), data = mtcars); fslrm
+data("mtcars")
+fslrm <- lm(mpg ~ factor(am)) 
 coef(summary(fslrm))
 ```
 ---        
         Statistical linear regression  
-                Basic - w additive Gaussian error  
                 Interpretation of regression coefficients (intercept, slope)  
                 Regression - prediction  
         Multivariate Linear Regression
@@ -134,22 +133,17 @@ coef(summary(fslrm))
 
 ---
 # XI. Inference:
-        Assumptions:
-                A Variables other than transmission type may influence MPG ratings   
-                B 
-                C
-        State H0 & Ha hypothesis'here
-                Set Seed, if required
-                One or Two Sided Test
-                Power / Alpha
-                Beta = (1 - Alpha)
-                Confidence Intervals (.95 one sided, .975 two sided)
-                Standard Error
-                Variance
-                student's T-score
-                Z-score
-                p-Values
-                Residual Plots with diagnostics see Appendix
+        Hypothesis':
+                A H0 = The difference between Automatic and Manual transmission MPG = 0   
+                B Ha = The difference between Automatic and Manual transmission MPG != 0
+                C Select the desired confidence interval = .975 (two sided)
+                D Alpha = 0.025
+                        Standard Error
+                        Variance
+                        student's T-score
+                        Z-score
+                        p-Values
+                E Resisuals Leverage & Influence Measures
 ---
 
 # XII. Conclusions / Recommendations:  
@@ -196,6 +190,9 @@ abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 
 ```{r Box Plot Figure 1, echo=FALSE, fig.height=7, fig.width=7}
 data("mtcars")
+data("mtcars")
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+head(mtcars,3)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission Miles Per Gallon")
 ```
 ---                
