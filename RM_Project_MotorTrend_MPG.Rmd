@@ -175,7 +175,6 @@ pairs(mpg ~ ., data = mtcarsProc)
 ## Histograms
 ---
 
-### OR
 ```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data(mtcarsProc)
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
