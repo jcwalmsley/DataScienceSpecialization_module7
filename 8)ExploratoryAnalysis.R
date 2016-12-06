@@ -9,20 +9,25 @@ pairs(mpg ~ ., data = mtcars)
 ## Histogram
 ---
 ```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
-data(mtcarsProc)
+data("mtcars")
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+head(mtcars,3)
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
-hist(mtcarsProc$mpg[mtcarsProc$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
-abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Auto"]), col="red", lwd = 4)
-hist(mtcarsProc$mpg[mtcarsProc$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40));
-abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Manual"]), col="blue", lwd = 4)
+hist(mtcars$mpg[mtcars$am=="Auto"], breaks=10, xlab = "Miles Per Gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
+abline(v=mean(mtcars$mpg[mtcars$am=="Auto"]), col="red", lwd = 4)
+hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles Per Gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40));
+abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 ```
 ---
 
 ---
 ## Boxplot
 Figures: Exploratory see Appendix A -?
-```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
-boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Transmission type ~ Miles per Gallon")
+```{r Box plot, echo=FALSE, fig.height=6, fig.width=6}
+data(mtcars)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+head(mtcars,3)
+boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission Miles Per Gallon")
 ```
 ---
 YES QQ plot
