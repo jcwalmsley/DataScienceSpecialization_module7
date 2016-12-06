@@ -124,7 +124,7 @@ coef(summary(fslrm))
                 lm - step function 
 ---
 
-# X.Preliminary Findings: Quesions of Interest: & Interpretation of Results:
+# X.Preliminary Findings: Questions of Interest: & Interpretation of Results:
         A
         B
         C
@@ -164,7 +164,7 @@ coef(summary(fslrm))
 
 # XIV. Appendix A, "Visual Analysis Plots""
 
-Pairs
+## Pairs
 ---
 
 ```{r Pairs Figure 1, echo=FALSE, fig.height=6, fig.width=6}
@@ -172,16 +172,16 @@ pairs(mpg ~ ., data = mtcarsProc)
 ```
 ---                
         
-Histograms
+## Histograms
 ---
 
-```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+```{r Histogram Figure 0, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 data(mtcarsProc)
 mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb);
 hist(mtcarsProc$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "Histogram mtcars$mpg", xlim = range(5:40))
 ```
-# OR
-```{r Histogram Figure 2, echo=FALSE, fig.height=5, fig.width=5}
+### OR
+```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data(mtcarsProc)
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 hist(mtcarsProc$mpg[mtcarsProc$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
@@ -192,20 +192,31 @@ abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Manual"]), col="blue", lwd = 4)
 
 ---                
         
-Box Plot
+## Box Plots
 ---
 
-```{r Box Plot Figure 1, echo=FALSE, fig.height=5, fig.width=5}
+```{r Box Plot Figure 1, echo=FALSE, fig.height=7, fig.width=5}
 data("mtcarsProc")
-boxplot(mpg ~ am, data = mtcarsProc, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
+boxplot(mpg ~ am, data = mtcarsProc, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission Miles Per Gallon")
 ```
 ---                
-===
+
+## Scatter Plot
+---
+```{r Scatter Plot Figure 1, echo=FALSE, fig.height=, fig.width=5}
+# NOTE USE GGPLOT
+# 
+```
 
 
 
 
-Figure 4, QQ Plot
+
+
+
+
+
+## QQ Plots
 ---
 
 ```{r QQ plot, echo=FALSE, fig.height=5, fig.width=5}
@@ -214,7 +225,7 @@ data("mtcarsProc")
 ```
 ---                
         
-Figure 5, Single Variable Linear Model Regression plot
+## Single Variable Linear Model Regression Plot
 ```{r SingleVarLMfit, echo=FALSE}
 data("mtcarsProc")
 f1 <- lm(mpg ~ factor(am), data = mtcarsProc)
@@ -224,7 +235,7 @@ library(ggplot2)
 ```
 
 ---
-Figure 6, Bivariate Linear Model Regression plot
+## Bivariate Linear Model Regression plot
 ```{r}
 data("mtcarsProc")
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcarsProc)
@@ -239,7 +250,7 @@ coef(summary(f3))
 #To be inserted
 ```
 ---
-Figure 7, Multivariate Linear Model(s) plot
+## Multivariate Linear Model(s) plot
 
 ---
 
@@ -248,7 +259,7 @@ Figure 7, Multivariate Linear Model(s) plot
 ```
 ---                
         
-Figure 8, Residuals plot
+## Residuals plot
 
 ---
 
@@ -258,7 +269,7 @@ Figure 8, Residuals plot
 ```
 ---                
         
-Figure 9, Residuals vs Fitted
+## Residuals vs Fitted
 
 ---
 
@@ -268,13 +279,7 @@ Figure 9, Residuals vs Fitted
 ```
 ---
         
-Figure 10, GLM
-
-
-
-
-
-
+## Generalized Linear Models
 
 
 
