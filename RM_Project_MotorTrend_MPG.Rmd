@@ -25,18 +25,27 @@ output:
 #Grading - Criteria (remove on completion)  
 
 Did the student interpret the coefficients correctly?  
+
 Did the student do some exploratory data analyses?  
+
 Did the student fit multiple models and detail their strategy for model selection?  
+
 Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?  
+
 Did the student do a residual plot and some diagnostics?  
+
 Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?  
+
 Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?  
+
 Did the report include an executive summary?  
-Was the report done in Rmd (knitr)?  
+
+YES Was the report done in Rmd (knitr) with pdf output?  
 
 ---
 
 #Analysis considerations:
+# A.
         Descriptive  
                 any(is.na)  
                 head(data)  
@@ -45,25 +54,35 @@ Was the report done in Rmd (knitr)?
         Exploratory  
                 Pairs  
                 Histograms  
-                Boxplots  
-                QQ plots  
+                Boxplots
+                Heatmap  
+                K-Means  
+                Dimension Reduction  
+                        PCA  
+                        SVD  
+# B.
         OLS Ordinary least squares  
                 General least squares for linear equations  
+# C.        
         Regression to the mean - Simple linear regression  
+# D.        
         Statistical linear regression  
                 Basic - w additive Gaussian error  
                 Interpretation of regression coefficients (intercept, slope)  
                 Regression - prediction  
+# E.        
         Residuals  
                 Residual variation  
                 Influence  
                 Leverage  
                 Estimate residual variation  
                 R squared  
+# F. 
         Regression inference  
                 Parameters  
                 Confidence intervals  
                 Prediction  
+# G.        
         Multivariate regression analysis  
                 Linear models  
                 Two variable simple linear regression (additive) / (multiplicative)  
@@ -71,6 +90,7 @@ Was the report done in Rmd (knitr)?
                 Fitted values, residuals and residual variation  
                 Summary coefficients  
                 Model Adjustment  
+# H.        
         GLMs  
                 Linear  
                 Logistic  
@@ -78,8 +98,10 @@ Was the report done in Rmd (knitr)?
                 Binary GLMs  
                         Odds  
                         Fitting  
-        Poisson  
-                Count data  
+                VIF
+# I.
+        QQ plots  
+# J.         
         Predictive ~ NA  
         Causal ~ NA  
         Mechanistic ~ NA  
@@ -111,41 +133,33 @@ any(is.na(mtcars)); colnames(mtcars)
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
                         a Note; for column header 8 = vs; variable names = V-block, & S-block;  
-                        b Note; for column header 9 = am; variable names = A-type = A, & M-type;
+                        b Note; for column header 9 = am; variable names = Automatic = A, & Manual = M;
 ---                        
 ```{r Process data, echo=FALSE}
 data(mtcars)
-mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("A-type", "M-type")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); head(mtcars)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb); head(mtcars)
 ```
 ---
 
-#Exploratory analysis:  
-        Histograms    
-        Rug    
-        Boxplots    
-        Barplots    
-        Scatterplots  
-        Multiple plots  
-        Graphing - base, lattice, ggpplot2  
-        ABlines (h/v)   
-        Confidence intervals  
-        Standard error  
-        Variance  
-        Fitted lines  
-        Heatmap  
-        K-Means  
-        Dimension Reduction  
-                PCA  
-                SVD  
-        Figures: Exploratory see Appendix A  
+#Exploratory Analysis:  
+        Pairs plot: Appendix A, Figure 1
+        Histograms: Appendix A, Figure 2
+        Boxplots: Appendix A, Figure 3    
+        Barplots - na  
+        Scatterplots ? 
+        Multiple plots ? 
 ---  
 
-#Statistical modeling, regression & model fit:
+#Statistical Modeling, Regression & Model Fit:
         Assumptions:
                 A     
                 B
                 C
         Simple Linear Regression
+        Statistical linear regression  
+                Basic - w additive Gaussian error  
+                Interpretation of regression coefficients (intercept, slope)  
+                Regression - prediction  
         Multivariate Linear Regression
                 lm - simple
                 lm - multivariate
@@ -208,51 +222,97 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
         B
 ---
 
-#Appendix A, Figures / Plots
-        
-        #Pairs
+#Appendix A, 
+## Exploratory Analysis Visual Analysis
+
+# Figure 1, Pairs
 ---
 
 ```{r Pairs plot, echo=FALSE, fig.height=6, fig.width=6}
+data("mtcars")
 pairs(mpg ~ ., data = mtcars)
 ```
 ---                
         
-        #Histograms
+        # Figure 2, Histograms
 ---
 
 ```{r Hist plot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
-data("mtcars"); library(ggplot2); library(dplyr);
+data("mtcars")
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
 ---                
         
-        #Box Plots
+        # Figure 3, Box Plot
 ---
 
 ```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
+data("mtcars")
 boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
 ```
 ---                
-        
-        #QQ Plots
+===
+
+
+
+
+        # Figure 4, QQ Plot
 ---
 
 ```{r QQ plot, echo=FALSE, fig.height=5, fig.width=5}
+data("mtcars")
 #qqPlot(fit?, main="Q-Q plot")
 ```
 ---                
         
-        #Fitted
+        # Figure 5, Single Variable Linear Model Regression plot
+```{r SingleVarLMfit, echo=FALSE}
+data("mtcars")
+f1 <- lm(mpg ~ factor(am), data = mtcars)
+coef(summary(f1))
+library(ggplot2)
+
+```
+
+---
+        # Figure 6, Bivariate Linear Model Regression plot
+```{r}
+data("mtcars")
+f2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+coef(summary(f2))
+f3 <- lm(mpg ~ factor(am) * wt, data = mtcars)
+coef(summary(f3))
+
+
+
+
+
+
+library(ggplot2)
+
+
+
+
+
+```
+
 
 ---
 
 ```{r Fitted plot, fig.height=5, fig.width=5}
 #To be inserted
 ```
+---
+        # Figure 7, Multivariate Linear Model(s) plot
+
+---
+
+```{r Fitted plot2, fig.height=5, fig.width=5}
+#To be inserted
+```
 ---                
         
-        #Residuals
+        # Figure 8, Residuals plot
 
 ---
 
@@ -262,7 +322,7 @@ boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gal
 ```
 ---                
         
-        #Residuals vs Fitted
+        # Figure 9, Residuals vs Fitted
 
 ---
 
@@ -271,6 +331,16 @@ boxplot(mpg ~ am, data = mtcars, col = (c("grey","grey")), ylab = "Miles-Per-Gal
 
 ```
 ---
+        
+        # Figure 10, GLM
+
+
+
+
+
+
+
+
 
 ===
 END
