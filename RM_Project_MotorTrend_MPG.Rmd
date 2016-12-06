@@ -9,12 +9,12 @@ output:
     fig_height: 6
 ---
 
-#Executive Summary:  
+# I. Executive Summary:  
         ## Add after completing analysis  
 
 ---
 
-#Problem statement & questions to be answered:  
+# II. Problem statement & questions to be answered:  
         ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that;   
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
         ## They are particularly interested in the following two questions:  
@@ -22,7 +22,7 @@ output:
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 ---
 
-#Grading - Criteria (remove on completion)  
+# Grading - Criteria (remove on completion)  
 
 Did the student interpret the coefficients correctly?  
 
@@ -44,91 +44,45 @@ YES Was the report done in Rmd (knitr) with pdf output?
 
 ---
 
-#Analysis considerations:
-# A.
+# III. Analysis considerations outline:
         Descriptive  
-                any(is.na)  
-                head(data)  
-                str(data)  
-                summary(data)  
         Exploratory  
-                Pairs  
-                Histograms  
-                Boxplots
-                Heatmap  
-                K-Means  
-                Dimension Reduction  
-                        PCA  
-                        SVD  
-# B.
-        OLS Ordinary least squares  
-                General least squares for linear equations  
-# C.        
+        OLS Ordinary least squares
         Regression to the mean - Simple linear regression  
-# D.        
         Statistical linear regression  
-                Basic - w additive Gaussian error  
-                Interpretation of regression coefficients (intercept, slope)  
-                Regression - prediction  
-# E.        
         Residuals  
-                Residual variation  
-                Influence  
-                Leverage  
-                Estimate residual variation  
-                R squared  
-# F. 
         Regression inference  
-                Parameters  
-                Confidence intervals  
-                Prediction  
-# G.        
-        Multivariate regression analysis  
-                Linear models  
-                Two variable simple linear regression (additive) / (multiplicative)  
-                Summary coefficients  
-                Fitted values, residuals and residual variation  
-                Summary coefficients  
-                Model Adjustment  
-# H.        
-        GLMs  
-                Linear  
-                Logistic  
-                Poisson  
-                Binary GLMs  
-                        Odds  
-                        Fitting  
-                VIF
-# I.
-        QQ plots  
-# J.         
-        Predictive ~ NA  
-        Causal ~ NA  
-        Mechanistic ~ NA  
+        Multivariable regression analysis  
+        Adjustments
+        Residuals, variation, diagnostics
+        Multiple variables & model selection
+        GLMs
+        Binary GLMs
+        Count data
 ---
 
-#Software environment:
+# IV. Software environment:
         System - session Info:
 ```{r Session Info, echo=TRUE}
 sessionInfo()
 ```
 ---
 
-#Accessing data:
+# V. Accessing data:
         Getting the data: 
 ```{r Get data, echo=FALSE,}
 rm(list=ls()); data("mtcars") 
 ```
 ---       
 
-#Raw data overview: 
+# VI. Raw data overview: 
         Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE}
 any(is.na(mtcars)); colnames(mtcars)
 ```
 ---
 
-#Processing data:  
+# VII. Processing data:  
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
@@ -141,21 +95,23 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
 ```
 ---
 
-#Exploratory Analysis:  
-        Pairs plot: Appendix A, Figure 1
-        Histograms: Appendix A, Figure 2
-        Boxplots: Appendix A, Figure 3    
-        Barplots - na  
-        Scatterplots ? 
-        Multiple plots ? 
+# VIII. Exploratory Analysis:  
+        See Appendix A Figures 1:4 
 ---  
 
-#Statistical Modeling, Regression & Model Fit:
+# IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A     
+                A Multivarite intercorrelation exists   
                 B
                 C
         Simple Linear Regression
+---
+```{r SimpleLinearRegression, echo=TRUE}
+rm(list = ls()); data("mtcars")
+fslrm <- lm(mpg ~ factor(am), data = mtcars); fslrm
+coef(summary(fslrm))
+```
+---        
         Statistical linear regression  
                 Basic - w additive Gaussian error  
                 Interpretation of regression coefficients (intercept, slope)  
@@ -166,31 +122,15 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
                 lm - nested
                 lm - remove the intercept (-1)
                 lm - step function 
-        Coefficients / Slope
-        Standard Error
-        T-Vales
-        pValues
-        Residuals
-                Leverage
-                Influence
-        Confidence Intervals
-        Residuals
-        Hatvalues
-        dfbetas
-        Influence Measures
-        Anova
-                Chisq
-        Ancova
-        GLMs
 ---
 
-#Preliminary findings: quesions of interest: & interpretation of results:
+# X.Preliminary findings: quesions of interest: & interpretation of results:
         A
         B
         C
 
 ---
-#Inference:
+# XI. Inference:
         Assumptions:
                 A Variables other than transmission type may influence MPG ratings   
                 B 
@@ -209,7 +149,7 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
                 Residual Plots with diagnostics see Appendix
 ---
 
-#Conclusions / recommendations:  
+# XII. Conclusions / recommendations:  
         A
         B
         C
@@ -217,12 +157,12 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
                 2 Measures of uncertainty 'e'
 ---
 
-#Are there any possible viable alternative analyses?
+# XIII. Are there any possible viable alternative analyses?
         A
         B
 ---
 
-#Appendix A, 
+# XIV. Appendix A, 
 ## Exploratory Analysis Visual Analysis
 
 # Figure 1, Pairs
