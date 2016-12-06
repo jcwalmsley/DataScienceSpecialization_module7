@@ -14,7 +14,7 @@ output:
 
 ---
 
-# II. Problem statement & questions to be answered:  
+# II. Problem Statement & Questions to Answer:  
         ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that;   
         ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
         ## They are particularly interested in the following two questions:  
@@ -22,7 +22,7 @@ output:
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 ---
 
-# Grading - Criteria (remove on completion)  
+# Grading - Criteria (remove on completion of work)!!!  
 
 Did the student interpret the coefficients correctly?  
 
@@ -44,7 +44,7 @@ YES Was the report done in Rmd (knitr) with pdf output?
 
 ---
 
-# III. Analysis considerations outline:
+# III. Analysis Considerations Outline:
         Descriptive  
         Exploratory  
         OLS Ordinary least squares
@@ -61,28 +61,28 @@ YES Was the report done in Rmd (knitr) with pdf output?
         Count data
 ---
 
-# IV. Software environment:
+# IV. Software Environment:
         System - session Info:
 ```{r Session Info, echo=TRUE}
 sessionInfo()
 ```
 ---
 
-# V. Accessing data:
+# V. Accessing Data:
         Getting the data: 
 ```{r Get data, echo=FALSE,}
 rm(list=ls()); data("mtcars") 
 ```
 ---       
 
-# VI. Raw data overview: 
+# VI. Raw Data Overview: 
         Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE}
 any(is.na(mtcars)); colnames(mtcars)
 ```
 ---
 
-# VII. Processing data:  
+# VII. Processing Data:  
         Transformations;  
                 1 factor variables 8:11;  
                 2 change variable labels in columns 8 & 9;      
@@ -124,7 +124,7 @@ coef(summary(fslrm))
                 lm - step function 
 ---
 
-# X.Preliminary findings: quesions of interest: & interpretation of results:
+# X.Preliminary Findings: Quesions of Interest: & Interpretation of Results:
         A
         B
         C
@@ -149,7 +149,7 @@ coef(summary(fslrm))
                 Residual Plots with diagnostics see Appendix
 ---
 
-# XII. Conclusions / recommendations:  
+# XII. Conclusions / Recommendations:  
         A
         B
         C
@@ -164,24 +164,24 @@ coef(summary(fslrm))
 
 # XIV. Appendix A, "Visual Analysis Plots""
 
-Figure 1, Pairs
+Pairs
 ---
 
-```{r Pairs plot, echo=FALSE, fig.height=6, fig.width=6}
+```{r Pairs Figure 1, echo=FALSE, fig.height=6, fig.width=6}
 pairs(mpg ~ ., data = mtcarsProc)
 ```
 ---                
         
-Figure 2, Histograms
+Histograms
 ---
 
-```{r Hist plot1, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 data(mtcarsProc)
 mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb);
 hist(mtcarsProc$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "Histogram mtcars$mpg", xlim = range(5:40))
 ```
 # OR
-```{r Hist plot2, echo=FALSE, fig.height=5, fig.width=5}
+```{r Histogram Figure 2, echo=FALSE, fig.height=5, fig.width=5}
 data(mtcarsProc)
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 hist(mtcarsProc$mpg[mtcarsProc$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
@@ -190,25 +190,12 @@ hist(mtcarsProc$mpg[mtcarsProc$am=="Manual"], breaks=10, xlab = "Miles-Per-gallo
 abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Manual"]), col="blue", lwd = 4)
 ```
 
-
-
-```{r Hist Plot 3, echo=FALSE, fig.height=5, fig.width=5}
-mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb)
-data(mtcarsProc)
-head(mtcarsProc)
-g <- ggplot(mtcarsProc, aes(x = mpg, fill = am))
-g <- g + geom_histogram(colour = "black", binwidth = 3)
-g <- g + geom_vline(xintercept = mean((mtcarsProc$mpg[mtcarsProc$am == "Auto"]), size = 1)) 
-g <- g + geom_vline(xintercept = mean((mtcarsProc$mpg[mtcarsProc$am == "Manual"]), size = 1)) 
-g <- g + facet_grid(. ~ am)
-g
-```
 ---                
         
-Figure 3, Box Plot
+Box Plot
 ---
 
-```{r Box plot, echo=FALSE, fig.height=5, fig.width=5}
+```{r Box Plot Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data("mtcarsProc")
 boxplot(mpg ~ am, data = mtcarsProc, col = (c("grey","grey")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG Boxplot")
 ```

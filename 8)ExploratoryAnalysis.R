@@ -8,7 +8,26 @@ pairs(mpg ~ ., data = mtcars)
 ---
 # YES Histograms
 # Figures: Exploratory see Appendix A -?
- ```{r Hist plot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+data(mtcarsProc)
+mtcarsProc$vs <- factor(mtcarsProc$vs, labels = c("V-block", "S-block")); mtcarsProc$am <- factor(mtcarsProc$am, labels = c("Auto", "Manual")); mtcarsProc$gear <- factor(mtcarsProc$gear); mtcarsProc$carb <- factor(mtcarsProc$carb);
+hist(mtcarsProc$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "Histogram mtcars$mpg", xlim = range(5:40))
+---
+data(mtcarsProc)
+par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
+hist(mtcarsProc$mpg[mtcarsProc$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
+abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Auto"]), col="red", lwd = 4)
+hist(mtcarsProc$mpg[mtcarsProc$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40));
+abline(v=mean(mtcarsProc$mpg[mtcarsProc$am=="Manual"]), col="blue", lwd = 4)
+---
+
+
+
+
+
+
+
+
+```{r Hist plot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 data("mtcars"); library(ggplot2); library(dplyr);
 hist(mtcars$mpg, breaks=15, xlab = "Miles-Per-gallon", main = "MPG Histogram", xlim = range(5:40))
 ```
