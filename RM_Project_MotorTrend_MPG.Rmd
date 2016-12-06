@@ -131,10 +131,9 @@ fn4 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt)
 fn5 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec)
 fn6 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs)
 fn7 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
-fn8 <- update(fn1,mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear)
-fn9 <- update(fn1,mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
+fn8 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear)
+fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9) 
-
 ```
 
                 
@@ -143,7 +142,7 @@ anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 ---
 
 # X.Preliminary Findings: Questions of Interest: & Interpretation of Results:
-        A
+        A Based on the ANOVA table we can see model 4 is significant in relation to the variable for weight
         B
         C
 
