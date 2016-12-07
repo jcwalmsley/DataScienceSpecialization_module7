@@ -25,7 +25,7 @@ coef(summary(f3))
 ---
 
 ## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
@@ -33,9 +33,9 @@ plot(mlr1)
 ```
 ---
 
-## Multivariate Linear Model (all vars)
+## Multivariate Linear Model (all vars)b
 ## -Residuals/Fitted/Residuals vs Fitted & Adjusted, removing the intercept
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ . -1, data = mtcars)
 coef(summary(mlr1))

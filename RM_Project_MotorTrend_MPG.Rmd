@@ -6,8 +6,8 @@ output:
   pdf_document: 
     fig_caption: yes
     fig_crop: yes
-    fig_height: 7
-    fig_width: 7
+    fig_height: 6
+    fig_width: 6
 ---
 
 # I. Executive Summary:  
@@ -17,7 +17,7 @@ output:
 
 # II. Problem Statement & Questions to Answer:  
         ## Assuming I work for Motor Trend, a magazine about the automobile industry. Looking at the data set of a collection of cars ("mtcars") I know that;   
-        ## They are interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
+        ## Motor Trend is interested in exploring the relationship between a set of variables and the miles per gallon (mpg) outcome.   
         ## They are particularly interested in the following two questions:  
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
@@ -46,20 +46,14 @@ YES Was the report done in Rmd (knitr) with pdf output?
 ---
 
 # III. Analysis Considerations:
-        Descriptive  
-        Exploratory  
-        Regression to the mean - Simple linear regression  
-        Multivariable regression analysis  
-        Adjustments
-        Residuals, variation, diagnostics
-        Multiple variables & model selection
-        GLMs
-        Binary GLMs
+        Descriptive; Exploratory; Regression to the mean, simple linear regression  
+        Multivariable regression; Adjustments; Residuals, variation, diagnostics
+        Multiple variables & model selection; GLMs & Binary GLMs
 ---
 
 # IV. Software Environment:
         System - session Info:
-```{r Session Info, echo=TRUE}
+```{r Session Info, echo=FALSE}
 sessionInfo()
 ```
 ---
@@ -67,14 +61,15 @@ sessionInfo()
 # V. Accessing Data:
         Getting the data: 
 ```{r Get data, echo=FALSE,}
-rm(list=ls()); data("mtcars") 
+rm(list=ls()); data("mtcars")
+head(mtcars, 3)
 ```
 ---       
 
 # VI. Raw Data Overview: 
         Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE}
-any(is.na(mtcars)); colnames(mtcars)
+any(is.na(mtcars))
 ```
 ---
 
@@ -90,7 +85,6 @@ data(mtcars)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-eng", "S-eng")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 ```
-
 ---
 
 # VIII. Exploratory Analysis:  
@@ -104,24 +98,10 @@ head(mtcars,3)
                 B
                 C
         Simple Linear Regression
-
----        
         Multivariate Linear Regression
-                lm - multivariate
----                
-                
-                lm - nested or step function
----
-                lm - remove the intercept (-1) ## ????
-                
-                GLM - na
-                Binary GLM yes ## Need to revise this code              
----
-                
-                
-                
-                
-                
+        GLM - na
+        Binary GLM yes ## Need to revise this code
+        VIF
 ---
 
 # X.Preliminary Findings:  
@@ -130,40 +110,29 @@ head(mtcars,3)
         A Based on the ANOVA table we can see model 4 is significant in relation to the variable for weight
         B
         C
-
 ---
 # XI. Inference:
         Hypothesis':
                 A H0 = The difference between Automatic and Manual transmission MPG = 0   
                 B Ha = The difference between Automatic and Manual transmission MPG != 0
-                C Select the desired confidence interval = .975 (two sided)
-                D Alpha = 0.025
-                        Standard Error
-                        Variance
-                        student's T-score
-                        Z-score
-                        p-Values
-                E Resisuals Leverage & Influence Measures
+                C Select the desired confidence interval = .975 (two sided) ??
 ---
 
 # XII. Conclusions / Recommendations:  
         A
         B
-        C
-                1 Challenge the results ?
-                2 Measures of uncertainty 'e'
 ---
 
 # XIII. Are there other alternative analyses?
-        A
-        B
+        A VIF
+        B Challenge the results ?
+        C Measures of uncertainty 'e'
 ---
 
-# XIV. Appendix A, "Visual Analysis Plots""
+# XIV. Appendix A, "Graphical Analysis""
 
 ## Pairs
 ---
-
 ```{r Pairs Figure 1, echo=FALSE, fig.height=6, fig.width=6}
 pairs(mpg ~ ., data = mtcars)
 ```
@@ -171,8 +140,7 @@ pairs(mpg ~ ., data = mtcars)
         
 ## Histograms
 ---
-
-```{r Hist Figure 1, echo=FALSE, fig.height=5, fig.width=5}
+```{r Hist Figure 1, echo=FALSE, fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
@@ -188,28 +156,19 @@ abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 ## Box Plots
 ---
 
-```{r Box Plot Figure 1, echo=FALSE, fig.height=7, fig.width=7}
+```{r Box Plot Figure 1, echo=FALSE, fig.height=5.5, fig.width=5.5}
 data("mtcars")
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission Miles Per Gallon")
 ```
----                
-
-## QQ Plots
 ---
 
-```{r QQ plot, echo=FALSE, fig.height=5, fig.width=5}
-data("mtcars")
-#qqPlot(fit?, main="Q-Q plot")
-```
----
 ## Simple Linear Regression Single Variable Plot
 ```{r SimpleLinearRegression, echo=FALSE, fig.height=6, fig.width=6}
 fslrm <- lm(mpg ~ am, data = mtcars) 
 coef(summary(fslrm))
-plot(fslrm)
 ```
 
 ---
@@ -224,8 +183,8 @@ coef(summary(f3))
 
 ---
 
-## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+## Multivariate LM (all vars)-Residuals/Fitted/Residuals vs Fitted
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
@@ -233,8 +192,8 @@ plot(mlr1)
 ```
 ---
 
-## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted & Adjusted
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+## Multivariate LM (all vars)-Residuals/Fitted/Residuals vs Fitted & Adjusted
+```{r MultvariateLM(all vars)b, echo=FALSE, fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ . -1, data = mtcars)
 coef(summary(mlr1))
@@ -242,7 +201,7 @@ plot(mlr1)
 ```
 
 ---
-## Multivariate Linear Model Nested Plot
+## Multivariate LM Nested Plot
 ```{r Nested, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
 names(mtcars)
@@ -258,14 +217,8 @@ fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear 
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9) 
 ```
 ---
-
-```{r Residuals vs Fitted plot, echo=FALSE, fig.height=5, fig.width=5}
-# To be inserted
-
-```
----
         
-## Generalized Linear Models
+## Generalized Linear Models - na
 
 ## Binary Generalized Linear Models
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
