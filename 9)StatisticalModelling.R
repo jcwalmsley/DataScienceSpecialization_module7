@@ -6,25 +6,25 @@ Assumptions:
 ---
 
 Multivariate Linear Regression
-        lm - simple
-```{r SimpleLinearRegression, echo=FALSE}
+## Simple Linear Regression Single Variable Plot
+```{r SimpleLinearRegression, echo=FALSE, fig.height=6, fig.width=6}
 fslrm <- lm(mpg ~ am, data = mtcars)
 coef(summary(fslrm))
 plot(fslrm)
 ```
 ---
 
-        lm - multivariate
-```{r MLR, echo=TRUE,}
+## Bivariate Linear Model Regression plot
+```{r MLR, echo=FALSE, fig.height=6, fig.width=6}
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
 ```
 ---
-        lm - nested / lm - step 'function'
-```{r Nested, echo=TRUE}
-data("mtcars")
-names(mtcars)
+
+
+## Multivariate Linear Model(s) plot
+```{r Nested, echo=FALSE, fig.height=6, fig.width=6}
 fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
 fn2 <- update(fn1, mpg ~ cyl + disp + hp)
 fn3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
@@ -40,7 +40,7 @@ anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
         lm - remove the intercept (-1)
 
         GLM
-        Binary GLM
+## Binary GLM ## Need to revise this code!!!
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
 beta0 = 0; beta1 = 1
 p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
