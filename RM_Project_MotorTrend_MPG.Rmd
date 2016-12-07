@@ -226,7 +226,17 @@ coef(summary(f3))
 
 ## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
 ```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
+coef(summary(mlr1))
+plot(mlr1)
+```
+---
+
+## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted & Adjusted
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
+mlr1 <- lm(mpg ~ . -1, data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
 ```
@@ -247,25 +257,6 @@ fn8 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear)
 fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9) 
 ```
----
-
-```{r Fitted plot2, fig.height=5, fig.width=5}
-#To be inserted
-```
----                
-        
-## Residuals plot
-
----
-
-```{r Residual plot, echo=FALSE, fig.height=5, fig.width=5}
-#plot(resid(fit?))
-#abline(h=0)
-```
----                
-        
-## Residuals vs Fitted
-
 ---
 
 ```{r Residuals vs Fitted plot, echo=FALSE, fig.height=5, fig.width=5}

@@ -15,13 +15,33 @@ plot(fslrm)
 ---
 
 ## Bivariate Linear Model Regression plot
-```{r MLR, echo=FALSE, fig.height=6, fig.width=6}
+```{r Bivariate Linear Model Regression Plot, echo=FALSE, fig.height=6, fig.width=6}
+data("mtcars")
+f2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+coef(summary(f2))
+f3 <- lm(mpg ~ factor(am) * wt, data = mtcars)
+coef(summary(f3))
+```
+---
+
+## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
 ```
 ---
 
+## Multivariate Linear Model (all vars)
+## -Residuals/Fitted/Residuals vs Fitted & Adjusted, removing the intercept
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
+mlr1 <- lm(mpg ~ . -1, data = mtcars)
+coef(summary(mlr1))
+plot(mlr1)
+```
+---
 
 ## Multivariate Linear Model(s) plot
 ```{r Nested, echo=FALSE, fig.height=6, fig.width=6}
@@ -37,9 +57,9 @@ fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear 
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 ```
 ---
-        lm - remove the intercept (-1)
 
-        GLM
+# GLM
+
 ## Binary GLM ## Need to revise this code!!!
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
 beta0 = 0; beta1 = 1
