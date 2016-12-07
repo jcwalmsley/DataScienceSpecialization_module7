@@ -124,7 +124,9 @@ head(mtcars,3)
                 
 ---
 
-# X.Preliminary Findings: Questions of Interest: & Interpretation of Results:
+# X.Preliminary Findings:  
+  # Questions of Interest: 
+  # & Interpretation of Results:
         A Based on the ANOVA table we can see model 4 is significant in relation to the variable for weight
         B
         C
@@ -222,8 +224,8 @@ coef(summary(f3))
 
 ---
 
-## Multivariate Linear Model (all vars)
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=6, fig.width=6}
+## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
+```{r MultvariateLM(all vars), echo=FALSE, fig.height=2.75, fig.width=2.75}
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
@@ -276,12 +278,12 @@ anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 
 ## Binary Generalized Linear Models
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
-beta0 = 0; beta1 = 1
-p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
-
-plot(x, y, frame = FALSE, xlab = "x", ylab = "y") lines(lowess(x, y), type = "l", col = "blue", lwd = 3)
-fit = glm(y ~ x, family = binomial)
-lines(x, predict(fit, type = "response"), lwd = 3, col = "red")
+# beta0 = 0; beta1 = 1
+# p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
+# 
+# plot(x, y, frame = FALSE, xlab = "x", ylab = "y") lines(lowess(x, y), type = "l", col = "blue", lwd = 3)
+# fit = glm(y ~ x, family = binomial)
+# lines(x, predict(fit, type = "response"), lwd = 3, col = "red")
 ```
 
 ===
