@@ -118,9 +118,9 @@ mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
 ```
+---                
                 
-                
-                lm - nested
+                lm - nested or step function
 ```{r Nested, echo=TRUE}
 data("mtcars")
 names(mtcars)
@@ -135,10 +135,25 @@ fn8 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear)
 fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9) 
 ```
-
+---
+                lm - remove the intercept (-1) ## ????
                 
-                lm - remove the intercept (-1)
-                lm - step function 
+                GLM - na
+                Binary GLM yes ## Need to revise this code              
+```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
+beta0 = 0; beta1 = 1
+p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
+
+plot(x, y, frame = FALSE, xlab = "x", ylab = "y") lines(lowess(x, y), type = "l", col = "blue", lwd = 3)
+fit = glm(y ~ x, family = binomial)
+lines(x, predict(fit, type = "response"), lwd = 3, col = "red")
+```
+---
+                
+                
+                
+                
+                
 ---
 
 # X.Preliminary Findings: Questions of Interest: & Interpretation of Results:
