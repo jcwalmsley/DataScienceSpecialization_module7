@@ -1,4 +1,19 @@
 #Analysis considerations:
+Descriptive - any(is.na()), dim(), head(), str() & summary(), mean(), median(), mode()
+                max(), min(), range(), length(), class(), names()
+
+Exploratory - pairs(), histograms(), boxplots(), barplot() & multiple plots
+
+Analysis - OLS, SLR, BiVariate Regression, Multivariate Linear Regression, Heatmaps,
+                HCL, PCA, SVD
+
+Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),
+simple linear regression, multivariable regression & model selection,
+adjustments, residuals (predict fit, residual fit (-1)), hatvalues, variation
+& dfbetas, R^2, diagnostics; ANOVA, GLMs & Binary GLMs, coeficients, correlation,
+confint, ChiSq-Test, VIF, binary, binomial, poisson
+
+
 Descriptive
 any(is.na)y
 head(data)y

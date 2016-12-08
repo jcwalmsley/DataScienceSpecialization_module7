@@ -48,9 +48,9 @@ YES Was the report done in Rmd (knitr) with pdf output?
         Exploratory - pairs, histograms, boxplots & (multiple plots)  
         Analysis - Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),  
         simple linear regression, multivariable regression & model selection,  
-        adjustments, residuals (predict fit, residual fit (-1)),  
-        hatvalues, variation & dfbetas, R^2, diagnostics; GLMs & Binary GLMs,  
-        coeficients, correlation, confint, ChiSq-Test, VIF, binary, binomial, poisson
+        adjustments, residuals (predict fit, residual fit (-1)), hatvalues, variation  
+        & dfbetas, R^2, diagnostics; ANOVA, GLMs & Binary GLMs, coeficients, correlation,  
+        confint, ChiSq-Test, VIF, binary, binomial, poisson
 
 # IV. Software Environment:
         Set working directory:
@@ -87,16 +87,18 @@ head(mtcars,3)
 
 # IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A Correlation exists among multiple variables
+                A A correlation to mpg ratings may exist among multiple variables
                 B
                 C
 
 # X.Preliminary Findings:  
-  # Questions of Interest: 
-  # & Interpretation of Results:
-        A Based on the ANOVA table we can see model 4 is significant in relation to the variable for weight
-        B
-        C
+        Questions of Interest:
+                A What other regressos if any correlated with mpg rating and transmission type?
+                B 
+        Interpretation of Results:
+                A Based on the ANOVA table we can determine that model 4 has significance for (wt)
+                B
+                C
 
 # XI. Inference:
         Hypothesis':
