@@ -40,10 +40,14 @@ Did the report include an executive summary?
 YES Was the report done in Rmd (knitr) with pdf output?  
 
 # III. Analysis Considerations:
-        Descriptive; Exploratory; Regression to mean, Simple linear regression  
-        Multivariable regression & model selection; Adjustments; 
-        Residuals (predict fit, residual fit (-1)), Variation, Diagnostics;  
-        GLMs & Binary GLMs, Correlation, Confint, ChiSq, VIF
+        Descriptive - (dim, str & summary) statistics
+        Exploratory - pairs, histograms, boxplots & (multiple plots)  
+        Analysis - Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),  
+        simple linear regression, multivariable regression & model selection,  
+        adjustments, residuals (predict fit, residual fit (-1)),  
+        hatvalues, variation & dfbetas, R^2, diagnostics; GLMs & Binary GLMs,  
+        coeficients, correlation, confint, ChiSq-Test, VIF, binary, binomial, poisson
+
 # IV. Software Environment:
         Set working directory:
 ```{r Set directory, echo=FALSE, results='hide'}
@@ -53,59 +57,69 @@ setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
 ```{r Session Info, echo=FALSE, results='hide'}
 sessionInfo()
 ```
+
 # V. Accessing Data:
-        Getting the data: 
+        Clean up the work space & get the data: 
 ```{r Get data, echo=TRUE, results='hide'}
 rm(list=ls()); data("mtcars")
 ```
+
 # VI. Raw Data Overview: Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE, results='hide'}
 any(is.na(mtcars)); head(mtcars, 3)
 ```
-# VII. Processing Data:  
+
+# VII. Process Data:  
         Transformationns = Factor variables 8:11; modify variable names for col 8 & 9
 ```{r Process data, echo=TRUE, results='hide'}
 data(mtcars)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-eng", "S-eng")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 ```
+
 # VIII. Exploratory Analysis:  
         Add narrative here!!
         See Appendix A, Figures 1:4 
+
 # IX. Statistical Modeling, Regression & Model Fit:
         Assumptions:
                 A Correlation exists among multiple variables
                 B
                 C
-        Simple Linear Regression
-        Multivariate Linear Regression
-        GLM - na
-        Binary GLM yes ## Need to revise this code
-        VIF
+
 # X.Preliminary Findings:  
   # Questions of Interest: 
   # & Interpretation of Results:
         A Based on the ANOVA table we can see model 4 is significant in relation to the variable for weight
         B
         C
+
 # XI. Inference:
         Hypothesis':
                 A H0 = The difference between Automatic and Manual transmission MPG = 0   
                 B Ha = The difference between Automatic and Manual transmission MPG != 0
-                C Select the desired confidence interval = .975 (two sided) ??
+                C Desired confidence interval = .95 (one sided) ??
+
 # XII. Conclusions / Recommendations:  
         A
         B
+
 # XIII. Are there other alternative analyses?
         A VIF
         B Challenge the results ?
         C Measures of uncertainty 'e'
+
 ---
 # XIV. Appendix A, "Graphical Analysis""
 
 ## Pairs
-```{r Pairs Figure 1, echo=TRUE, fig.height=5, fig.width=5}
+```{r Pairs, echo=TRUE, fig.height=5, fig.width=5}
+# op <- par()
+par(mfrow = c(1, 1), cex = 0.8)
+png(Pairs = "plotPairs.png", width=480, height=480)
 pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
+# par(op)
+dev.off()
 ```
 
 ## Histograms
@@ -170,7 +184,7 @@ anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 
 ## Generalized Linear Models - na
 
-## Binary Generalized Linear Models
+## Binary Generalized Linear Models (Example from course text need to apply to thi project)
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
 # beta0 = 0; beta1 = 1
 # p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))

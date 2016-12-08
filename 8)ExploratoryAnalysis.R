@@ -10,13 +10,17 @@ pairs(mpg ~ ., data = mtcars)
 ---
 ```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data("mtcars")
+op <- par()
+par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
+png(Histogram Figure 1 = "plot2.png", width=480, height=480)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
-par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 hist(mtcars$mpg[mtcars$am=="Auto"], breaks=10, xlab = "Miles Per Gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40));
 abline(v=mean(mtcars$mpg[mtcars$am=="Auto"]), col="red", lwd = 4)
 hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles Per Gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40));
 abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
+par(op)
+dev.off()
 ```
 ---
 

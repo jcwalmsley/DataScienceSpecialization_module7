@@ -67,7 +67,7 @@ anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 
 ## Generalized Linear Models - na
 
-## Binary Generalized Linear Models
+## Binary Generalized Linear Models (Example from course text need to apply to thi project)
 ```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
 # beta0 = 0; beta1 = 1
 # p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
