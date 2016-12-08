@@ -19,6 +19,10 @@ output:
         ## They are particularly interested in the following two questions:  
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
+        ## Other assumptions
+                ## A Correlation with 'mpg' by variables other than transmission type may exist
+                ## B Certain models may exert influence / leverage on the correlation between mpg & am
+
 # Grading - Criteria (remove on completion)!!!  
 
 Did the student interpret the coefficients correctly?  
@@ -113,13 +117,13 @@ head(mtcars,3)
 # XIV. Appendix A, "Graphical Analysis""
 
 ## Pairs
-```{r Pairs1, echo=TRUE, fig.height=6, fig.width=6}
+```{r Pairs, echo=TRUE}
 data("mtcars")
-png(Pairs1 = "plotPairs1.png")
+png(Pairs = "plotPairs.png")
 par(mfrow = c(1, 1), cex = 0.6)
 Pairs <- pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
 Pairs
-dev.off()
+#dev.off()
 ```
 
 ## Histograms

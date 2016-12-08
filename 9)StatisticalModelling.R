@@ -2,14 +2,13 @@
 Assumptions:
         A Correlation with 'mpg' by variables other than transmission type may exist
         B Certain models may exert influence / leverage on the correlation between mpg & am
-        C
 ---
 
 Multivariate Linear Regression
 ## Simple Linear Regression Single Variable Plot
-```{r SLR, echo=FALSE, fig.height=6, fig.width=6}
+```{r fslrm, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
-png(SLR = "plotSLR.png", width=480, height=480)
+png(fslrm = "fslrm.png")
 par(mfrow = c(1, 1), cex = 0.7)
 fslrm <- lm(mpg ~ am, data = mtcars)
 coef(summary(fslrm))
@@ -19,26 +18,27 @@ dev.off()
 ---
 
 ## Bivariate Linear Model Regression plot
-```{r BivariateLM, echo=FALSE, fig.height=6, fig.width=6}
+```{r fBivLM, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
-png(BivariateLM = "plotBivariateLM.png", width=580, height=580)
+png(fBivLM = "fBivLM.png", main = "Bivariate LM Comparison")
 par(mfrow = c(1, 2), cex = 0.6)
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
 coef(summary(f2))
 f3 <- lm(mpg ~ factor(am) * wt, data = mtcars)
-coef(summary(f3)); plot(f2); plot(f3)
+coef(summary(f3))
+plot(BivMLM <- c(f2, f3)
 dev.off()
 ```
 ---
 
+
 ## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MLMallvarsFitted, echo=FALSE, fig.height=6.5, fig.width=6.5}
+```{r MLMFitted, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
-png(MLMallvarsFitted = "plotMLMallvarsFitted.png", width=580, height=580)
+png(MLMFitted = "plotMLMFitted.png")
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ ., data = mtcars)
-coef(summary(mlr1))
-plot(mlr1)
+MLMFitted <- lm(mpg ~ ., data = mtcars)
+coef(summary(mlr1)); MLMFitted
 dev.off()
 ```
 ---
