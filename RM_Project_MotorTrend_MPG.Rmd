@@ -113,12 +113,12 @@ head(mtcars,3)
 # XIV. Appendix A, "Graphical Analysis""
 
 ## Pairs
-```{r Pairs, echo=TRUE, fig.height=5, fig.width=5}
-# op <- par()
-par(mfrow = c(1, 1), cex = 0.8)
-png(Pairs = "plotPairs.png", width=480, height=480)
-pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
-# par(op)
+```{r Pairs1, echo=TRUE, fig.height=6, fig.width=6}
+data("mtcars")
+png(Pairs1 = "plotPairs1.png")
+par(mfrow = c(1, 1), cex = 0.6)
+Pairs <- pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
+Pairs
 dev.off()
 ```
 

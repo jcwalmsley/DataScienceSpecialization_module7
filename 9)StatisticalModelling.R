@@ -32,9 +32,9 @@ dev.off()
 ---
 
 ## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MLMall vars, echo=FALSE, fig.height=6.5, fig.width=6.5}
+```{r MLMallvarsFitted, echo=FALSE, fig.height=6.5, fig.width=6.5}
 data("mtcars")
-png(MLMallvars = "plotMLMallvars.png", width=580, height=580)
+png(MLMallvarsFitted = "plotMLMallvarsFitted.png", width=580, height=580)
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
@@ -44,7 +44,8 @@ plot(mlr1)
 
 ## Multivariate Linear Model (all vars)b
 ## -Residuals/Fitted/Residuals vs Fitted & Adjusted, removing the intercept
-```{r MultvariateLM(all vars), echo=FALSE, fig.height=6.5, fig.width=6.5}
+```{r MLMallvarsAdjusted, echo=FALSE, fig.height=6.5, fig.width=6.5
+png(MLMallvarsAdjusted = "plotMLMallvarsAdjusted.png", width=580, height=580)
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ . -1, data = mtcars)
 coef(summary(mlr1))
@@ -54,8 +55,8 @@ plot(mlr1)
 
 ## Multivariate Linear Model(s) plot
 ```{r Nested, echo=FALSE, fig.height=6, fig.width=6}
-
-
+png(Nested = "plotNested.png", width=580, height=580)
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
 fn2 <- update(fn1, mpg ~ cyl + disp + hp)
 fn3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
@@ -86,25 +87,6 @@ lines(x, predict(fit, type = "response"), lwd = 3, col = "red")
 
 
 
-Coefficients / Slope
-Standard Error
-T-Vales
-pValues
-Residuals
-        Leverage
-        Influence
-Confidence Intervals
-Residuals
-R^2
-Hatvalues
-dfbetas
-Influence Measures
-*Anova
-Chisq
-Ancova
-*GLMs
-*Binary GLM
-
-
+\
 
 
