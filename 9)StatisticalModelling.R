@@ -1,7 +1,7 @@
 #Statistical modeling, regression & model fit:
 Assumptions:
-        A correlation exists among one or more varaibles
-        B
+        A Correlation with 'mpg' by variables other than transmission type may exist
+        B Certain models may exert influence / leverage on the correlation between mpg & am
         C
 ---
 
@@ -39,6 +39,7 @@ par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars)
 coef(summary(mlr1))
 plot(mlr1)
+dev.off()
 ```
 ---
 
