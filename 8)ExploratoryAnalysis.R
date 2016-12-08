@@ -10,7 +10,6 @@ pairs(mpg ~ ., data = mtcars)
 ---
 ```{r Histogram Figure 1, echo=FALSE, fig.height=5, fig.width=5}
 data("mtcars")
-op <- par()
 par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 png(Histogram Figure 1 = "plot2.png", width=480, height=480)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)

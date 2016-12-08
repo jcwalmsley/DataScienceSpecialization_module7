@@ -119,24 +119,25 @@ head(mtcars,3)
 # XIV. Appendix A, "Graphical Analysis""
 
 ## Pairs
-```{r Pairs, echo=TRUE}
-data("mtcars")
-png(Pairs = "plotPairs.png")
+```{r Pairs, echo=TRUE, fig.height=5.5, fig.width=5.5}
+data(mtcars)
 par(mfrow = c(1, 1), cex = 0.6)
-Pairs <- pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
-Pairs
-#dev.off()
+pairs(mtcars[,c(1,6,9)], data = mtcars)
 ```
 
 ## Histograms
-```{r Hist Figure 1, echo=TRUE, fig.height=6.5, fig.width=6.5}
-data("mtcars");par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
+```{r HistFigure1, echo=TRUE, fig.height=6.5, fig.width=6.5}
+data(mtcars)
+png(HistFigure1 = "HistFigure1.png")
+op <- par()
+# par(mfrow = c(1, 1), cex = 0.7)
+par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 hist(mtcars$mpg[mtcars$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Automatic Transmission", col = "yellow", xlim = range(5:40))
 abline(v=mean(mtcars$mpg[mtcars$am=="Auto"]), col="red", lwd = 4)
 hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Count", main = "Manual Transmission", col="lightblue", xlim = range(5:40))
-abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
+abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4); dev.off()
 ```
 
 ## Box Plots

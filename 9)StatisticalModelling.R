@@ -37,10 +37,12 @@ dev.off()
 ```{r fMLM, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
 png(fMLM = "fMLM.png")
+op <- par()
 par(mfrow = c(1, 2), cex = 0.6)
 fMLM <- lm(mpg ~ ., data = mtcars)
 coef(summary(fMLM))
 plot(fMLM)
+par(op)
 dev.off()
 ```
 ---
