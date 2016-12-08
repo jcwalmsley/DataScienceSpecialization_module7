@@ -171,9 +171,8 @@ mlr1 <- lm(mpg ~ . -1, data = mtcars);coef(summary(mlr1))
 ```
 
 ## Multivariate LM Nested Plot
-```{r Nested, echo=FALSE, results='hide', fig.height=6, fig.width=6}
+```{r ANOVA_Nested_LM, echo=TRUE}
 data("mtcars")
-names(mtcars)
 fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
 fn2 <- update(fn1, mpg ~ cyl + disp + hp)
 fn3 <- update(fn1, mpg ~ cyl + disp + hp + drat)

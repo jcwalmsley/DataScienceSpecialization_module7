@@ -20,44 +20,45 @@ dev.off()
 ## Bivariate Linear Model Regression plot
 ```{r fBivLM, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
-png(fBivLM = "fBivLM.png", main = "Bivariate LM Comparison")
+png(fBivLM = "fBivLM.png")
 par(mfrow = c(1, 2), cex = 0.6)
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
 coef(summary(f2))
 f3 <- lm(mpg ~ factor(am) * wt, data = mtcars)
 coef(summary(f3))
-plot(BivMLM <- c(f2, f3)
+plot(f2)
+plot(f3)
 dev.off()
 ```
 ---
 
 
 ## Multivariate Linear Model (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MLMFitted, echo=FALSE, fig.height=6, fig.width=6}
+```{r fMLM, echo=FALSE, fig.height=6, fig.width=6}
 data("mtcars")
-png(MLMFitted = "plotMLMFitted.png")
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-MLMFitted <- lm(mpg ~ ., data = mtcars)
-coef(summary(mlr1)); MLMFitted
+png(fMLM = "fMLM.png")
+par(mfrow = c(1, 2), cex = 0.6)
+fMLM <- lm(mpg ~ ., data = mtcars)
+coef(summary(fMLM))
+plot(fMLM)
 dev.off()
 ```
 ---
 
 ## Multivariate Linear Model (all vars)b
 ## -Residuals/Fitted/Residuals vs Fitted & Adjusted, removing the intercept
-```{r MLMallvarsAdjusted, echo=FALSE, fig.height=6.5, fig.width=6.5
-png(MLMallvarsAdjusted = "plotMLMallvarsAdjusted.png", width=580, height=580)
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ . -1, data = mtcars)
-coef(summary(mlr1))
-plot(mlr1)
+```{r fMLMA, echo=FALSE, fig.height=6.5, fig.width=6.5
+png(fMLMA = "fMLMA.png")
+par(mfrow = c(2, 1), cex = 0.7)
+fMLMA <- lm(mpg ~ . -1, data = mtcars)
+coef(summary(fMLMA))
+plot(fMLMA)
+dev.off()
 ```
 ---
 
 ## Multivariate Linear Model(s) plot
-```{r Nested, echo=FALSE, fig.height=6, fig.width=6}
-png(Nested = "plotNested.png", width=580, height=580)
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
+```{r ANOVA_Nested_LM, echo=FALSE}
 fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
 fn2 <- update(fn1, mpg ~ cyl + disp + hp)
 fn3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
