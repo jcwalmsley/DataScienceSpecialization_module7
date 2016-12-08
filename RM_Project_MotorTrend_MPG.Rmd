@@ -40,10 +40,15 @@ Did the report include an executive summary?
 YES Was the report done in Rmd (knitr) with pdf output?  
 
 # III. Analysis Considerations:
-        Descriptive; Exploratory; Regression to the mean, simple linear regression  
-        Multivariable regression; Adjustments; Residuals, variation, diagnostics
-        Multiple variables & model selection; GLMs & Binary GLMs
+        Descriptive; Exploratory; Regression to mean, Simple linear regression  
+        Multivariable regression & model selection; Adjustments; 
+        Residuals (predict fit, residual fit (-1)), Variation, Diagnostics;  
+        GLMs & Binary GLMs, Correlation, Confint, ChiSq, VIF
 # IV. Software Environment:
+        Set working directory:
+```{r Set directory, echo=FALSE, results='hide'}
+setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
+```        
         System - session Info:
 ```{r Session Info, echo=FALSE, results='hide'}
 sessionInfo()
@@ -52,19 +57,13 @@ sessionInfo()
         Getting the data: 
 ```{r Get data, echo=TRUE, results='hide'}
 rm(list=ls()); data("mtcars")
-head(mtcars, 3)
 ```
 # VI. Raw Data Overview: Motor Trend 'mtcars' data set:
 ```{r Data overview, echo=TRUE, results='hide'}
-any(is.na(mtcars))
+any(is.na(mtcars)); head(mtcars, 3)
 ```
 # VII. Processing Data:  
-        Transformations;  
-                1 factor variables 8:11;  
-                2 change variable labels in columns 8 & 9;      
-                        a Note; col 8 = vs; variable names = 'V-eng', & 'S-eng';  
-                        b Note; col 9 = am; variable names = 'Automatic' = A, & 'Manual' = M
-                        
+        Transformationns = Factor variables 8:11; modify variable names for col 8 & 9
 ```{r Process data, echo=TRUE, results='hide'}
 data(mtcars)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-eng", "S-eng")); mtcars$am <- factor(mtcars$am, labels = c("Automatic", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
