@@ -1,9 +1,13 @@
 #Exploratory analysis:
+
+
 ---
 #3 Pair plot
 # Figures: Exploratory see Appendix A, Figure
-```{r Pairs plot, echo=FALSE, fig.height=6, fig.width=6}
-pairs(mpg ~ ., data = mtcars)
+```{r PairsPlot, echo=FALSE, }
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
 ```
 ---
 ## Histogram

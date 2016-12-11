@@ -1,12 +1,77 @@
 # XIV. Appendix A, "Graphical Analysis""
 
-## Pairs
-```{r Pairs Figure 1, echo=TRUE, fig.height=5, fig.width=5}
-pairs(mpg ~ ., data = mtcars[,c(1,6,9)])
+Fig.1, Pairs
+```{r Pairs Fig.1, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
 ```
 
-## Histograms
-```{r Hist Figure 1, echo=TRUE, fig.height=6.5, fig.width=6.5}
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ hp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ hp | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ wt | as.factor(cyl), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+----
+
+Fig.1, Pairs
+```{r Pairs Fig.1, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ disp | as.factor(am), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ hp | as.factor(am), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ hp | as.factor(am), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+
+Fig.2, Pairs
+```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ wt | as.factor(am), data = mtcars,
+       panel = panel.smooth, rows = 1)
+```
+---
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.2, Histograms
+```{r Hist Fig.2, echo=TRUE, fig.height=6.5, fig.width=6.5}
 data("mtcars");par(mfrow = c(2,1), mar = c(4,4,2,1)) # set margin
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
@@ -16,41 +81,49 @@ hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab
 abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 ```
 
-## Box Plots
-```{r Box Plot Figure 1, echo=TRUE, fig.height=5.5, fig.width=5.5}
+Fig.3, Box Plots
+```{r Box Plot Fig.3, echo=TRUE, fig.height=6, fig.width=6}
 data("mtcars")
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission Miles Per Gallon")
 ```
 
-## Simple Linear Regression Single Variable Plot
-```{r SimpleLinearRegression, echo=TRUE, results='hide', fig.height=6, fig.width=6,}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));fslrm <- lm(mpg ~ am, data = mtcars);
-coef(summary(fslrm)); plot(fslrm)
+Fig.4, Simple Linear Regression - Single Variable Plot
+```{r SimpleLinearRegression Fig.4, echo=TRUE, results='hide', fig.height=6, fig.width=6,}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 2));fslrm1 <- lm(mpg ~ am, data = mtcars);
+coef(summary(fslrm)); plot(fslrm);fslrm2 <- lm(mpg ~ am - 1, data = mtcars);
+coef(summary(fslrm)); plot(fslrm); plot(fslrm2)
 ```
 
-## Bivariate Linear Model Regression plot
+Fig.5, Bivariate Linear Model Regression plot
 ```{r Bivariate Linear Model Regression Plot, echo=TRUE, results='hide', fig.height=6, fig.width=6}
 data("mtcars")
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));fslrm <- lm(mpg ~ am, data = mtcars);
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
 f3 <- lm(mpg ~ factor(am) * wt, data = mtcars);coef(summary(f3))
+f4 <- lm(mpg ~ factor(am) + qsec, data = mtcars);coef(summary(f4))
+f5 <- lm(mpg ~ factor(am) * qsec, data = mtcars);coef(summary(f5))
+f6 <- lm(mpg ~ factor(am) + wt + qsec, data = mtcars);coef(summary(f6))
+f7 <- lm(mpg ~ factor(am) * wt * qsec, data = mtcars);coef(summary(f7))
+plot(f2);plot(f3);plot(f4);plot(f5);plot(f6);plot(f7)
 ```
 
-## Multivariate LM (all vars)-Residuals/Fitted/Residuals vs Fitted
-```{r MultvariateLM(all vars), echo=TRUE, results='hide', fig.height=6.5, fig.width=6.5}
+Fig.6, MultivariateLM(allvars)Fig.6 - Residuals/Fitted/Residuals vs Fitted
+```{r MultvariateLM(allvars)Fig.6, echo=TRUE, results='hide', fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1))
+plot(mlr1);plot(mlr2)
 ```
 
-## Multivariate LM (all vars)-Residuals/Fitted/Residuals vs Fitted & Adjusted
-```{r MultvariateLM(all vars)b, echo=TRUE, results='hide', fig.height=6.5, fig.width=6.5}
+Fig.7, Multivariate LM (all vars)-Residuals/Fitted/Residuals vs Fitted & Adjusted
+```{r MultvariateLM(all vars)Fig.7, echo=TRUE, results='hide', fig.height=6.5, fig.width=6.5}
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ . -1, data = mtcars);coef(summary(mlr1))
+mlr2 <- lm(mpg ~ . - 1, data = mtcars);coef(summary(mlr2))
 ```
 
-## Multivariate LM Nested Plot
-```{r Nested, echo=FALSE, results='hide', fig.height=6, fig.width=6}
+Fig.8, Multivariate LM Nested Plot
+```{r Nested_Fig.8, echo=FALSE, results='hide', fig.height=6, fig.width=6}
 data("mtcars")
 names(mtcars)
 fn1 <- lm(mpg ~ cyl + disp, data = mtcars)
@@ -65,14 +138,9 @@ fn9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear 
 anova(fn1, fn2, fn3, fn4, fn5, fn6, fn7, fn8, fn9)
 ```
 
+--------------------------Reviewed up to this point------------------------------
+
 ## Generalized Linear Models - na
 
-## Binary Generalized Linear Models (Example from course text need to apply to thi project)
-```{r Binary GLM, echo=FALSE, fig.height=6, fig.width=6}
-# beta0 = 0; beta1 = 1
-# p = 1 / (1 + exp(-1 * (beta0 + beta1 * x)))
-#
-# plot(x, y, frame = FALSE, xlab = "x", ylab = "y") lines(lowess(x, y), type = "l", col = "blue", lwd = 3)
-# fit = glm(y ~ x, family = binomial)
-# lines(x, predict(fit, type = "response"), lwd = 3, col = "red")
-```
+## Binary Generalized Linear Models - na
+\
