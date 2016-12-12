@@ -104,29 +104,38 @@ rbind(head(ordmtcars2), head(ordmtcars))
                 A A correlation to mpg ratings may exist among multiple variables
                 B
 ## Bivariate Linear Model
-```{r BivariateLM, echo=FALSE}
+```{r BivariateLM, echo=FALSE, fig.height=4,fig.width=4, results='hide'}
 data("mtcars")
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
 f3 <- lm(mpg ~ factor(am) * wt, data = mtcars);coef(summary(f3))
+par(mfrow = c(1, 2), mar = c(4, 5, 2, 1))
+plot(f2)
+plot(f3)
 ```
+
+
 ## Multivariate LM (all vars) Fitted Plot
 ```{r MVLM(allvars)F, echo=FALSE, results='hide'}
+mvlmf <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1))
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1))
-vif(mlr1)
+coef(summary(mvlmf))
+vif(mvlmf)
+
 ```
 
-## Multivariate LM (all vars) Fitted & Adjusted
+## Multivariate LM (all vars) Fitted & Adjusted 
+(Note: the variable qsec appears to be significant at this point)
 ```{r MVLM(allvars)F&A, echo=FALSE, results='hide'}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mlr1 <- lm(mpg ~ . -1, data = mtcars);coef(summary(mlr1))
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mvlmfa <- lm(mpg ~ . -1, data = mtcars);coef(summary(mvlmfa))
 ```
 
-## MultivariateLM(allvars)VIF(varianceInflationFactor)
+## MultivariateLM(allvars)VIF(varianceInflationFactor) 
+(Note: at this point qsec no longer appears significant; but drat now appears to be instead, and notice the variance inflation figures of the other varables now seem to warrant removing them from the model)
 ```{r MVLM(allvars)VIF, echo=FALSE, results='hide'}
-mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1));vif(mlr1);sqrt(vif(mlr1))
+mvlmfa <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmfa));vif(mvlmfa);sqrt(vif(mvlmfa))
 ```
 
-## Multivariate LM Nested & ANOVA table
+## Multivariate LM Nested & ANOVA table (Note: here that with the nested model approach that models 2 & 4 are indicated to be significant)
 ```{r MVLM_Nested_ANOVA_table, echo=FALSE, results='hide'}
 data("mtcars")
 fm1 <- lm(mpg ~ factor(am), data = mtcars)
@@ -138,7 +147,7 @@ fm6 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear 
 anova(fm1, fm2, fm3, fm4, fm5, fm6)
 ```
 
-## Best Fit Modeling 
+## Best Fit Modeling (Note: comparing the following three models and using anova table test we find that model fbf3 is highly significant and therefore discard the other two models)
 ```{r BestFitModeling, echo=FALSE, results='hide'}
 data("mtcars"); library(car)
 fbf1 <- lm(mpg ~ factor(am) + cyl + disp +  wt + qsec, data = mtcars)
@@ -154,22 +163,33 @@ sqrt(vif(fbf3))
 anova(fbf1,fbf2,fbf3)
 ```
 
+
 ```{r Fig.5_BestModelPlot, echo=FALSE, fig.height=5, fig.width=5}
 fbf3 <- lm(mpg ~ factor(am) + wt, data = mtcars)
-par(mfrow = c(2, 2), mar = c(4.0, 4.0, 4.0, 3.0))
-plot(fbf3)
+library(ggplot2)
+g <- ggplot(mtcars, aes(x = wt, y = mpg),)
+g <- g + xlab("Weight (Tons)")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_point(size = 6, colour = "black", alpha = 0.2)
+g <- g + geom_point(size = 5, colour = "blue", alpha = 0.2)
+g <- g + geom_smooth(method = "lm", colour = "black")
+g
 ```
 
-```{r Fig.6_dfbetaPlots, echo=FALSE, fig.height=5, fig.width=5}
-dfbetaPlots(fbf3, data = mtcars)
-#par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
+
+############### NEXT PROCESS TO CHECK!!!!!
+
+```{r Fig.6_dfbetaPlots, echo=FALSE}
+dfbetaPlots(lm(mpg ~ factor(am) + wt, data = mtcars, family = binomial))
+par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
 
 
    ## ISSUE NEEDS RESOLUTION
 ```{r Fig.6_ConfInt, echo=FALSE}
-fbf3 <- lm(mpg ~ factor(am) + drat + qsec, data = mtcars)
+fbf3 <- lm(mpg ~ am + wt, data = mtcars)
 scf3 <- coef(summary(fbf3))
+scf3
 scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
 scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]
 ```
