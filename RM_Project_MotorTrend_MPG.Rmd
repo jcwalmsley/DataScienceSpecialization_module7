@@ -177,7 +177,26 @@ g
 ```
 
 
-############### NEXT PROCESS TO CHECK!!!!!
+############### NEXT PROCESS TO CHECK!!!!! IS RESIDUALS TO IDENTIFY POOR MODEL FIT??
+
+```{r ResidFit, message=FALSE, warning=FALSE}
+y <- mtcars$mpg
+x <- mtcars$wt
+n <- length(y)
+fw <- lm(x ~ y, data = mtcars)
+e <- resid(fw)# ;e;plot(e);sum(e)
+plot(x,e,
+     xlab = "Vehicle Weight in Tons",
+     ylab = "Residuals (MPG)",
+     bg = "lightblue",
+     col = "black", cex = 2, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+```
+
+############### NEXT PROCESS: R^2 the percentage of total variability explained by the linear relationship with the predictor !!!!
+
 
 ```{r Fig.6_dfbetaPlots, echo=FALSE}
 dfbetaPlots(lm(mpg ~ factor(am) + wt, data = mtcars, family = binomial))
