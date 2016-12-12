@@ -18,9 +18,9 @@ output:
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 #               Grading - Criteria (remove on completion)!!!  
 
-Did the student interpret the coefficients correctly?  
+YES!!!! Did the student interpret the coefficients correctly?  
 
-Did the student do some exploratory data analyses?  
+YES!!!! Did the student do some exploratory data analyses?  
 
 Did the student fit multiple models and detail their strategy for model selection?  
 
@@ -34,7 +34,7 @@ Was the report brief (about 2 pages long) for the main body of the report and no
 
 Did the report include an executive summary?  
 
-YES Was the report done in Rmd (knitr) with pdf output?  
+YES!!!! Was the report done in Rmd (knitr) with pdf output?  
 
 # III.          Analysis Considerations:
         Descriptive - (dim, mean, sd, sigma^2, str & summary) statistics
@@ -48,24 +48,23 @@ YES Was the report done in Rmd (knitr) with pdf output?
 
 # IV.           Software Environment:
         Set working directory:
-```{r Set directory, echo=FALSE, results='hide'}
+```{r SetDirectory, echo=TRUE, results='hide'}
 setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
 ```        
         System - session Info:
-```{r Session Info, echo=FALSE, results='hide'}
+```{r SessionInfo, echo=TRUE, results='hide'}
 sessionInfo()
 ```
 
 # V.            Accessing Data:
         Clean up the work space & get the data: 
-```{r Get data, echo=TRUE, results='hide'}
+```{r GetData, echo=TRUE, results='hide'}
 rm(list=ls()); data("mtcars");mtcars
 ```
 
-# VI.           Raw Data Overview: Motor Trend 'mtcars' data set:
-```{r Data overview, echo=FALSE, results='hide'}
+# VI.           Raw Data Overview: Motor Trend 'mtcars' data set:  Descriptive Statistics
+```{r DataOverview, echo=FALSE, results='hide'}
 any(is.na(mtcars));head(mtcars, 3)
-mtcars
 ```
 A data frame with 32 observations on 11 variables.  
 
@@ -84,27 +83,121 @@ A data frame with 32 observations on 11 variables.
 
 # VII.          Process Data:  
         Transformationns = Factor variables 8:11; modify variable names for col 8 & 9
-```{r Process data, echo=TRUE, results='hide'}
-data("mtcars")
-for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);mtcars[,]
+```{r ProcessData, echo=TRUE, results='hide'}
+data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);mtcars[,]
 ```
 
 # VIII.         Exploratory Analysis:  
         Add narrative here!!
-```{r ExplAn1, echo=TRUE}
-data(mtcars)
-library(car);library(dplyr)
-h1 <- sapply(mtcars, range, simplify = TRUE);h1
-mu1 <- sapply(mtcars, mean, simplify = TRUE);mu1
-c1 <- sapply(mtcars, sd, simplify = TRUE);c1
-c2 <- sapply(mtcars, var, simplify = TRUE);c2
+```{r ExpAna_1, echo=TRUE}
+data(mtcars);library(car);library(dplyr)
+h1 <- sapply(mtcars, range, simplify = TRUE);h1;mu1 <- sapply(mtcars, mean, simplify = TRUE);mu1
+c1 <- sapply(mtcars, sd, simplify = TRUE);c1;c2 <- sapply(mtcars, var, simplify = TRUE);c2
+ordmtcars <- mtcars[order(mtcars$mpg,decreasing = TRUE),]
+ordmtcars2 <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
+rbind(head(ordmtcars2), head(ordmtcars))
 ```
-        See Appendix A, Figures 1:4 
+        For additional exploratory graphical analysis see Appendix A, Figures 1:4 
 
 # IX.           Statistical Modeling, Regression & Model Fit:
         Assumptions:
                 A A correlation to mpg ratings may exist among multiple variables
                 B
+## Bivariate Linear Model
+```{r BivariateLM, echo=FALSE}
+data("mtcars")
+f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
+f3 <- lm(mpg ~ factor(am) * wt, data = mtcars);coef(summary(f3))
+```
+## Multivariate LM (all vars) Fitted Plot
+```{r MVLM(allvars)F, echo=FALSE, results='hide'}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
+mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1))
+vif(mlr1)
+```
+
+## Multivariate LM (all vars) Fitted & Adjusted
+```{r MVLM(allvars)F&A, echo=FALSE, results='hide'}
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mlr1 <- lm(mpg ~ . -1, data = mtcars);coef(summary(mlr1))
+```
+
+## MultivariateLM(allvars)VIF(varianceInflationFactor)
+```{r MVLM(allvars)VIF, echo=FALSE, results='hide'}
+mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1));vif(mlr1);sqrt(vif(mlr1))
+```
+
+## Multivariate LM Nested & ANOVA table
+```{r MVLM_Nested_ANOVA_table, echo=FALSE, results='hide'}
+data("mtcars")
+fm1 <- lm(mpg ~ factor(am), data = mtcars)
+fm2 <- update(fm1, mpg ~ cyl + disp)
+fm3 <- update(fm1, mpg ~ cyl + disp + hp + drat)
+fm4 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec)
+fm5 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
+fm6 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
+anova(fm1, fm2, fm3, fm4, fm5, fm6)
+```
+
+## Best Fit Modeling 
+```{r BestFitModeling, echo=FALSE, results='hide'}
+data("mtcars"); library(car)
+fbf1 <- lm(mpg ~ factor(am) + cyl + disp +  wt + qsec, data = mtcars)
+vif(fbf1)
+sqrt(vif(fbf1))
+fbf2 <- lm(mpg ~ factor(am) + wt + qsec, data = mtcars)
+vif(fbf2)
+sqrt(vif(fbf2))
+anova(fbf1,fbf2)
+fbf3 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+vif(fbf3)
+sqrt(vif(fbf3))
+anova(fbf1,fbf2,fbf3)
+```
+
+```{r Fig.5_BestModelPlot, echo=FALSE, fig.height=5, fig.width=5}
+fbf3 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+par(mfrow = c(2, 2), mar = c(4.0, 4.0, 4.0, 3.0))
+plot(fbf3)
+```
+
+```{r Fig.6_dfbetaPlots, echo=FALSE, fig.height=5, fig.width=5}
+dfbetaPlots(fbf3, data = mtcars)
+#par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
+```
+
+
+
+
+
+
+   ## ISSUE NEEDS RESOLUTION
+```{r Fig.6_ConfInt, echo=FALSE}
+fbf3 <- lm(mpg ~ factor(am) + drat + qsec, data = mtcars)
+scf3 <- coef(summary(fbf3))
+scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
+scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]
+```
+
+
+## Find something with levels
+```{r Fig.7_Predict, echo=FALSE, fig.height=5, fig.width=6}
+# fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
+# xVals <- mtcars$wt
+# yVals <- mtcars$mpg
+# plot(x, y, frame=FALSE,xlab="Weight", xlim=range(1000:6000), ylab="Miles per Gallon", ylim=range(5:40), pch=21,col="black", bg="lightblue", cex=2)
+# abline(fbf1, lwd = 2)
+# xVals <- seq(min(x), max(x), by = .01)
+# b0 <- coef(summary(fbf1))[1];b0
+# b1 <- sum(coef(summary(fbf1))[1,1] + coef(summary(fbf1))[2,1]);b1
+# yVals <- b0 + b1 * xVals
+# se1 <- sigma * sqrt(1 / n + (xVals - mean(x))^2/ssx)
+# se2 <- sigma * sqrt(1 + 1 / n + (xVals - mean(x))^2/ssx)
+# lines(xVals, yVals + 2 * se1)
+# lines(xVals, yVals - 2 * se1)
+# lines(xVals, yVals + 2 * se2)
+# lines(xVals, yVals - 2 * se2)
+```
+
 # X.            Preliminary Findings:  
         Questions of Interest:
                 A What other regressors if any correlated with mpg rating and transmission type?
@@ -130,7 +223,7 @@ c2 <- sapply(mtcars, var, simplify = TRUE);c2
         C Measures of uncertainty 'e'
 
 ---
-# XIV.          Appendix A, "Graphical Analysis""
+# XIV.          Appendix A: "Exploratory Graphical Analysis""
 
 ## Pairs Plot
 ```{r Fig.1_Pairs, echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE}
@@ -164,95 +257,6 @@ coef(summary(fslrm)); # plot(fslrm)
 plot(fslrm)
 ```
 
-## Bivariate Linear Model Plot
-```{r Fig.5_BivariateLM, echo=FALSE, fig.height=6, fig.width=6}
-data("mtcars")
-f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
-f3 <- lm(mpg ~ factor(am) * wt, data = mtcars);coef(summary(f3))
-```
-
-## Multivariate LM (all vars) Fitted Plot
-```{r Fig.6_MVLM(allvars)a, echo=FALSE, results='hide', fig.height=6.5, fig.width=6.5}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ ., data = mtcars);coef(summary(mlr1))
-vif(mlr1)
-```
-
-## Multivariate LM (all vars) Fitted & Adjusted Plot
-```{r Fig.7_MVLM(allvars)b, echo=FALSE, results='hide', fig.height=6.5, fig.width=6.5}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-mlr1 <- lm(mpg ~ . -1, data = mtcars);coef(summary(mlr1))
-```
-
-## MultivariateLM(allvars)VIF(varianceInflationFactor)
-```{r Fig.7_MVLM(allvars)c, echo=FALSE, results='hide'}
-mlr1 <- lm(mpg ~ ., data = mtcars)
-coef(summary(mlr1))
-vif(mlr1)
-sqrt(vif(mlr1))
-```
-
-
-## Multivariate LM Nested Plot & ANOVA table
-```{r Fig.8_MVLM_Nested_ANOVAtable, echo=FALSE, results='hide'}
-data("mtcars")
-fm1 <- lm(mpg ~ factor(am), data = mtcars)
-fm2 <- update(fm1, mpg ~ cyl + disp)
-fm3 <- update(fm1, mpg ~ cyl + disp + hp + drat)
-fm4 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec)
-fm5 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
-fm6 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
-anova(fm1, fm2, fm3, fm4, fm5, fm6)
-```
-
-## Best Fit Model 
-```{r Fig.9_f4, echo=FALSE, results='hide'}
-data("mtcars"); library(car)
-fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
-vif(fbf1)
-sqrt(vif(fbf1))
-fbf2 <- lm(mpg ~ factor(am) + wt, data = mtcars)
-vif(fbf2)
-sqrt(vif(fbf2))
-cor(mtcars$mpg, mtcars$wt)
-cor(mtcars$mpg, mtcars$am==0)
-cor(mtcars$mpg, mtcars$am==1)
-```
-
-```{r Fig.10_BestFplot, echo=FALSE, fig.height=5, fig.width=5}
-fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
-plot(fbf1)
-order(mtcars[,1])
-ordmtcars <- mtcars[order(mtcars$mpg),]
-head(ordmtcars);tail(ordmtcars)
-```
-
-```{r Fig.11_ConfInt, echo=FALSE}
-fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
-sumCoef <- summary(fbf1)$coefficients
-sumCoef[1,1] + c(-1, 1) * qt(.975, df = fbf1$df) * sumCoef[1, 2]
-sumCoef[2,1] + c(-1, 1) * qt(.975, df = fbf1$df) * sumCoef[2, 2]
-```
-
-
-```{r Fig.12_Predict, echo=FALSE, fig.height=5, fig.width=6}
-fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
-xVals <- mtcars$wt
-yVals <- mtcars$mpg
-plot(x, y, frame=FALSE,xlab="Weight", xlim=range(1000:6000), ylab="Miles per Gallon", ylim=range(5:40), pch=21,col="black", bg="lightblue", cex=2)
-abline(fbf1, lwd = 2)
-xVals <- seq(min(x), max(x), by = .01)
-b0 <- coef(summary(fbf1))[1];b0
-b1 <- sum(coef(summary(fbf1))[1,1] + coef(summary(fbf1))[2,1]);b1
-yVals <- b0 + b1 * xVals
-se1 <- sigma * sqrt(1 / n + (xVals - mean(x))^2/ssx)
-se2 <- sigma * sqrt(1 + 1 / n + (xVals - mean(x))^2/ssx)
-lines(xVals, yVals + 2 * se1)
-lines(xVals, yVals - 2 * se1)
-lines(xVals, yVals + 2 * se2)
-lines(xVals, yVals - 2 * se2)
-
-```
 
 ===
 END
