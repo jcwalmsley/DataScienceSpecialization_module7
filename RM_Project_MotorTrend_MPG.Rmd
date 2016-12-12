@@ -89,7 +89,7 @@ data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);mtcars[,]
 
 # VIII.         Exploratory Analysis:  
         Add narrative here!!
-```{r ExpAna_1, echo=TRUE}
+```{r ExpAna_1, echo=TRUE, message=FALSE, warning=FALSE}
 data(mtcars);library(car);library(dplyr)
 h1 <- sapply(mtcars, range, simplify = TRUE);h1;mu1 <- sapply(mtcars, mean, simplify = TRUE);mu1
 c1 <- sapply(mtcars, sd, simplify = TRUE);c1;c2 <- sapply(mtcars, var, simplify = TRUE);c2
@@ -164,10 +164,6 @@ plot(fbf3)
 dfbetaPlots(fbf3, data = mtcars)
 #par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
-
-
-
-
 
 
    ## ISSUE NEEDS RESOLUTION
