@@ -16,25 +16,19 @@ output:
 # II.           Problem Statement & Questions to Answer:  
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
+---
 #               Grading - Criteria (remove on completion)!!!  
+???? Did the report include an executive summary?  
+???? Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?  
+???? Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?  
+???? Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?  
 
 YES!!!! Did the student interpret the coefficients correctly?  
-
 YES!!!! Did the student do some exploratory data analyses?  
-
-Did the student fit multiple models and detail their strategy for model selection?  
-
-Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?  
-
-Did the student do a residual plot and some diagnostics?  
-
-Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?  
-
-Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?  
-
-Did the report include an executive summary?  
-
+YES!!!! Did the student fit multiple models and detail their strategy for model selection?  
+YES!!!! Did the student do a residual plot and some diagnostics?  
 YES!!!! Was the report done in Rmd (knitr) with pdf output?  
+---
 
 # III.          Analysis Considerations:
         Descriptive - (dim, mean, sd, sigma^2, str & summary) statistics
@@ -43,59 +37,50 @@ YES!!!! Was the report done in Rmd (knitr) with pdf output?
         & (multiple plots); T-Test
         
         Analysis -  OLS, simple linear regression, statistical linear regression,  
-        multivariate regression & model selection, logistic regression, pValues, adjustments,         residuals, residual fit, predict fit, hatvalues, variance, & dfbetas, R^2,  
+        multivariate regression & model selection, logistic regression, pValues,  
+        adjustments, residuals, residual fit, predict fit, hatvalues, variance, & dfbetas, R^2,  
         diagnostics; ANOVA, coeficients, confint, correlation, covariance, variance inflation
 
-# IV.           Software Environment:
-        Set working directory:
+# IV.           Software Environment: &  System - session Info:
+        Set the Working Directory then get System & Session Info
 ```{r SetDirectory, echo=TRUE, results='hide'}
 setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
-```        
-        System - session Info:
-```{r SessionInfo, echo=TRUE, results='hide'}
 sessionInfo()
-```
-
-# V.            Accessing Data:
+```        
+       
+# V.            Accessing Data & Raw Data Overview: Motor Trend 'mtcars' data set:
         Clean up the work space & get the data: 
-```{r GetData, echo=TRUE, results='hide'}
-rm(list=ls()); data("mtcars");mtcars
-```
-
-# VI.           Raw Data Overview: Motor Trend 'mtcars' data set:  Descriptive Statistics
-```{r DataOverview, echo=FALSE, results='hide'}
-any(is.na(mtcars));head(mtcars, 3)
+```{r Data_mtcars, echo=TRUE, results='hide'}
+rm(list=ls());library(car);library(dplyr); data("mtcars");any(is.na(mtcars));data(mtcars)
 ```
 A data frame with 32 observations on 11 variables.  
 
 [, 1]	mpg	Miles/(US) gallon  
-[, 2]	cyl	Number of cylinders  
+[, 2]	cyl	Number of cylinders (4,6,8)
 [, 3]	disp	Displacement (cu.in.)  
 [, 4]	hp	Gross horsepower  
 [, 5]	drat	Rear axle ratio  
 [, 6]	wt	Weight (1000 lbs)  
 [, 7]	qsec	1/4 mile time  
-[, 8]	vs	V/S  
+[, 8]	vs	V/S (V = vee-block, S = straight-block)
 [, 9]	am	Transmission (0 = automatic, 1 = manual)  
-[,10]	gear	Number of forward gears  
-[,11]	carb	Number of carburetors  
+[,10]	gear	Number of forward gears (3,4,5)
+[,11]	carb	Number of carburetors (1,2,3,4,6,8)
 
-
-# VII.          Process Data:  
-        Transformationns = Factor variables 8:11; modify variable names for col 8 & 9
-```{r ProcessData, echo=TRUE, results='hide'}
-data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);mtcars[,]
+# VI.          Process Data:  Cconvert columns 2 & 8:11 (cyl=(4,6,8), vs = engine block shape (0=V, 1=S), am into transmission type (0=automatic & 1=manual), gear=(3:5) & carb=(1,2,3,4,6,8) factor levels 
+```{r ProcessData, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);head(mtcars,3);#str(mtcars);summary(mtcars)
 ```
 
-# VIII.         Exploratory Analysis:  
+# VII.         Descriptive Statistics
+```{r DataDescriptions, eval=FALSE, include=FALSE}
+ordmtcars2 <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
+#ordmtcars2
+```
+
+# VIII.           Exploratory Analysis:  
         Add narrative here!!
 ```{r ExpAna_1, echo=TRUE, message=FALSE, warning=FALSE}
-data(mtcars);library(car);library(dplyr)
-h1 <- sapply(mtcars, range, simplify = TRUE);h1;mu1 <- sapply(mtcars, mean, simplify = TRUE);mu1
-c1 <- sapply(mtcars, sd, simplify = TRUE);c1;c2 <- sapply(mtcars, var, simplify = TRUE);c2
-ordmtcars <- mtcars[order(mtcars$mpg,decreasing = TRUE),]
-ordmtcars2 <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
-rbind(head(ordmtcars2), head(ordmtcars))
 ```
         For additional exploratory graphical analysis see Appendix A, Figures 1:4 
 
@@ -298,9 +283,16 @@ g <- g + geom_point(size = 5, colour = "blue", alpha = 0.2)
 g <- g + geom_smooth(method = "lm", colour = "black")
 g
 ```
-
+## NOTE: use the cut function by 3 on MPG
 
 ===
 END
 ===
 
+```{r DataOverview, echo=FALSE, results='hide'}
+any(is.na(mtcars));data(mtcars);library(car);library(dplyr)
+r1 <- sapply(mtcars, range, simplify = TRUE);r1;mu1 <- sapply(mtcars, mean, simplify = TRUE);mu1
+sd1 <- sapply(mtcars, sd, simplify = TRUE);sd1;var1 <- sapply(mtcars, var, simplify = TRUE);var1
+rbind(head(ordmtcars2), head(ordmtcars))
+ordmtcars2
+```
