@@ -80,17 +80,13 @@ ordmtcars2 <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
 rbind(head(ordmtcars2,3),tail(ordmtcars2,3))
 ```
 
-################-----------------##################
 
 # VIII.           Exploratory Analysis:  
+        See Appendix A, Figures 1:4
         Add narrative here!!
-```{r EA_1_SVD_PCA, echo=TRUE, fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE}
-with(mtcars, plot(mpg, (am + wt)))
-f1 <- lm(mpg ~ factor(am) + wt, data = mtcars)
-plot(f1)
-```
-        For additional exploratory graphical analysis see Appendix A, Figures 1:4 
-
+        
+################-----------------##################
+        
 # IX.           Statistical Modeling, Regression & Model Fit:
         Assumptions:
                 A A correlation to mpg ratings may exist among multiple variables
@@ -110,15 +106,13 @@ plot(f3)
 ```{r MVLM(allvars)F, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 mvlmf <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmf))
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-coef(summary(mvlmf))
-vif(mvlmf)
-
+coef(summary(mvlmf));vif(mvlmf)
 ```
 
 ## Multivariate LM (all vars) Fitted & Adjusted 
 (Note: the variable qsec appears to be significant at this point)
 ```{r MVLM(allvars)F&A, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mvlmfa <- lm(mpg ~ . -1, data = mtcars);coef(summary(mvlmfa))
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mvlmfa <- lm(mpg ~ . -1, data = mtcars);coef(summary(mvlmfa));
 ```
 
 ## MultivariateLM(allvars)VIF(varianceInflationFactor) 
@@ -128,44 +122,54 @@ mvlmfa <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmfa));vif(mvlmfa);sqrt(vif(
 ```
 
 ## Multivariate LM Nested & ANOVA table (Note: here that with the nested model approach that models 2 & 4 are indicated to be significant)
-```{r MVLM_Nested_ANOVA_table, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r MVLM_ANOVA_table, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 data("mtcars")
 fm1 <- lm(mpg ~ factor(am), data = mtcars)
-fm2 <- update(fm1, mpg ~ cyl + disp)
-fm3 <- update(fm1, mpg ~ cyl + disp + hp + drat)
-fm4 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec)
-fm5 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
-fm6 <- update(fm1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
+fm2 <- update(fit, mpg ~ cyl + disp)
+fm3 <- update(fit, mpg ~ cyl + disp + hp + drat)
+fm4 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec)
+fm5 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
+fm6 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
 anova(fm1, fm2, fm3, fm4, fm5, fm6)
 ```
 
-## Best Fit Modeling (Note: comparing the following three models and using anova table test we find that model fbf3 is highly significant and therefore discard the other two models)
+## Best Fit Modeling (Note: comparing the models above and using anova table we find that models fm2 & fm4 are significant exhibiting low pValues, therefore discard two variables in model three from model four as the bestfit models)
 ```{r BestFitModeling, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 data("mtcars"); library(car)
 fbf1 <- lm(mpg ~ factor(am) + cyl + disp +  wt + qsec, data = mtcars)
 vif(fbf1)
 sqrt(vif(fbf1))
-fbf2 <- lm(mpg ~ factor(am) + wt + qsec, data = mtcars)
+fbf2 <- lm(mpg ~ factor(am) + cyl + disp +  wt, data = mtcars)
 vif(fbf2)
 sqrt(vif(fbf2))
-anova(fbf1,fbf2)
-fbf3 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+fbf3 <- lm(mpg ~ factor(am) + cyl +  wt, data = mtcars)
 vif(fbf3)
 sqrt(vif(fbf3))
-anova(fbf1,fbf2,fbf3)
+fbf4 <- lm(mpg ~ factor(am) + disp +  wt, data = mtcars)
+vif(fbf4)
+sqrt(vif(fbf4))
+anova(fbf1,fbf2,fbf3,fbf4)
 ```
-
+## Comparing variations of the best two models from the first MVLM Nested ANOVA table we find that model fbf3 has the lowest Variance Inflation results of the possible models tested > lm(mpg ~ factor(am) + cyl + wt, data = mtcars)
 
 ```{r Fig.5_BestModelPlot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
-fbf3 <- lm(mpg ~ factor(am) + wt, data = mtcars)
+data("mtcars")
+fbf3 <- lm(mpg ~ factor(am) + cyl + disp + wt, data = mtcars)
 library(ggplot2)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
 g <- ggplot(mtcars, aes(x = wt, y = mpg),)
 g <- g + xlab("Weight (Tons)")
 g <- g + ylab("Miles per Gallon")
-g <- g + geom_point(size = 6, colour = "black", alpha = 0.2)
-g <- g + geom_point(size = 5, colour = "blue", alpha = 0.2)
-g <- g + geom_smooth(method = "lm", colour = "black")
+g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
+g <- g + geom_smooth(method = "lm", col = "black")
 g
+cor.test(mtcars$am, mtcars$cyl)
+cor.test(mtcars$am, mtcars$disp)
+cor.test(mtcars$am, mtcars$wt)
+cor.test(mtcars$cyl, mtcars$disp)
+cor.test(mtcars$cyl, mtcars$disp)
+cor.test(mtcars$cyl, mtcars$wt)
+cor.test(mtcars$disp, mtcars$wt)
 ```
 
 
@@ -202,27 +206,13 @@ fbf3 <- lm(mpg ~ am + wt, data = mtcars)
 scf3 <- coef(summary(fbf3))
 scf3
 scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
-scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]
+scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
 ```
 
 
 ## Find something with levels
 ```{r Fig.7_Predict, echo=FALSE, fig.height=5, fig.width=6}
 # fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
-# xVals <- mtcars$wt
-# yVals <- mtcars$mpg
-# plot(x, y, frame=FALSE,xlab="Weight", xlim=range(1000:6000), ylab="Miles per Gallon", ylim=range(5:40), pch=21,col="black", bg="lightblue", cex=2)
-# abline(fbf1, lwd = 2)
-# xVals <- seq(min(x), max(x), by = .01)
-# b0 <- coef(summary(fbf1))[1];b0
-# b1 <- sum(coef(summary(fbf1))[1,1] + coef(summary(fbf1))[2,1]);b1
-# yVals <- b0 + b1 * xVals
-# se1 <- sigma * sqrt(1 / n + (xVals - mean(x))^2/ssx)
-# se2 <- sigma * sqrt(1 + 1 / n + (xVals - mean(x))^2/ssx)
-# lines(xVals, yVals + 2 * se1)
-# lines(xVals, yVals - 2 * se1)
-# lines(xVals, yVals + 2 * se2)
-# lines(xVals, yVals - 2 * se2)
 ```
 
 # X.            Preliminary Findings:  
@@ -254,7 +244,7 @@ scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]
 
 ## Pairs Plot
 ```{r Fig.1_Pairs, echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE}
-pairs(mtcars[,c(1,4,6,9)])
+pairs(mtcars[,c(1,2,6,9)], panel = panel.smooth, main = "MTCARS data set", col = 3)
 ```
 
 ## Histograms Plot
@@ -271,23 +261,22 @@ abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 
 ## Box Plot
 ```{r Fig.3_BoxPlot, echo=FALSE, fig.height=4.5, fig.width=4.5}
-data("mtcars")
+data("mtcars");par(mfrow = c(1,1), mar = c(4,4,2,2))
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 head(mtcars,3)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission, Miles Per Gallon Ratings")
 ```
 
 ## Simple Linear Regression Plot
-```{r Fig.4_SimpleLR, echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));fslrm <- lm(mpg ~ am, data = mtcars);
-coef(summary(fslrm))
+```{r Fig.4_SimpleLR, echo=TRUE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE}
 library(ggplot2)
+fit <- lm(mpg ~ factor(am), data = mtcars)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
 g <- ggplot(mtcars, aes(x = am, y = mpg),)
-g <- g + xlab("Transmission Type")
-g <- g + ylab("Miles per Gallon")
-g <- g + geom_point(size = 6, colour = "black", alpha = 0.2)
-g <- g + geom_point(size = 5, colour = "blue", alpha = 0.2)
-g <- g + geom_smooth(method = "lm", colour = "black")
+g + xlab("Transmission Type")
+g + ylab("Miles per Gallon")
+g + geom_smooth(method = "lm", col = "black")
+g + geom_point(size = 3, col = "blue", alpha = 0.35)
 g
 ```
 ## NOTE: use the cut function by 3 on MPG
