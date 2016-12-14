@@ -76,16 +76,17 @@ A data frame with 32 observations on 11 variables.
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)
 
 # VI.          Process Data:  Cconvert columns 2 & 8:11 (cyl=(4,6,8), vs = engine block shape (0=V, 1=S), am into transmission type (0=automatic & 1=manual), gear=(3:5) & carb=(1,2,3,4,6,8) factor levels 
-```{r ProcessData, echo=FALSE, message=TRUE, warning=TRUE, results='hide'}
+```{r ProcessData, message=TRUE, warning=TRUE, include=FALSE, results='hide'}
 data("mtcars")
 for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i])
 str(mtcars)
 ```
 
-# VII.         Descriptive Statistics (view first & last three rows)
-```{r DataDescriptions, eval=FALSE, include=FALSE}
-ordmtcars <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
+# VII.         Descriptive Statistics (view first & last three rows & factor variables 2 & 8:11)
+```{r DescriptiveStats, echo=TRUE, message=TRUE, warning=TRUE, results='hide'}
+ordmtcars <<- mtcars[order(mtcars$mpg,decreasing = FALSE),]
 rbind(head(ordmtcars,3),tail(ordmtcars,3))
+ordmtcars
 ```
 
 
@@ -99,32 +100,50 @@ rbind(head(ordmtcars,3),tail(ordmtcars,3))
         Assumptions:
                 A A correlation to mpg ratings may exist among multiple variables
                 B
-## Multivariate Linear Model (all vars) Fitted Values, Quantiles & Leverage Plots
-```{r MVLM(allvars), echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
-f1 <- lm(mpg ~ ., data = ordmtcars)
-coef(summary(f1))
-vif(f1)
-par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
-plot(f1)
-# Note; vars with lowest vif = drat, vs & am
-```
 
 ## Bivariate Linear Model: # Note: manual trans & eng shape / vs are significant
 ```{r BivariateLM, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-mvlmf <- lm(mpg ~ factor(am) + drat + vs, data = ordmtcars)
+mvlmf <- lm(mpg ~ factor(am) + wt, data = ordmtcars)
 coef(summary(mvlmf))
 vif(mvlmf)
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 plot(mvlmf)
 ```
 
+## Multivariate Linear Model (all vars) Fitted Values, Quantiles & Leverage Plots
+```{r MVLM(allvars), echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
+f1 <- lm(mpg ~ ., data = ordmtcars)
+coef(summary(f1))
+vif(f1)
+sqrt(vif(f1))
+# variables with low inflation variance =  drat,wt,qsec,vs & am; Therefore for the first model we will select these regressors
+library(ggplot2)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(ordmtcars, aes(x = drat, wt, qsec, vs, am, y = mpg),)
+g <- g + xlab("drat+wt+qsec+vs+am")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
+g <- g + geom_smooth(method = "lm", col = "black")
+g
+```
+# Note; vars with lowest vif = drat, vs & am
+
+
+
+
 ## Multivariate Linear Model Adjusted 
 (Note: the variable qsec appears to be significant at this point)
 ```{r MVLM(allvars)F&A, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-mvlma <- lm(mpg ~ factor(am) + drat + vs  - 1, data = ordmtcars)
-coef(summary(mvlma))
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-plot(mvlma)
+f1 <- lm(mpg ~ . -1, data = ordmtcars)
+coef(summary(f1))
+confint(f1)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(ordmtcars, aes(x = drat, wt, qsec, vs, am, -1, y = mpg),)
+g <- g + xlab("Fit adjusted to the mean of (drat-wt-qsec-vs-am)")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
+g <- g + geom_smooth(method = "lm", col = "black")
+g
 ```
 
 ## Multivariate LM Nested & ANOVA table (Note: with nested modeling method, models 3 & 6 each add a significate variable to the fitted model and in this case model 3 is disp & model 6 is wt. Now use the vif (variable inflation) test on model six to check for any variance inflation among the varialbes of this model. The results show that "hp", "drat", and "wt" all have square rooted infaltion values less than 3.0 so these can be accepted into the model of best fit (fbf1) along with the main variable of the study "am"
@@ -142,51 +161,37 @@ fm10 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs + gear + carb
 anova(fit, fm2, fm3, fm4, fm5, fm6, fm7, fm8, fm9, fm10)
 vif(fm6)
 sqrt(vif(fm6))
+confint(fm6)
 ```
 
 
 ## Best Fit Modeling (Note: based on the nested modeling process followed by the anova table check then followed by the vif and sqrt(vif) test we decide to go with the following model labeled (fbf1) and notice that all of the sqrt(vif) values are less than 2.0 indicating a good model fit.
-```{r BestFitModeling, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r BestFitModeling, echo=TRUE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, results='hide'}
 library(car)
-fbf1 <- lm(mpg ~ factor(am) + drat + hp + wt, data = ordmtcars)
+data("mtcars")
+fbf1 <- lm(mpg ~ hp + drat + am, data = mtcars)
 vif(fbf1)
 sqrt(vif(fbf1))
 library(ggplot2)
 par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
-g <- ggplot(mtcars, aes(x = am + drat + hp + wt, y = mpg),)
-g <- g + xlab("am + drat + hp + wt")
+g <- ggplot(mtcars, aes(x = hp + drat +  wt + am, y = mpg),)
+g <- g + xlab(">hp + drat + am<")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
 g <- g + geom_smooth(method = "lm", col = "black")
 g
 ```
-
-
-
-```{r Fig.5_BestModelPlot, fig.height=5, fig.width=5, message=FALSE, warning=FALSE, include=FALSE}
-data("mtcars")
-fbf3 <- lm(mpg ~ factor(am) + drat + hp + wt, data = mtcars)
-library(ggplot2)
-par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
-g <- ggplot(mtcars, aes(x = cyl + disp + wt + am, y = mpg),)
-g <- g + xlab("cyl + disp + wt + am")
-g <- g + ylab("Miles per Gallon")
-g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
-g <- g + geom_smooth(method = "lm", col = "black")
-g
-```
-
 
 
 # DIAGNOSTICS A
 ```{r ResidFit, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 y <- mtcars$mpg
-x <- (mtcars$am + mtcars$disp + mtcars$hp + mtcars$wt)
+x <- (mtcars$hp + mtcars$drat + mtcars$am)
 n <- length(y)
 fw <- lm(y ~ x, data = mtcars)
 e <- resid(fw)# ;e;plot(e);sum(e)
 plot(x,e,
-     xlab = "am + drat + hp + wt",
+     xlab = "hp + drat + am",
      ylab = "Residuals (MPG)",
      bg = "lightblue",
      col = "black", cex = 2, pch = 21, frame = FALSE)
@@ -197,24 +202,21 @@ for(i in 1:n)
 
 
 # DIAGNOSTICS B
-```{r Fig.6_dfbetaPlots, echo=FALSE}
-dfbetaPlots(lm(mpg ~ factor(am), data = mtcars, family = binomial))
-par(mfrow = c(1, 1), mar = c(4.0, 3.0, 3.0, 3.0))
+```{r Fig.6_dfbetaPlots, echo=TRUE, fig.height=5, fig.width=5}
+dfbetaPlots(lm(mpg ~ hp + drat + am, data = mtcars, family = binomial))
+par(mfrow = c(4, 4), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
 
 
 # It turns out that the confint for "am" 17.33614 - 42.71801 is rather wide and does not include zero meaning it may not be the best overall predictor of "mpg" rating values. On the other hand the much narrower confint of "drat", "hp", & "wt" indicate that they are likely to be good predictors of "mpg"
 # however the confint for drat, hp and wt each include zero
 ```{r Fig.6_ConfInt, echo=TRUE, message=FALSE, warning=FALSE}
-fbf3 <- lm(mpg ~ factor(am) + drat + hp + wt, data = mtcars)
+fbf3 <- lm(mpg ~ hp + drat + factor(am) , data = mtcars)
 coef(summary(fbf3))
-scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
-scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
-scf3[3,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[3, 2]##****
-scf3[4,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[4, 2]##****
+confint(fbf3)
 ```
 
-############### NEXT PROCESS: the percentage of total variability explained by the linear relationship with the predictor !!!! #################
+############### NEXT PROCESS: Prediction !!!! #################
 
 ## Find something with levels
 ```{r Fig.7_Predict, echo=FALSE, fig.height=5, fig.width=6}
@@ -290,3 +292,4 @@ g
 ===
 END
 ===
+
