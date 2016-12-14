@@ -5,9 +5,7 @@ date: "12/1/2016"
 output: 
   pdf_document: 
     fig_caption: yes
-    fig_crop: yes
     fig_height: 6
-    fig_width: 6
 ---
 
 # I.            Executive Summary:  
@@ -102,7 +100,7 @@ ordmtcars
                 B
 
 ## Bivariate Linear Model: # Note: manual trans & eng shape / vs are significant
-```{r BivariateLM, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r Fig.5_BivariateLM, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 mvlmf <- lm(mpg ~ factor(am) + wt, data = ordmtcars)
 coef(summary(mvlmf))
 vif(mvlmf)
@@ -111,7 +109,7 @@ plot(mvlmf)
 ```
 
 ## Multivariate Linear Model (all vars) Fitted Values, Quantiles & Leverage Plots
-```{r MVLM(allvars), echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
+```{r Fig.6_MVLM(allvars), echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
 f1 <- lm(mpg ~ ., data = ordmtcars)
 coef(summary(f1))
 vif(f1)
@@ -133,7 +131,7 @@ g
 
 ## Multivariate Linear Model Adjusted 
 (Note: the variable qsec appears to be significant at this point)
-```{r MVLM(allvars)F&A, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+```{r Fig.7_MVLM(allvars)A, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 f1 <- lm(mpg ~ . -1, data = ordmtcars)
 coef(summary(f1))
 confint(f1)
@@ -166,7 +164,7 @@ confint(fm6)
 
 
 ## Best Fit Modeling (Note: based on the nested modeling process followed by the anova table check then followed by the vif and sqrt(vif) test we decide to go with the following model labeled (fbf1) and notice that all of the sqrt(vif) values are less than 2.0 indicating a good model fit.
-```{r BestFitModeling, echo=TRUE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, results='hide'}
+```{r Fig.8_BestFitModeling, echo=TRUE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, results='hide'}
 library(car)
 data("mtcars")
 fbf1 <- lm(mpg ~ hp + drat + am, data = mtcars)
@@ -184,7 +182,7 @@ g
 
 
 # DIAGNOSTICS A
-```{r ResidFit, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+```{r Fig.9_ResidFit, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 y <- mtcars$mpg
 x <- (mtcars$hp + mtcars$drat + mtcars$am)
 n <- length(y)
@@ -202,7 +200,7 @@ for(i in 1:n)
 
 
 # DIAGNOSTICS B
-```{r Fig.6_dfbetaPlots, echo=TRUE, fig.height=5, fig.width=5}
+```{r Fig.10_dfbetaPlots, echo=TRUE, fig.height=5, fig.width=5}
 dfbetaPlots(lm(mpg ~ hp + drat + am, data = mtcars, family = binomial))
 par(mfrow = c(4, 4), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
@@ -210,7 +208,7 @@ par(mfrow = c(4, 4), mar = c(4.0, 3.0, 3.0, 3.0))
 
 # It turns out that the confint for "am" 17.33614 - 42.71801 is rather wide and does not include zero meaning it may not be the best overall predictor of "mpg" rating values. On the other hand the much narrower confint of "drat", "hp", & "wt" indicate that they are likely to be good predictors of "mpg"
 # however the confint for drat, hp and wt each include zero
-```{r Fig.6_ConfInt, echo=TRUE, message=FALSE, warning=FALSE}
+```{r ConfInt, echo=TRUE, message=FALSE, warning=FALSE}
 fbf3 <- lm(mpg ~ hp + drat + factor(am) , data = mtcars)
 coef(summary(fbf3))
 confint(fbf3)
@@ -219,7 +217,7 @@ confint(fbf3)
 ############### NEXT PROCESS: Prediction !!!! #################
 
 ## Find something with levels
-```{r Fig.7_Predict, echo=FALSE, fig.height=5, fig.width=6}
+```{r Fig.11_Predict, echo=FALSE, fig.height=5, fig.width=6}
 # fbf1 <- lm(mpg ~ factor(am) + cyl + disp + hp + drat + wt + qsec, data = mtcars)
 ```
 
