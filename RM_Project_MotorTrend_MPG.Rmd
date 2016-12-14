@@ -95,10 +95,8 @@ rbind(head(ordmtcars2,3),tail(ordmtcars2,3))
 ```{r BivariateLM, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
 data("mtcars")
 f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
-f3 <- lm(mpg ~ factor(am) * wt, data = mtcars);coef(summary(f3))
-par(mfrow = c(1, 2), mar = c(4, 5, 2, 1))
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
 plot(f2)
-plot(f3)
 ```
 
 
@@ -124,13 +122,13 @@ mvlmfa <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmfa));vif(mvlmfa);sqrt(vif(
 ## Multivariate LM Nested & ANOVA table (Note: here that with the nested model approach that models 2 & 4 are indicated to be significant)
 ```{r MVLM_ANOVA_table, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 data("mtcars")
-fm1 <- lm(mpg ~ factor(am), data = mtcars)
+fit <- lm(mpg ~ factor(am), data = mtcars)
 fm2 <- update(fit, mpg ~ cyl + disp)
 fm3 <- update(fit, mpg ~ cyl + disp + hp + drat)
 fm4 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec)
 fm5 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
 fm6 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
-anova(fm1, fm2, fm3, fm4, fm5, fm6)
+anova(fit, fm2, fm3, fm4, fm5, fm6)
 ```
 
 ## Best Fit Modeling (Note: comparing the models above and using anova table we find that models fm2 & fm4 are significant exhibiting low pValues, therefore discard two variables in model three from model four as the bestfit models)
@@ -163,17 +161,12 @@ g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
 g <- g + geom_smooth(method = "lm", col = "black")
 g
-cor.test(mtcars$am, mtcars$cyl)
-cor.test(mtcars$am, mtcars$disp)
-cor.test(mtcars$am, mtcars$wt)
-cor.test(mtcars$cyl, mtcars$disp)
-cor.test(mtcars$cyl, mtcars$disp)
-cor.test(mtcars$cyl, mtcars$wt)
+cor.test(mtcars$am, mtcars$cyl);cor.test(mtcars$am, mtcars$disp)
+cor.test(mtcars$am, mtcars$wt);cor.test(mtcars$cyl, mtcars$disp)
+cor.test(mtcars$cyl, mtcars$disp);cor.test(mtcars$cyl, mtcars$wt)
 cor.test(mtcars$disp, mtcars$wt)
 ```
 
-
-############### NEXT PROCESS TO CHECK!!!!! IS RESIDUALS TO IDENTIFY POOR MODEL FIT??
 
 ```{r ResidFit, message=FALSE, warning=FALSE}
 y <- mtcars$mpg
@@ -191,7 +184,6 @@ for(i in 1:n)
         lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
 ```
 
-############### NEXT PROCESS: R^2 the percentage of total variability explained by the linear relationship with the predictor !!!!
 
 
 ```{r Fig.6_dfbetaPlots, echo=FALSE}
@@ -209,6 +201,7 @@ scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
 scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
 ```
 
+############### NEXT PROCESS: the percentage of total variability explained by the linear relationship with the predictor !!!! #################
 
 ## Find something with levels
 ```{r Fig.7_Predict, echo=FALSE, fig.height=5, fig.width=6}
