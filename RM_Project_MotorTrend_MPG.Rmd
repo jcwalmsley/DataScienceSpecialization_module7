@@ -24,9 +24,15 @@ output:
 ???? Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?  
 ???? Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?  
 
+
 YES!!!! Did the student interpret the coefficients correctly?  
 YES!!!! Did the student do some exploratory data analyses?  
+
+
 YES!!!! Did the student fit multiple models and detail their strategy for model selection?  
+Needs some more work
+
+
 YES!!!! Did the student do a residual plot and some diagnostics?  
 YES!!!! Was the report done in Rmd (knitr) with pdf output?  
 
@@ -52,7 +58,7 @@ sessionInfo()
        
 # V.            Accessing Data & Raw Data Overview: Motor Trend 'mtcars' data set:
         Clean up the work space & get the data: 
-```{r Data_mtcars, echo=TRUE, results='hide'}
+```{r Data_mtcars, include=FALSE, results='hide'}
 rm(list=ls());library(car);library(dplyr); data("mtcars");any(is.na(mtcars));data(mtcars)
 ```
 A data frame with 32 observations on 11 variables.  
@@ -70,14 +76,16 @@ A data frame with 32 observations on 11 variables.
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)
 
 # VI.          Process Data:  Cconvert columns 2 & 8:11 (cyl=(4,6,8), vs = engine block shape (0=V, 1=S), am into transmission type (0=automatic & 1=manual), gear=(3:5) & carb=(1,2,3,4,6,8) factor levels 
-```{r ProcessData, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);head(mtcars,3);#str(mtcars);summary(mtcars)
+```{r ProcessData, echo=FALSE, message=TRUE, warning=TRUE, results='hide'}
+data("mtcars")
+for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i])
+str(mtcars)
 ```
 
 # VII.         Descriptive Statistics (view first & last three rows)
 ```{r DataDescriptions, eval=FALSE, include=FALSE}
-ordmtcars2 <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
-rbind(head(ordmtcars2,3),tail(ordmtcars2,3))
+ordmtcars <- mtcars[order(mtcars$mpg,decreasing = FALSE),]
+rbind(head(ordmtcars,3),tail(ordmtcars,3))
 ```
 
 
@@ -91,91 +99,90 @@ rbind(head(ordmtcars2,3),tail(ordmtcars2,3))
         Assumptions:
                 A A correlation to mpg ratings may exist among multiple variables
                 B
-## Bivariate Linear Model
-```{r BivariateLM, echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
-data("mtcars")
-f2 <- lm(mpg ~ factor(am) + wt, data = mtcars);coef(summary(f2))
-par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
-plot(f2)
+## Multivariate Linear Model (all vars) Fitted Values, Quantiles & Leverage Plots
+```{r MVLM(allvars), echo=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, results='hide'}
+f1 <- lm(mpg ~ ., data = ordmtcars)
+coef(summary(f1))
+vif(f1)
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+plot(f1)
+# Note; vars with lowest vif = drat, vs & am
 ```
 
-
-## Multivariate LM (all vars) Fitted Plot
-```{r MVLM(allvars)F, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-mvlmf <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmf))
+## Bivariate Linear Model: # Note: manual trans & eng shape / vs are significant
+```{r BivariateLM, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+mvlmf <- lm(mpg ~ factor(am) + drat + vs, data = ordmtcars)
+coef(summary(mvlmf))
+vif(mvlmf)
 par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
-coef(summary(mvlmf));vif(mvlmf)
+plot(mvlmf)
 ```
 
-## Multivariate LM (all vars) Fitted & Adjusted 
+## Multivariate Linear Model Adjusted 
 (Note: the variable qsec appears to be significant at this point)
 ```{r MVLM(allvars)F&A, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-par(mfrow = c(2, 2), mar = c(4, 5, 2, 1));mvlmfa <- lm(mpg ~ . -1, data = mtcars);coef(summary(mvlmfa));
+mvlma <- lm(mpg ~ factor(am) + drat + vs  - 1, data = ordmtcars)
+coef(summary(mvlma))
+par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
+plot(mvlma)
 ```
 
-## MultivariateLM(allvars)VIF(varianceInflationFactor) 
-(Note: at this point qsec no longer appears significant; but drat now appears to be instead, and notice the variance inflation figures of the other varables now seem to warrant removing them from the model)
-```{r MVLM(allvars)VIF, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-mvlmfa <- lm(mpg ~ ., data = mtcars);coef(summary(mvlmfa));vif(mvlmfa);sqrt(vif(mvlmfa))
-```
-
-## Multivariate LM Nested & ANOVA table (Note: here that with the nested model approach that models 2 & 4 are indicated to be significant)
+## Multivariate LM Nested & ANOVA table (Note: with nested modeling method, models 3 & 6 each add a significate variable to the fitted model and in this case model 3 is disp & model 6 is wt. Now use the vif (variable inflation) test on model six to check for any variance inflation among the varialbes of this model. The results show that "hp", "drat", and "wt" all have square rooted infaltion values less than 3.0 so these can be accepted into the model of best fit (fbf1) along with the main variable of the study "am"
 ```{r MVLM_ANOVA_table, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-data("mtcars")
-fit <- lm(mpg ~ factor(am), data = mtcars)
-fm2 <- update(fit, mpg ~ cyl + disp)
-fm3 <- update(fit, mpg ~ cyl + disp + hp + drat)
-fm4 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec)
-fm5 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am)
-fm6 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs +  am +  gear + carb)
-anova(fit, fm2, fm3, fm4, fm5, fm6)
+fit <- lm(mpg ~ factor(am), data = ordmtcars)
+fm2 <- update(fit, mpg ~ cyl)
+fm3 <- update(fit, mpg ~ cyl + disp)
+fm4 <- update(fit, mpg ~ cyl + disp + hp)
+fm5 <- update(fit, mpg ~ cyl + disp + hp + drat)
+fm6 <- update(fit, mpg ~ cyl + disp + hp + drat + wt)
+fm7 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec)
+fm8 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs)
+fm9 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs + gear)
+fm10 <- update(fit, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs + gear + carb)
+anova(fit, fm2, fm3, fm4, fm5, fm6, fm7, fm8, fm9, fm10)
+vif(fm6)
+sqrt(vif(fm6))
 ```
 
-## Best Fit Modeling (Note: comparing the models above and using anova table we find that models fm2 & fm4 are significant exhibiting low pValues, therefore discard two variables in model three from model four as the bestfit models)
+
+## Best Fit Modeling (Note: based on the nested modeling process followed by the anova table check then followed by the vif and sqrt(vif) test we decide to go with the following model labeled (fbf1) and notice that all of the sqrt(vif) values are less than 2.0 indicating a good model fit.
 ```{r BestFitModeling, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-data("mtcars"); library(car)
-fbf1 <- lm(mpg ~ factor(am) + cyl + disp +  wt + qsec, data = mtcars)
+library(car)
+fbf1 <- lm(mpg ~ factor(am) + drat + hp + wt, data = ordmtcars)
 vif(fbf1)
 sqrt(vif(fbf1))
-fbf2 <- lm(mpg ~ factor(am) + cyl + disp +  wt, data = mtcars)
-vif(fbf2)
-sqrt(vif(fbf2))
-fbf3 <- lm(mpg ~ factor(am) + cyl +  wt, data = mtcars)
-vif(fbf3)
-sqrt(vif(fbf3))
-fbf4 <- lm(mpg ~ factor(am) + disp +  wt, data = mtcars)
-vif(fbf4)
-sqrt(vif(fbf4))
-anova(fbf1,fbf2,fbf3,fbf4)
 ```
+
+
+
 ## Comparing variations of the best two models from the first MVLM Nested ANOVA table we find that model fbf3 has the lowest Variance Inflation results of the possible models tested > lm(mpg ~ factor(am) + cyl + wt, data = mtcars)
 
-```{r Fig.5_BestModelPlot, echo=FALSE, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+
+
+
+
+```{r Fig.5_BestModelPlot, fig.height=5, fig.width=5, message=FALSE, warning=FALSE, include=FALSE}
 data("mtcars")
 fbf3 <- lm(mpg ~ factor(am) + cyl + disp + wt, data = mtcars)
 library(ggplot2)
 par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
-g <- ggplot(mtcars, aes(x = wt, y = mpg),)
-g <- g + xlab("Weight (Tons)")
+g <- ggplot(mtcars, aes(x = cyl + disp + wt + am, y = mpg),)
+g <- g + xlab("cyl + disp + wt + am")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
 g <- g + geom_smooth(method = "lm", col = "black")
 g
-cor.test(mtcars$am, mtcars$cyl);cor.test(mtcars$am, mtcars$disp)
-cor.test(mtcars$am, mtcars$wt);cor.test(mtcars$cyl, mtcars$disp)
-cor.test(mtcars$cyl, mtcars$disp);cor.test(mtcars$cyl, mtcars$wt)
-cor.test(mtcars$disp, mtcars$wt)
 ```
+###^^^^^^^^####  Comment on the sinusoidal pattern
 
-
-```{r ResidFit, message=FALSE, warning=FALSE}
+```{r ResidFit, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 y <- mtcars$mpg
-x <- mtcars$wt
+x <- (mtcars$cyl + mtcars$disp + mtcars$wt + mtcars$am==0 + mtcars$am==1)
 n <- length(y)
-fw <- lm(x ~ y, data = mtcars)
+fw <- lm(y ~ x, data = mtcars)
 e <- resid(fw)# ;e;plot(e);sum(e)
 plot(x,e,
-     xlab = "Vehicle Weight in Tons",
+     xlab = "cyl + disp + wt + am",
      ylab = "Residuals (MPG)",
      bg = "lightblue",
      col = "black", cex = 2, pch = 21, frame = FALSE)
@@ -187,18 +194,20 @@ for(i in 1:n)
 
 
 ```{r Fig.6_dfbetaPlots, echo=FALSE}
-dfbetaPlots(lm(mpg ~ factor(am) + wt, data = mtcars, family = binomial))
+dfbetaPlots(lm(mpg ~ factor(am) + cyl + disp + wt, data = mtcars, family = binomial))
 par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
 
 
    ## ISSUE NEEDS RESOLUTION
-```{r Fig.6_ConfInt, echo=FALSE}
-fbf3 <- lm(mpg ~ am + wt, data = mtcars)
+```{r Fig.6_ConfInt, echo=TRUE, message=FALSE, warning=FALSE}
+fbf3 <- lm(mpg ~ cyl + disp + factor(am) + wt, data = mtcars)
 scf3 <- coef(summary(fbf3))
 scf3
 scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
 scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
+scf3[3,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
+scf3[4,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
 ```
 
 ############### NEXT PROCESS: the percentage of total variability explained by the linear relationship with the predictor !!!! #################
