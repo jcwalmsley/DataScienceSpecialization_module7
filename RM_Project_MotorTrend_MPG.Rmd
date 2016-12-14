@@ -151,19 +151,21 @@ library(car)
 fbf1 <- lm(mpg ~ factor(am) + drat + hp + wt, data = ordmtcars)
 vif(fbf1)
 sqrt(vif(fbf1))
+library(ggplot2)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(mtcars, aes(x = am + drat + hp + wt, y = mpg),)
+g <- g + xlab("am + drat + hp + wt")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
+g <- g + geom_smooth(method = "lm", col = "black")
+g
 ```
-
-
-
-## Comparing variations of the best two models from the first MVLM Nested ANOVA table we find that model fbf3 has the lowest Variance Inflation results of the possible models tested > lm(mpg ~ factor(am) + cyl + wt, data = mtcars)
-
-
 
 
 
 ```{r Fig.5_BestModelPlot, fig.height=5, fig.width=5, message=FALSE, warning=FALSE, include=FALSE}
 data("mtcars")
-fbf3 <- lm(mpg ~ factor(am) + cyl + disp + wt, data = mtcars)
+fbf3 <- lm(mpg ~ factor(am) + drat + hp + wt, data = mtcars)
 library(ggplot2)
 par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
 g <- ggplot(mtcars, aes(x = cyl + disp + wt + am, y = mpg),)
@@ -173,16 +175,18 @@ g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.55)
 g <- g + geom_smooth(method = "lm", col = "black")
 g
 ```
-###^^^^^^^^####  Comment on the sinusoidal pattern
 
+
+
+# DIAGNOSTICS A
 ```{r ResidFit, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 y <- mtcars$mpg
-x <- (mtcars$cyl + mtcars$disp + mtcars$wt + mtcars$am==0 + mtcars$am==1)
+x <- (mtcars$am + mtcars$disp + mtcars$hp + mtcars$wt)
 n <- length(y)
 fw <- lm(y ~ x, data = mtcars)
 e <- resid(fw)# ;e;plot(e);sum(e)
 plot(x,e,
-     xlab = "cyl + disp + wt + am",
+     xlab = "am + drat + hp + wt",
      ylab = "Residuals (MPG)",
      bg = "lightblue",
      col = "black", cex = 2, pch = 21, frame = FALSE)
@@ -192,22 +196,22 @@ for(i in 1:n)
 ```
 
 
-
+# DIAGNOSTICS B
 ```{r Fig.6_dfbetaPlots, echo=FALSE}
-dfbetaPlots(lm(mpg ~ factor(am) + cyl + disp + wt, data = mtcars, family = binomial))
-par(mfrow = c(1, 2), mar = c(4.0, 3.0, 3.0, 3.0))
+dfbetaPlots(lm(mpg ~ factor(am), data = mtcars, family = binomial))
+par(mfrow = c(1, 1), mar = c(4.0, 3.0, 3.0, 3.0))
 ```
 
 
-   ## ISSUE NEEDS RESOLUTION
+# It turns out that the confint for "am" 17.33614 - 42.71801 is rather wide and does not include zero meaning it may not be the best overall predictor of "mpg" rating values. On the other hand the much narrower confint of "drat", "hp", & "wt" indicate that they are likely to be good predictors of "mpg"
+# however the confint for drat, hp and wt each include zero
 ```{r Fig.6_ConfInt, echo=TRUE, message=FALSE, warning=FALSE}
-fbf3 <- lm(mpg ~ cyl + disp + factor(am) + wt, data = mtcars)
-scf3 <- coef(summary(fbf3))
-scf3
+fbf3 <- lm(mpg ~ factor(am) + drat + hp + wt, data = mtcars)
+coef(summary(fbf3))
 scf3[1,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[1, 2]
 scf3[2,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
-scf3[3,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
-scf3[4,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[2, 2]##****
+scf3[3,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[3, 2]##****
+scf3[4,1] + c(-1, 1) * qt(.975, df = fbf3$df) * scf3[4, 2]##****
 ```
 
 ############### NEXT PROCESS: the percentage of total variability explained by the linear relationship with the predictor !!!! #################
