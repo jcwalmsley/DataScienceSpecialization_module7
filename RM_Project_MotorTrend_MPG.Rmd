@@ -185,7 +185,7 @@ g
 ```
 
 ##      Multivariate LM Nested & ANOVA table 
-#### With nested modeling method, models 3 & 6 each add a significate variable to the fitted model and in this case model 3 is disp & model 6 is wt. Now use the vif (variable inflation) test on model six to check for any variance inflation among the varialbes of this model. The results show that "hp", "drat", and "wt" all have square rooted infaltion values less than 3.0 so these can be accepted into the model of best fit (fbf1) along with the main variable of the study "am"
+With nested modeling method, models 3 & 6 each add a significate variable to the fitted model and in this case model 3 is disp & model 6 is wt. Now use the vif (variable inflation) test on model six to check for any variance inflation among the varialbes of this model. The results show that "hp", "drat", and "wt" all have square rooted infaltion values less than 3.0 so these can be accepted into the model of best fit (fbf1) along with the main variable of the study "am"
 ```{r MVLM_ANOVA_table, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 fit <- lm(mpg ~ factor(am), data = ordmtcars)
 fm2 <- update(fit, mpg ~ cyl)
@@ -205,7 +205,7 @@ confint(fm6)
 
 
 ##      Best Fit Modeling 
-#### Based on the nested modeling process followed by the anova table check then followed by the vif and sqrt(vif) test we decide to go with the following model labeled (fbf1) and notice that all of the sqrt(vif) values are less than 2.0 indicating a good model fit.
+Based on the nested modeling process followed by the anova table check then followed by the vif and sqrt(vif) test we decide to go with the following model labeled (fbf1) and notice that all of the sqrt(vif) values are less than 2.0 indicating a good model fit.
 ```{r Fig.8_BestFitModeling, eval=FALSE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, include=FALSE, results='hide'}
 library(car)
 data("mtcars")
@@ -298,12 +298,6 @@ coplot(mpg ~ disp | as.factor(am), data = mtcars,
 pairs(mtcars, main = "mtcars data")
 coplot(mpg ~ wt | as.factor(am), data = mtcars,
        panel = panel.smooth, rows = 1)
-
-
-
-
-
-
 ```
 
 ##      Histograms Plot
