@@ -124,7 +124,12 @@ plot(1/(coef(f1)))
 ## g <- g + geom_point(size = 5, colour = "blue", alpha = 0.2)
 ##
 ---
-mtcars
+
+from the pairs plot
+# #pairs(ordmtcars, panel = panel.smooth, main = "MTCARS data set", col = 3)
+# pairs(mtcars, main = "mtcars data")
+# coplot(mpg ~ hp + drat | as.factor(cyl), data = mtcars,
+#        panel = panel.smooth, rows = 1)
 
 
 
