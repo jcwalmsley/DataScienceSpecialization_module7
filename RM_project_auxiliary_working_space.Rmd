@@ -1,4 +1,10 @@
 ---
+title: "RM_proj_auxilary_working_space"
+author: "james c walmsley"
+date: "12/16/2016"
+output: html_document
+---
+---
 title: "Regression Models Project - Motor Trend Data 'mtcars' Miles Per Gallon Analysis"
 author: "james c walmsley"
 date: "12/1/2016"
@@ -81,19 +87,16 @@ A data frame with 32 observations on 11 variables.
 [,10]	gear	Number of forward gears (3,4,5)  
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)  
 
-#       Process Data: factor columns 2 & 8:11 (cyl,vs,am,gear,carb)
-Order the data set from least mpg on the top row to highest mpg on the bottom row
-```{r ProcessData, message=TRUE, cache=TRUE, warning=TRUE, include=FALSE, results='hide'}
+#       Process Data: 
+Convert columns 2 & 8:11 (cyl,vs,am,gear,carb) into factors and 0rder the data set from least mpg on the top row to highest mpg on the bottom row
+```{r ProcessData, eval=FALSE, message=TRUE, warning=TRUE, cache=TRUE, include=FALSE, results='hide'}
 data("mtcars");
-for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i])
-str(mtcars);ordmtcars <<- mtcars[order(mtcars$mpg,decreasing = FALSE),]
-data <- rbind(head(ordmtcars,3),tail(ordmtcars,3))
-dataord <- ordmtcars[1:3,]
+for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]):str(mtcars);ordmtcars <<- mtcars[order(mtcars$mpg,decreasing = FALSE),]
+data <- rbind(head(ordmtcars,3),tail(ordmtcars,3));dataord <- ordmtcars[1:3,]
 ```
 
 #       Descriptive Statistics
-Visual reveiw of the list of vehicles in order of mpg seems to indicate that there may be a strong negative correlation between mpg and the number of high # cylinders, larger cubic inch displacement, higher horsepower, V-engine shape, automatic transmission, lwo # of gears, and high # of carburetors and the reverse seems to be correlated to to higher mpg ratings. This seems to indicate a high degree of multicollinearity.
-
+Reveiw the data set for any obvious visual patterns or trends using descriptive statistics code
 ```{r DescriptiveStats, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 str(ordmtcars);summary(ordmtcars);ordmtcars
 ```
@@ -101,17 +104,16 @@ str(ordmtcars);summary(ordmtcars);ordmtcars
 
 #       Exploratory Analysis:  
         See figures 1:4 in Appendix A
-        Add narrative here!!
+        Use pairs, histogram and boxplots to visually examine key parameters of the data
         
-################-----------------##################
-        
+
 #       Statistical Modeling, Regression & Model Fit:
         Assumptions:
-                A A correlation to mpg ratings may exist among multiple variables
+                A 
                 B
 ##      Simple Linear Regression Plot
-In this plot we examine the relationship between mpg ratings and vehicle weight and find that as mpg rating increases vehicle weight decreases.
-```{r Fig.4_SimpleLR, eval=FALSE, fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+Examine the relationship between miles per gallon ratings and transmission type using a simple linear regression
+```{r Fig.4_SimpleLR, echo=FALSE, fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE, results='hide'}
 cor(ordmtcars$mpg, ordmtcars$wt)
 library(ggplot2); library(dplyr);library(ggplot2)
 par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
@@ -129,7 +131,7 @@ g2
 
 ##      Bivariate Linear Model: # Note: manual trans & eng shape / vs are significant
 This plot examines adding to the weight component the transmision type in a bivariate model that highlights some vehicles with noticable leverage on the model results in particular the followign vehicles: for the low end of the mpg ratings ~ Chrysler Imperial, and for the high mpg ratings the ~ Fiat 128, Toyota Corolla, 
-```{r Fig.5_BivariateLM, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.5_BivariateLM, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 f2 <- lm(mpg ~ factor(am) + wt, data = ordmtcars)
 coef(summary(f2))
 vif(f2);sqrt(vif(f2))
@@ -137,47 +139,43 @@ par(mfrow = c(2, 2), mar = c(4, 5, 2, 1))
 plot(f2)
 ```
 
-##      Multivariate Linear Model (all vars)
+##      Multivariate LM (all vars)
 Considering the results of the VIF (variance inflation test) vif(fit) results indicate variance inflation of these regressors: cyl, disp, hp, drat, wt, qsec, vs, am, gear, & carb. Considering the sqrt(vi(fit) though we can choose those regressors that have values less than three which are: drat, vs, gear, carb and keep the one of interest which is am
-```{r Fig.6_MVLM(allvars), eval=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.6_MVLM(allvars), echo=TRUE, message=FALSE, warning=FALSE, results='hide'}
 f3 <- lm(mpg ~ ., data = ordmtcars)
-coef(summary(f3))
-vif(f3)
-sqrt(vif(f3))
+c1 <- coef(summary(f3))
+v1 <- vif(f3)
+s1 <- sqrt(vif(f3))
 ```
 
-# variables with low sqrt of variance inflation =  cyl, drat, vs, am, gear & carb; The first multivariate model includes these regressors
+# From the output of the above code use those variables with low sqrt of variance inflation results = (cyl, drat, vs, am, gear & carb), to formulate the next multivariate model
 ```{r, eval=FALSE, fig.height=3, fig.width=3, message=FALSE, warning=FALSE, include=FALSE}
 library(ggplot2);library(dplyr);data("mtcars")
-f4 <- lm(mpg ~ am + drat +  cyl + vs + gear + carb, data = mtcars)
-f5 <- lm(mpg ~ I(am + drat) + carb, data = mtcars)
-sqrt(vif(f5))
-x <- mtcars[,c(5,9,11)]
-y <- mtcars$mpg
-n <- length(y)
+f4 <- lm(mpg ~ am + drat +  cyl + vs + gear + carb, data = mtcars);vif(f4)
+f5 <- lm(mpg ~ I(am + drat) + carb, data = mtcars);sqrt(vif(f5))
 par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
-g1 <- ggplot(mtcars, aes(x = drat, am, carb, y = y),)
-g1 <- g1 + xlab("(am + drat) + carb")
-g1 <- g1 + ylab("Miles per g1allon")
-g1 <- g1 + geom_smooth(aes(method = "lm", se = FALSE))
-g1 <- g1 + geom_point(size = 3.0, col = "black", alpha = .65)
-g1
+g <- ggplot(mtcars, aes(x = drat, am, carb, y = mpg),)
+g <- g + xlab("(am + drat) + carb")
+g <- g + ylab("Miles per g1allon")
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
+g <- g + geom_point(size = 3.0, col = "black", alpha = .65)
+g
 ```
 
 
-
-
-##      Multivariate Linear Model Adjusted 
-```{r Fig.7_MVLM(allvars)A, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+##      Multivariate LM (all vars) & Adjusted 
+```{r Fig.7_MVLM(allvars)Adjusted, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 f6 <- lm(mpg ~ . -1, data = ordmtcars)
-coef(summary(f6))
-confint(f6)
 par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
-g <- ggplot(ordmtcars, aes(x = drat, wt, qsec, vs, am, -1, y = mpg),)
-g <- g + xlab("MLM Adjusted - (drat-wt-qsec-vs-am)")
+g <- ggplot(ordmtcars, aes(x = cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb -1, y = mpg),)
+g <- g + xlab("Multivariate(all)Adjusted")
 g <- g + ylab("Miles per Gallon")
-g <- g + geom_smooth(aes(method = "lm", col = "red"))
-g <- g + geom_point(size = 3.0, col = "blue", alpha = 0.75)
+g <- g + geom_abline(intercept = 33.9, slope = -7.24)
+g <- g + geom_point(aes(colour = factor(cyl)), size = 4)
+g <- g + geom_point(colour = "grey90", size = 1.5)
+g <- g + geom_point(colour = "black", size = 4.5)
+g <- g + geom_point(colour = "pink", size = 4)
+g <- g + geom_point(aes(shape = factor(cyl)))
 g
 ```
 
@@ -213,7 +211,7 @@ library(ggplot2);library(graphics)
 x <- (mtcars$cyl + mtcars$disp + mtcars$wt + mtcars$am)
 par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
 g <- ggplot(mtcars, aes(x = x, y = mpg),)
-g <- g + xlab("hp + drat + am")
+g <- g + xlab("cyl + disp + wt + am")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 3, col = "blue", alpha = 0.55)
 g <- g + geom_smooth(method = "lm", col = "black")
@@ -239,6 +237,24 @@ for(i in 1:n)
         lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
 ```
 
+
+Removing the regressor disp in this model based on the appearance of an sinusoidal shape in the previous residual plot above resulting in a more random residual plot in this model (eliminating overfitting)
+```{r Fig.9_ResidFit, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+y <- mtcars$mpg
+x <- (as.numeric(mtcars$cyl) + mtcars$wt + as.numeric(mtcars$am))
+n <- length(y)
+fw <- lm(y ~ x, data = ordmtcars)
+coef(summary(fw))
+e <- resid(fw)# ;e;plot(e);sum(e)
+plot(x,e,
+     xlab = "cyl + wt + am",
+     ylab = "Residuals (MPG)",
+     bg = "lightblue",
+     col = "black", cex = 1.5, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+```
 
 ```{r hatvalues, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 hv1 <- hatvalues(lm(mpg ~ ., data = ordmtcars));hv1;plot(hv1)
@@ -331,9 +347,8 @@ mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- f
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission, Miles Per Gallon Ratings")
 ```
 
-##      NOTE: use the cut function by 3 on MPG
-
 ===
         END
 ===
+
 
