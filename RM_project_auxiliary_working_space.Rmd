@@ -121,10 +121,11 @@ cor(ordmtcars$mpg, ordmtcars$wt)
 In this plot we examine the relationship between mpg ratings and vehicle weight and find that as mpg rating increases vehicle weight decreases.
 ```{r Fig.4_SimpleLR, eval=c(3:12), fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE}
 library(ggplot2); library(dplyr);library(ggplot2)
+ordmtcars$am <- factor(ordmtcars$am, labels = c("Auto", "Manual"))
 f1 <- lm(mpg ~ factor(am), data = ordmtcars)
 coef(summary(f1))
 par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
-g <- ggplot(mtcars, aes(x = factor(am), y = mpg),)
+g <- ggplot(ordmtcars, aes(x = factor(am), y = mpg),)
 g <- g + xlab("Transmission Type")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 4.0, col = "blue", alpha = .45)
