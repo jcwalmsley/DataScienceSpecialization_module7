@@ -257,8 +257,8 @@ elements of the structure and summary statistics in the descriptive statistics.<
 <p>Examine the relationship between mpg &amp; two variables: am &amp; weight beacuse weight has an -86%<br />
 negative correlation with mpg (the highest single variable correlation with mpg)</p>
 </div>
-<div id="multivariate-linear-model-all-vars" class="section level1">
-<h1>Multivariate Linear Model (all vars):</h1>
+<div id="multivariate-linear-model" class="section level1">
+<h1>Multivariate Linear Model:</h1>
 <p>The influence measures test indicates that the following vehicles exhibit<br />
 substatial influence on the model fit; “Merc 230”,“Merc 280”, “Honda Civic”,<br />
 “Camaro Z28”,“Porsche 914-2”,“ford Pantera L”,“ferrari Dino”,“Maserati Bora” based on the cov.r (covariance ratio) at 2.809 or above</p>
@@ -276,39 +276,33 @@ effect it has on the fit</p>
 using the command vif we can see that cyl, disp &amp; hp</p>
 </div>
 </div>
-<div id="modeling-best-fit" class="section level1">
-<h1>Modeling Best Fit:</h1>
+<div id="multivarite-linear-model-finding-best-fit-with-step-function" class="section level1">
+<h1>Multivarite Linear Model Finding Best Fit with Step function:</h1>
 <pre class="r"><code>library(stats);library(MASS)</code></pre>
 <pre><code>## 
 ## Attaching package: 'MASS'</code></pre>
 <pre><code>## The following object is masked from 'package:dplyr':
 ## 
 ##     select</code></pre>
-<pre class="r"><code>fs &lt;- lm(mpg ~ . +factor(vs)+factor(am), data = mtcars)
-stp &lt;- step(fs, trace = FALSE)
+<pre class="r"><code>fstp &lt;- lm(mpg ~ ., data = mtcars)
+stp &lt;- step(fstp, trace = FALSE)
 coef(summary(stp))</code></pre>
-<pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
-## (Intercept)  9.617781  6.9595930  1.381946 1.779152e-01
-## wt          -3.916504  0.7112016 -5.506882 6.952711e-06
-## qsec         1.225886  0.2886696  4.246676 2.161737e-04
-## am           2.935837  1.4109045  2.080819 4.671551e-02</code></pre>
+<pre><code>         Estimate Std. Error   t value     Pr(&gt;|t|)</code></pre>
+<p>(Intercept) 9.617781 6.9595930 1.381946 1.779152e-01 wt -3.916504 0.7112016 -5.506882 6.952711e-06 qsec 1.225886 0.2886696 4.246676 2.161737e-04 am 2.935837 1.4109045 2.080819 4.671551e-02</p>
 <pre class="r"><code>summary(stp)$r.squared</code></pre>
-<pre><code>## [1] 0.8496636</code></pre>
-<div id="section-1" class="section level12">
-<p>——————–###############———————-</p>
-<p>???????? Based on the nested modeling process followed by the anova table check then<br />
-followed by the vif and sqrt(vif) test we decide to go with the following model<br />
-labeled (fnm4) and notice that all of the sqrt(vif) values are less than 1.6<br />
-indicating most likely a good fit.</p>
-<p>==================</p>
-</div>
+<p>[1] 0.8496636</p>
+<p>Based on the nested modeling process followed by the anova table check then<br />
+followed by the vif and sqrt(vif) test and the step function we decide to go<br />
+with the following model labeled (fstp)</p>
 </div>
 <div id="diagnostics-a" class="section level1">
 <h1>DIAGNOSTICS A</h1>
 <p>Resid fit plot produces a random distribution in three distinct groups indicating the number of cylinders that were included in this particular model fit as factors</p>
-<p>Removing the regressor disp in this model based on the appearance of an sinusoidal shape in the previous residual plot above resulting in a more random residual plot in this model (eliminating overfitting)</p>
 <p>The hatvalues plot does not exhibit any obvious patterns or trends</p>
 <p>The dffits test shows evenly distributed random results above and below the center at zero with a single outlier at 6 with a 31 mmpg rating</p>
+<div id="section-1" class="section level14">
+<p>——————###############—————–</p>
+</div>
 </div>
 <div id="diagnostics-b" class="section level1">
 <h1>DIAGNOSTICS B</h1>

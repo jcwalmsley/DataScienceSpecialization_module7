@@ -239,7 +239,7 @@ g
 Remove the am variable from the multivariate linear regression to see what  
 effect it has on the fit
 
-```{r Fig.7b_MVLM(allvars,-'am'), echo=TRUE, eval=TRUE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.7b_MVLM(allvars,-am), echo=TRUE, eval=TRUE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars");as.numeric(unlist(mtcars))
 f4 <- lm(mpg ~ . - am, data = mtcars)
 coef(summary(f4));vif(f4);sqrt(vif(f4));# plot(f3)

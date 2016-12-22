@@ -2,3 +2,5 @@ base
 car
 dplyr
 xtable
+ggplot2
+MASS
