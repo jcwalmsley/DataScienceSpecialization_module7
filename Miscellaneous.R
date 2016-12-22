@@ -134,8 +134,113 @@ from the pairs plot
 
 
 
+REVISE THIS!!!!
+
+        # From the output of the above code use those variables with low sqrt of variance inflation results = (cyl, drat, vs, am, gear & carb), to formulate the next multivariate model
 
 
 
+        ```{r, eval=FALSE, fig.height=3, fig.width=3, message=FALSE, warning=FALSE, include=FALSE}
+library(ggplot2);library(dplyr);data("mtcars")
+f4 <- lm(mpg ~ am + drat +  cyl + vs + gear + carb, data = mtcars);vif(f4)
+f5 <- lm(mpg ~ I(am + drat) + carb, data = mtcars);sqrt(vif(f5))
+par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(mtcars, aes(x = (drat, am, carb), y = mpg),)
+g <- g + xlab("(am + drat + carb)")
+g <- g + ylab("Miles per g1allon")
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
+g <- g + geom_point(size = 3.0, col = "black", alpha = .65)
+g
+```
+
+
+Finding a better model fit; use the variables with low sqrt of variance
+inflation =  cyl, drat, vs, am, gear & carb; The following multivariate model
+includes these regressors
+
+```{r, echo=TRUE, eval=, fig.height=3, fig.width=3, message=FALSE, warning=FALSE, include=FALSE}
+library(ggplot2);library(dplyr);data("mtcars")
+f4 <- lm(mpg ~ am + drat +  cyl + vs + gear + carb, data = mtcars)
+sqrt(vif(f4))
+# remove cyl for high level of variance inflation
+f5 <- lm(mpg ~ I(am + drat) + carb, data = mtcars)
+sqrt(vif(f5))
+x <- mtcars[,c(5,9,11)]
+y <- mtcars$mpg
+n <- length(y)
+par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(mtcars, aes(x = drat, am, carb, y = y),)
+g <- g + xlab("(am + drat) + carb")
+g <- g + ylab("Miles per g1allon")
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
+g <- g + geom_point(size = 3.0, col = "black", alpha = .65)
+g
+```
+library(car)
+library(datasets)
+library(dplyr)
+library(ggplot2)
+library(graphics)
+library(grDevices)
+library(GGally)
+library(knitr)
+library(kernlab)
+library(MASS)
+library(xtable)
+custom_car <- ggpairs(mtcars[, c("mpg", "wt", "cyl")], upper = "blank", title = "Custom Example")
+# ggplot example taken from example(geom_text)
+plot <- ggplot2::ggplot(mtcars, ggplot2::aes(x=wt, y=mpg, label=rownames(mtcars)))
+plot <- plot +
+        ggplot2::geom_text(ggplot2::aes(colour=factor(cyl)), size = 3) +
+        ggplot2::scale_colour_discrete(l=40)
+custom_car[1, 2] <- plot
+personal_plot <- ggally_text(
+        "ggpairs allows you\nto put in your\nown plot.\nLike that one.\n <---"
+)
+# custom_car[1, 3] <- personal_plot
+# # custom_car
+#
+# # remove plots after creating a plot matrix
+# custom_car[2,1] <- NULL
+# custom_car[3,1] <- "blank" # the same as storing null
+# custom_car[3,2] <- NULL
+# custom_car
+
+
+Removing the regressor disp in this model based on the appearance of an sinusoidal shape in the previous residual plot above resulting in a more random residual plot in this model (eliminating overfitting)
+```{r Fig.9_ResidFit2, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+y <- mtcars$mpg
+x <- (as.numeric(mtcars$cyl) + mtcars$wt + as.numeric(mtcars$am))
+n <- length(y)
+fw <- lm(y ~ x, data = ordmtcars)
+coef(summary(fw))
+e <- resid(fw)# ;e;plot(e);sum(e)
+plot(x,e,
+     xlab = "cyl + disp + drat + hp wt + am",
+     ylab = "Residuals (MPG)",
+     bg = "lightblue",
+     col = "black", cex = 2.5, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+```
+
+Removing the regressor disp in this model based on the appearance of an sinusoidal shape in the previous residual plot above resulting in a more random residual plot in this model (eliminating overfitting)
+```{r Fig.9_ResidFit2, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+y <- mtcars$mpg
+x <- (as.numeric(mtcars$cyl) + mtcars$wt + as.numeric(mtcars$am))
+n <- length(y)
+fw <- lm(y ~ x, data = ordmtcars)
+coef(summary(fw))
+e <- resid(fw)# ;e;plot(e);sum(e)
+plot(x,e,
+     xlab = "cyl + disp + drat + hp wt + am",
+     ylab = "Residuals (MPG)",
+     bg = "lightblue",
+     col = "black", cex = 2.5, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+```
 
 

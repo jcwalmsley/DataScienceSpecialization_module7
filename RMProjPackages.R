@@ -1,0 +1,12 @@
+library(car)
+library(datasets)
+library(dplyr)
+library(GGally)
+library(ggplot2)
+library(graphics)
+library(grDevices)
+library(knitr)
+library(kernlab)
+library(MASS)
+library(xtable)
+
