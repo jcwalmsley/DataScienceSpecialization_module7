@@ -186,7 +186,7 @@ plot(f3)
 
 
 #       Multivariate Linear Model (all vars) Adjusted:
-```{r Fig.7_MVLM(allvars)_Adjusted, echo=FALSE,  eval=c(1,2,5:12), fig.align='center', fig.height=7,fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.7a_MVLM(allvars)_Adjusted, echo=FALSE,  eval=c(1,2,5:12), fig.align='center', fig.height=7,fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 library(car);library(ggplot2)
 f6 <- lm(mpg ~ . -1, data = ordmtcars)
 coef(summary(f6))
@@ -208,7 +208,7 @@ that am or transmission type does not influence mpg ratings in any significant
 way. 
 
 
-```{r Fig.7_MVLM(allvars -(am)), eval=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.7b_MVLM(allvars -(am)), eval=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars")
 mtcars2 <- subset(mtcars, select = -am)
 mean(mtcars2$mpg)
@@ -233,7 +233,7 @@ plot(f4)
 Using a nested model approach, followed by checking for variance inflation  
 using the command vif we can see that cyl, disp & hp 
 
-```{r MVLM_ANOVA_table, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.8_MVLM_ANOVA_table, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 fn1 <- lm(mpg ~ factor(am), data = mtcars)
 fnm2 <- update(fn1, mpg ~ cyl + disp)
 fnm3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
@@ -263,7 +263,7 @@ summary(stp)$r.squared
 Based on the nested modeling process followed by the anova table check then  
 followed by the vif and sqrt(vif) test and the step function we decide to go  
 with the following model labeled (fstp) 
-```{r Fig.8_BestFitModeling, eval=FALSE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, include=FALSE, results='hide'}
+```{r Fig.9a_BestFitModeling, eval=FALSE, fig.height=5, fig.width=5, message=TRUE, warning=TRUE, include=FALSE, results='hide'}
 data("mtcars");library(car);library(ggplot2);library(graphics)
 stp
 mtc <- mtcars
@@ -284,7 +284,7 @@ g
 #       DIAGNOSTICS A
 Resid fit plot produces a random distribution in three distinct groups indicating 
 the number of cylinders that were included in this particular model fit as factors
-```{r Fig.9_ResidFit, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.10_ResidFit, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 ordmtcars$am <- factor(ordmtcars$am, labels = c("Auto", "Manual"))
 y <- mtcars$mpg
 x <- (mtc$wt + mtc$qsec + mtc$am)
@@ -315,7 +315,7 @@ hv1 <- hatvalues(lm(mpg ~ x, data = mtc));hv1;plot(hv1)
 
 The dffits test shows evenly distributed random results above and
 below the center at zero with a single outlier at 6 with a 31 mmpg rating
-```{r dft2, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.11_dft2, eval=FALSE, fig.height=4.5, fig.width=4.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 mtc$am <- factor(mtc$am, labels = c("Auto", "Manual"))
 y <- mtcars$mpg
 x <- (mtc$wt + mtc$qsec + as.numeric(mtc$am))
