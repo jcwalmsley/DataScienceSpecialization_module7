@@ -21,26 +21,6 @@ output:
                 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 ---
 
-#       Grading - Criteria (remove on completion)!!!  
-        ####YES!!!! Did the report include an executive summary?
-        ####???? Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?
-        ####???? Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?
-        ####???? Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?
-
-
-        ####YES!!!! Did the student interpret the coefficients correctly?
-        ####YES!!!! Did the student do some exploratory data analyses?
-
-
-        ####YES!!!! Did the student fit multiple models and detail their strategy for model selection?
-        ####Needs some more work
-
-
-        ####YES!!!! Did the student do a residual plot and some diagnostics?
-        ####YES!!!! Was the report done in Rmd (knitr) with pdf output?
-
----
-
 #       Analysis Considerations:
         Descriptive - (dim, mean, sd, sigma^2, str & summary) statistics
         
@@ -59,7 +39,7 @@ setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
 sessionInfo()
 ```        
        
-#       Accessing Data & Raw Data Overview: Motor Trend 'mtcars' data set:
+#       Raw Data: Motor Trend 'mtcars' data set:
 Clean up the work space & import the data from the data sets package
 ```{r Data_mtcars, include=FALSE, results='hide'}
 rm(list=ls());library(car);library(dplyr); data("mtcars");any(is.na(mtcars));data(mtcars)
@@ -77,6 +57,7 @@ A data frame with 32 observations on 11 variables.
 [, 9]	am	Transmission (0 = automatic, 1 = manual)    
 [,10]	gear	Number of forward gears (3,4,5)  
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)  
+
 
 #       Process Data: 
 Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) and order the data on mpg from the lowest to highest mpg rating

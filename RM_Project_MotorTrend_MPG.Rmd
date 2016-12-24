@@ -9,16 +9,42 @@ output:
     fig_height: 5.5
 ---
 
-#       Executive Summary:
-        
 
+#       Executive Summary:  
         
-#       Problem Statement & Questions:    
+#       Problem Statement & Questions to Answer:  
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
-                ## Q2 "Quantify the MPG difference between automatic and manual  
-                transmissions"  
+                ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
 ---
 
+#       Analysis Considerations:
+Assumptions:
+Given data set for this analysis consists of independent and identically distrubuted random varialbles iid for 32 vehicles or subjects with 11 variables or observations
+
+Descriptive - (dim, mean, sd, sigma^2, str & summary) statistics
+        
+Exploratory - pairs, histograms, QQ, fitted, residualplots, boxplots  
+& (multiple plots); T-Test
+        
+Analysis -  OLS, simple linear regression, statistical linear regression,  
+multivariate regression & model selection, logistic regression, pValues,  
+adjustments, residuals, residual fit, predict fit, hatvalues, variance, & dfbetas, R^2,  
+diagnostics; ANOVA, coeficients, confint, correlation, covariance, variance inflation
+
+
+
+#       Software Environment: &  System - session Info:
+Set the Working Directory then get System & Session Info
+```{r SetDirectory, eval=FALSE, include=FALSE, results='hide'}
+setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
+sessionInfo()
+```        
+       
+#       Raw Data: Motor Trend 'mtcars' data set:
+Clean up the work space & import the data from the data sets package
+```{r Data_mtcars, include=FALSE, results='hide'}
+rm(list=ls());library(car);library(dplyr); data("mtcars");any(is.na(mtcars));data(mtcars)
+```
 A data frame with 32 observations on 11 variables.  
 
 [, 1]	mpg	Miles/(US) gallon    
@@ -34,95 +60,106 @@ A data frame with 32 observations on 11 variables.
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)  
 
 
-#       Exploratory Analysis:    
-Develop r code to analyze and identify any significant relationships /  
-correlations positively or negatively affecting the vehicle  mpg ratings.
-Create a pairs plot, histogram and box plot to visually represent the key   
-elements of the structure and summary statistics in the descriptive statistics.
+#       Process Data: 
+Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) and order the data on mpg from the lowest to highest mpg rating
+```{r ProcessData, echo=FALSE, eval=TRUE, cache=TRUE, message=TRUE, warning=TRUE, cache=TRUE, include=FALSE, results='hide'}
+data("mtcars");
+for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);str(mtcars);ordmtcars <<- mtcars[order(mtcars$mpg,decreasing = FALSE),];ordmtcars
+```
+
+#       Descriptive Statistics
+Reveiw data set for obvious visual patterns or trends using descriptive statistics r code to generate pairs plots, histograms and boxplots see Appendix A below for more information
+```{r DescriptiveStats, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+str(ordmtcars);summary(ordmtcars);ordmtcars
+```
 
 
+#       Exploratory Analysis:  
+Develop the r code for analyzing and identify any significant relationships /
+correlations between the range of mpg ratings and any of the other ten varialbes 
+for observations contained in the data set. Use avaialbe regression model tools 
+to find the best model fit, examine the coefficients, hatvalues, residuals, dfbetas, variance inflation, and R^2 values to spot over or underfitting of the 
+model.
 
-#############
+Next, we can check for the correlation between mpg and the other ten regressors and learn that the weight variable has the highest single correlation to mpg that any of the other single varialbes at (-95.45%) using the ordered data set "ordmtcars".
+```{r correlation, eval=FALSE, include=FALSE}
+cor(ordmtcars$mpg, ordmtcars$wt)
+```
 
-
-
-
-
-#       Statistical Modeling:  
-### Regression & Model Fit:    
-        ## Assumptions:    
-                ## A     
-                ## B    
-
-#       Simple Linear Regression Plot:
-Examine the relationship between mpg ratings and transmission type; automatic vs manual
-```{r Fig.4_SimpleLR, echo=FALSE, eval=FALSE, fig.align='center',fig.height=4.0, fig.width=6.5, message=FALSE, warning=FALSE}
+#       Statistical Modeling:
+        Assumptions:
+                A 
+                B
+##              Simple Linear Regression Plot
+In this plot we examine the relationship between mpg ratings and vehicle weight and find that as mpg rating increases vehicle weight decreases.
+```{r Fig.4_SimpleLR, echo=TRUE, eval=c(5:12), fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE}
 library(dplyr)
-library(ggplot2)
 ordmtcars$am <- factor(ordmtcars$am, labels = c("Auto", "Manual"))
-f1 <- lm(mpg ~ am, data = ordmtcars)
+f1 <- lm(mpg ~ factor(am), data = ordmtcars)
 coef(summary(f1))
-par(mfrow = c(1,1), mar = c(2,2,2,2)) # set margin
+library(ggplot2)
+par(mfrow = c(2,1), mar = c(4,4,2,2)) # set margin
 g <- ggplot(ordmtcars, aes(x = factor(am), y = mpg),)
 g <- g + xlab("Transmission Type")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_point(size = 4.0, col = "blue", alpha = .45)
-g <- g + geom_abline(intercept = 9.91, slope = 7.24) # adjusted (-7.24) to fit grid
+g <- g + geom_abline(intercept = 9.91, slope = 7.24) # intercept adjusted (-7.24) to fit grid
 g
 ```
 
 
-#       Bivariate Linear Model:  
-Examine the relationship between mpg & two variables: am & weight beacuse weight has an -86%  
-negative correlation with mpg (the highest single variable correlation with mpg)
-```{r Fig.5_BivariateLM_1, echo=FALSE, eval=FALSE, fig.align='center', fig.height=6.0, fig.width=7.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-library(car)
-f2 <- lm(mpg ~ as.numeric(am) + wt, data = ordmtcars)
-hatvalues(f2);coef(summary(f2));vif(f2);sqrt(vif(f2))
-par(mfrow = c(2,2), mar = c(4,4,3,2)) # set margin
-plot(f2)
-```
+##              Bivariate Linear Model: # Note: manual trans & eng shape / vs are significant
+First, using r command plot(f2) plot the four series plor for Reiduals vs Fitted, Normal QQ, Scale Location, and Residuals vs Leverage diagnostics plots of the bivariate model using; as.numeric(am) + wt.
 
-```{r Fig.5_BivariateLM_2, echo=FALSE, eval=FALSE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-library(car)
+Next, check coefficients summary (f2), hatvalues(f2),vif(f2), & sqrt(vif(f2)) for 
+indications of poor model fit
+
+Additionaly, check indluence.measures on (f2) as see that the Cadilac Fleetwood, Lincoln Continental, Chrysler Imperial and the Fiat 128 exhibit influence on the model fit (f2).
+
+Finally, fit a bivariate linear regression model using as.numeric(am) & wt.
+```{r Fig.5_BivariateLM, echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE, results='hide'}
 f2 <- lm(mpg ~ as.numeric(am) + wt, data = ordmtcars)
-par(mfrow = c(1,1), mar = c(4,4,4,2))
+plot(f2)
+hatvalues(f2);coef(summary(f2));vif(f2);sqrt(vif(f2))
+par(mfrow = c(2, 2), mar = c(4,4,4,2))
 g <- ggplot(mtcars, aes(x = as.numeric(am) + wt , y = mpg),)
 g <- g + xlab("Transmission Type + Weight")
 g <- g + ylab("Miles per Gallon")
-g <- g + geom_smooth(aes(method = "lm", se = FALSE))
 g <- g + geom_point(size = 3.5, col = "blue", alpha = .65)
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
 g
 ```
 
-#       Multivariate Linear Model:
+
+##      Multivariate Linear Model (all vars)
 
 The influence measures test indicates that the following vehicles exhibit  
 substatial influence on the model fit; "Merc 230","Merc 280", "Honda Civic",  
-"Camaro Z28","Porsche 914-2","ford Pantera L","ferrari Dino","Maserati Bora"
+"Camaro Z28","Porsche 914-2","Ford Pantera L","Ferrari Dino","Maserati Bora"
 based on the cov.r (covariance ratio) at 2.809 or above
 
-
-```{r Fig.6_MVLM(allvars), echo=FALSE, eval=c(1,2,4,7:19), fig.align='center', fig.height=7, fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-library(car);library(ggplot2)
+```{r Fig.6_MVLM(allvars), eval=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars")
-as.numeric(unlist(mtcars))
 f3 <- lm(mpg ~ ., data = mtcars)
+confint(f3)
 coef(summary(f3))
 vif(f3)
 sqrt(vif(f3))
-par(mfrow = c(1, 1), mar = c(3,3,3,2))
+par(mfrow = c(1, 1), mar = c(4,4,4,2))
 g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb), y = mpg),)
-g <- g + xlab("All Design Components Inclusive")
+g <- g + xlab("All Design Components Included")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_smooth(aes(method = "lm", se = FALSE))
-g <- g + geom_point(aes(shape = factor(am), size = 4.0))
-g <- g + geom_point(aes(colour = factor(cyl)))
+g <- g + geom_point(size = 2.5, col = "black", alpha = .85)
 g
+#
+par(mfrow = c(2,2), mar = c(4,4,4,2))
+plot(f3)
 ```
 
+
 #       Multivariate Linear Model (all vars) Adjusted:
-```{r Fig.7a_MVLM(allvars,-1), echo=FALSE,  eval=c(1,2,5:12), fig.align='center', fig.height=7,fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.7a_MVLM(allvars)_Adjusted, echo=FALSE,  eval=c(1,2,5:12), fig.align='center', fig.height=7,fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 library(car);library(ggplot2)
 f6 <- lm(mpg ~ . -1, data = ordmtcars)
 coef(summary(f6))
@@ -138,28 +175,30 @@ g
 ```
 
 
+Removing the ""am" (transmission type) variable from the multivariate linear
+regression using all other varialbes the results appear to be identical; meaing  
+that am or transmission type does not influence mpg ratings in any significant  
+way. 
 
-#       Multivariate Linear Model (all vars - am):
 
-Remove the am variable from the multivariate linear regression to see what  
-effect it has on the fit
-
-```{r Fig.7b_MVLM(allvars,-am), echo=TRUE, eval=TRUE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-data("mtcars");as.numeric(unlist(mtcars))
-f4 <- lm(mpg ~ . - am, data = mtcars)
-coef(summary(f4));vif(f4);sqrt(vif(f4));# plot(f3)
+```{r Fig.7b_MVLM(allvars,-am), eval=FALSE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+data("mtcars")
+mtcars2 <- subset(mtcars, select = -am)
+mean(mtcars2$mpg)
+f4 <- lm(mpg ~ ., data = mtcars2)
+confint(f4)
+coef(summary(f4))
+vif(f4)
+sqrt(vif(f4))
 par(mfrow = c(1, 1), mar = c(4,4,4,2))
-g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + gear + carb), y = mpg),)
+g <- ggplot(mtcars2, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + gear + carb), y = mpg),)
 g <- g + xlab("All Design Components - am")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_smooth(aes(method = "lm", se = FALSE))
-g <- g + geom_point(size = 2.5, col = "black", alpha = .85)
-g <- g + geom_point(aes(shape = factor(gear), size = 4.5, colour = "white"))
-g <- g + geom_point(aes(colour = factor(cyl), size = 3.5))
-g <- g + geom_point(aes(size = drat), alpha = .4)
+g <- g + geom_point(size = 2.5, col = "orange", alpha = .85)
 g
-# par(mfrow = c(2, 2), mar = c(4,4,4,2))
-# plot(f4)
+par(mfrow = c(2,2), mar = c(4,4,4,2))
+plot(f4)
 ```
 
 
@@ -167,7 +206,7 @@ g
 Using a nested model approach, followed by checking for variance inflation  
 using the command vif we can see that cyl, disp & hp 
 
-```{r Fig.8_MVLM_ANOVA_table.test, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r Fig.8_MVLM_ANOVA_table, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 fn1 <- lm(mpg ~ factor(am), data = mtcars)
 fnm2 <- update(fn1, mpg ~ cyl + disp)
 fnm3 <- update(fn1, mpg ~ cyl + disp + hp + drat)
@@ -213,14 +252,14 @@ g
 ```
 
 
-
-
-
-#       Any alternative analyses?
-        A VIF
-        B Challenge the results ?
-        C Measures of uncertainty 'e'
-
+#       Preliminary Findings:  
+        Questions of Interest:
+                A What other regressors if any correlated with mpg rating and transmission type?
+                B 
+        Interpretation of Results:
+                A Using ANOVA table with Nested Multivariate Regression fit it is clear that the variable weight (wt) is significance according with a code of ** = 0.001
+                B Based on the 
+                C
 ---
 #       Appendix A: Figures for the "Exploratory Analysis"
 
