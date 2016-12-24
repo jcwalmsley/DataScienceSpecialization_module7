@@ -10,34 +10,7 @@ output:
 ---
 
 #       Executive Summary:    
-        The mean "MPG" rating of all vehicles included in this data set is  
-        20.09062mpg. For vehicles with automatic transmisions the mpg is  
-        17.15 mpg, and with manual transmisions 24.38 mpg for a difference of  
-        7.24 mpg in favor of manual transmissions.
-        
-        Upon further analysis of the relationship between vehicle design  
-        components and "MPG" ratings in this particular dat set we find that a  
-        small number of vehicles exhibit a degree of leverage and influence  
-        over the "MPG" analysis results at both ends of the ratings. The  
-        following vehicles!!!!!!!
-        
-        
-        Additionally, vehicle weight is highly correlated (-86.77%) with mpg  
-        ratings in the ordered datas set and transmission type is highly  
-        correlated with vehicle wieght at (69%). In other words lighter vehicles  
-        tend to have manual transmissions where as heavier vehicles tend to have  
-        automatic trasnmissions. Figure XXX shows the analysis that explains  
-        this bias in the data and is confirmed in the QQ plots where the low and  
-        high "MPG" ratings are not inclusive of both types of transmissions.  
-        This figure also shows that where the cubic inch displacement and hp are  
-        generally equivalent between transmission types there is only a very  
-        slight difference in "MPG" rating. 
-        
-        To answer the question of whether automatic or manual transmissions are  
-        better for gas mileage we will look at vehicles with roughly the same  
-        design components as possible using this given data set.  Such a  
-        comparison is best shown in figure XXXXX
-        
+
         
 #       Problem Statement & Questions:    
                 ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
@@ -45,57 +18,6 @@ output:
                 transmissions"  
 ---
 
-#       Grading - Criteria (remove on completion)!!!  
-        ####YES!!!! Did the report include an executive summary?
-        ####???? Did the student answer the questions of interest or detail why  
-        the question(s) is (are) not answerable?
-        ####???? Did the student quantify the uncertainty in their conclusions  
-        and/or perform an inference correctly?
-        ####???? Was the report brief (about 2 pages long) for the main body of  
-        the report and no longer than 5 with supporting appendix of figures?
-
-
-        ####YES!!!! Did the student interpret the coefficients correctly?
-        ####YES!!!! Did the student do some exploratory data analyses?
-
-
-        ####YES!!!! Did the student fit multiple models and detail their  
-        strategy for model selection?
-        ####Needs some more work
-
-
-        ####YES!!!! Did the student do a residual plot and some diagnostics?
-        ####YES!!!! Was the report done in Rmd (knitr) with pdf output?
-
----
-
-#       Analysis Considerations:  
-        Descriptive - (dim, mean, sd, sigma^2, str & summary) statistics
-        
-        Exploratory - pairs, histograms, QQ, fitted, residualplots, boxplots  
-        & (multiple plots); T-Test
-        
-        Analysis -  OLS, simple linear regression, statistical linear  
-        regression, multivariate regression & model selection, logistic  
-        regression, pValues, adjustments, residuals, residual fit, predict fit,  
-        hatvalues, variance, & dfbetas, R^2, diagnostics; ANOVA, coeficients,  
-        confint, correlation, covariance, variance inflation
-
-#       Software Environment:    
-System - session Info: Set the Working Directory then get System & Session Info
-```{r SetDirectory, echo=TRUE, eval=FALSE, include=FALSE, results='hide'}
-setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
-sessionInfo();source('RMProjPackages.R');installed.packages()
-```        
-       
-#       Access Data:  
-Clean the work space, import the data from thr R data sets package and check for
-any missing values.
-
-Raw Data Overview: Motor Trend 'mtcars' data set: 
-```{r Data_mtcars, echo=TRUE, cache=TRUE, include=FALSE, results='hide'}
-rm(list=ls());data("mtcars");any(is.na(mtcars))
-```
 A data frame with 32 observations on 11 variables.  
 
 [, 1]	mpg	Miles/(US) gallon    
@@ -109,24 +31,6 @@ A data frame with 32 observations on 11 variables.
 [, 9]	am	Transmission (0 = automatic, 1 = manual)    
 [,10]	gear	Number of forward gears (3,4,5)  
 [,11]	carb	Number of carburetors (1,2,3,4,6,8)  
-
-#       Process Data:  
-Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) and order the data on mpg from  
-the lowest to highest mpg rating
-```{r ProcessData_factor, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-data("mtcars");for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);str(mtcars)
-```
-
-#       Descriptive Statistics:  
-Veiw the structure and summary of the mtcars data set to get an idea of the min.  
-max. mean, median, and 1st and 3rd quartiles for each of the variables. Then  
-order the data set from lowest mpg on top to highest mpg.
-
-```{r Descriptive_Stats, echo=TRUE, eval=TRUE, include=FALSE, results='hide'}
-mean(mtcars$mpg);median(mtcars$mpg)
-str(mtcars);summary(mtcars)
-ordmtcars <<- mtcars[order(mtcars$mpg,decreasing = FALSE),];ordmtcars[c(1:2,30:32),]
-```
 
 
 #       Exploratory Analysis:    
@@ -309,42 +213,7 @@ g
 
 
 
-#       Preliminary Findings:  
-        Questions of Interest:
-                A What other regressors if any correlated with mpg rating and 
-                transmission type?
-                B 
-        Interpretation of Results:
-                A Using ANOVA table with Nested Multivariate Regression fit it  
-                is clear that the variable weight (wt) is significance according  
-                with a code of ** = 0.001
-                B Based on the 
-                C
 
-#       Inference:
-        Hypothesis':
-                A H0 = The difference between Automatic and Manual transmission  
-                MPG = 0   
-                B Ha = The difference between Automatic and Manual transmission  
-                MPG != 0
-                C Desired confidence interval = .95 (one sided) ??
-```{r Inference_1, echo=TRUE, eval=TRUE, include=FALSE, results='hide'}
-library(kernlab)
-set.seed(8932)
-trainIndicator = rbinom(32, size = 1, prob = 0.5)
-table(trainIndicator)
-```
-
-
-
-```{r Prediction, eval=FALSE, warning=TRUE, include=FALSE}
-
-```
-
-
-#       Conclusions / Recommendations:  
-        A
-        B
 
 #       Any alternative analyses?
         A VIF

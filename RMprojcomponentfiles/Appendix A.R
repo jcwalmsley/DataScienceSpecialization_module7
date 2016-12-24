@@ -47,13 +47,6 @@ coplot(mpg ~ hp | as.factor(am), data = mtcars,
 Fig.2, Pairs
 ```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
 pairs(mtcars, main = "mtcars data")
-coplot(mpg ~ hp | as.factor(am), data = mtcars,
-       panel = panel.smooth, rows = 1)
-```
-
-Fig.2, Pairs
-```{r Pairs Fig.2, echo=TRUE, fig.height=6, fig.width=6}
-pairs(mtcars, main = "mtcars data")
 coplot(mpg ~ wt | as.factor(am), data = mtcars,
        panel = panel.smooth, rows = 1)
 ```

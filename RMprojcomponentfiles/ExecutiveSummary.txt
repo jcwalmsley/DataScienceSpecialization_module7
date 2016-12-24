@@ -1,0 +1,15 @@
+Executive Summary:
+
+The mean "MPG" rating of all vehicles included in this data set is 20.09062mpg.
+
+The mean "MPG" rating of vehicles with automatic transmisions is 17.15 mpg, and those with manual transmisions 24.38 mpg for a difference of 7.24 mpg in favor of the manual transmission in the given data set.
+
+Upon further analysis of the relationship between vehicle design components and "MPG" ratings in this particular dat set we find that a small number of vehicles exhibit a degree of leverage and influence over the "MPG" analysis results at both ends of the ratings. The following vehicles!!!!!!!
+
+
+Additionally, vehicle weight is highly correlated (-86.77%) with mpg ratings and transmission type is highly correlated with vehicle wieght at (69%). In other words lighter vehicles tend to have manual transmissions where as heavier vehicles tend to have automatic trasnmissions. Figure XXX shows the analysis that explains this bias in the data and is confirmed in the QQ plots where the low and high "MPG" ratings are not inclusive of both types of transmissions. This figure also shows that where the cubic inch displacement and hp are generally equivalent between transmission types there is only a very slight difference in "MPG" rating.
+
+
+To answer the question of whether automatic or manual transmissions are better for gas mileage we will look at vehicles with roughly the same design components  as possible using this given data set.  Such a comparison is best shown in figure XXXXX
+
+
