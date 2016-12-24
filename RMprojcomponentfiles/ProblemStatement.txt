@@ -1,5 +1,30 @@
-"You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:""
+Background information relating to the analysis:
+
+"You work for Motor Trend, a magazine about the automobile industry.""
+
+"Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome)."
+
+"They are particularly interested in the following two questions:"
 
 
 ## Q1 “Is an automatic or manual transmission better for 'mpg'”
 ## Q2 "Quantify the MPG difference between automatic and manual transmissions"
+---
+
+## Q1R Which transmission types is associated with higher mpg ratings: automatic or manual?
+
+## Q2R What is the estimated mpg difference between the two types of transmissions?
+
+## Q3 What are the conficence levels or our estimates?
+## Q4 What are the associated confidence intervals of these estimates?
+
+
+Assumptions:
+Given data set for this analysis consists of independent and identically distrubuted random varialbles iid for 32 vehicles or subjects with 11 variables or observations
+
+
+
+
+
+
+

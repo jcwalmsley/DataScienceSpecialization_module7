@@ -284,7 +284,17 @@ g
                 B Based on the 
                 C
 ---
-#       Appendix A: "Exploratory Analysis"
+#       Appendix A: Figures for the "Exploratory Analysis"
+
+##      Pairs Plot: 
+Interpretation: MPG decreases as the; # of cylinders increases, the engine  
+displacement increases, the horsepower increases, the weight increases, the rear  
+axle ratio decreases, qsec time decreases, the engine is a V-block, # of gears  
+decreases, and the # of carburators increases ~ conversely the MPG increases as  
+the: rear axle ratio increases, qsec time increases, the engine is a  
+Straight-block, transmission is manual, # of gears increases and the # of  
+carburators decreases
+
 
 ```{r Fig.1_Pairs, echo=FALSE, fig.align='center', fig.height=5, fig.width=6.5, message=FALSE, warning=FALSE}
 panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
@@ -300,9 +310,8 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 pairs(mtcars[1:11], lower.panel=panel.smooth, upper.panel = panel.cor, cex=1.5, pch=20, col="lightblue", cex.labels=2, font.lables =2, main = "MPG mtcars data")
 ```
 
-
-##      Histograms Plot
-```{r Fig.2_Hist, echo=FALSE, fig.height=4.0, fig.width=6.5}
+##      Histogram:
+```{r Fig.2_Hist, echo=FALSE, fig.align='center', fig.height=4.0, fig.width=6.5}
 data(mtcars)
 par(mfrow = c(2,1), mar = c(4,4,4,4)) # set margin
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
@@ -312,15 +321,15 @@ hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab
 abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 ```
 
-##      Box Plot
-```{r Fig.3_BoxPlot, echo=FALSE, fig.height=4, fig.width=6.5}
+##      Box Plot:
+```{r Fig.3_BoxPlot, echo=FALSE, fig.align='center', fig.height=4, fig.width=6.5}
 data("mtcars");par(mfrow = c(1,1), mar = c(4,4,4,4))
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission, Miles Per Gallon Ratings")
 ```
 
+
 ===
         END
 ===
-
 
