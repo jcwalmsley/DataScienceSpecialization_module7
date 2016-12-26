@@ -1,26 +1,55 @@
-Background information relating to the analysis:
+2       Bakckround information, problem statement & questions of interest:
+                Background situation:
+                        As a member of a team of data analysts for the Motor Trend Magazine we have been given a data set called "mtcars"
+                        and asked to answer some questions of interest concerning differences between automatic and manual transmissoin types
+                        in regards to associated mpg or miles per gallon ratings within the given data set.
+                Assumptions:
+                        The given data set (a sample of a larger population) for this analysis consists of (iid) independent and identically                                distrubuted random varialbles for 32 subjects (vehicles) of 11 observations or variables.
 
-"You work for Motor Trend, a magazine about the automobile industry.""
+        Questions of interest for Motor Trend Magazine:
+                Q1 “Is an automatic or manual transmission better for 'mpg'”
+                        or which type of tramsmission is associated with better mph or gas mileage ratings?
 
-"Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome)."
+                Q2 "Quantify the MPG difference between automatic and manual transmissions"
+                        or assuming there is an associated difference in mpg ratings between manual and automatic type transmissions then:
+                        What is the expected difference and how accurate is this estimate based on the given data?
 
-"They are particularly interested in the following two questions:"
+        Related questions:
+
+                Q3 What is the mean mpg for manual and for automatic transmissions?
+
+                Q4 What is are the confidence intervals related to the mean mpg rating for manual and automatics
+                        or with a 95% confidence level the values of the means are between x1 and x2
+
+                Q5 What is the standard error and variaince of those estimates?
+                        or the standard error of these two estimates are: a & b
 
 
-## Q1 “Is an automatic or manual transmission better for 'mpg'”
-## Q2 "Quantify the MPG difference between automatic and manual transmissions"
+        Prediction:
+                Hypothesis
+                General knowledge indicates that:
+                        typically luxury cars have automatic transmissions
+                        typically luxury cards weigh more than other models
+                        typically luxury cars have lower mpg ratings than other cars
+                        typically sports cars are lighter
+                        typically sports cars are faster
+                        typically sports cares have manual transmissions
+                        typically sports cars have lower mpg ratings than other models
+                        typically sedans are family cars
+                        typically sedans are slower than sports cars and lighter than luxury cars
+                        typically sedans have either manual or automatic transmissions
+                        typically sedans have higher mpg ratings than sports cars or luxuruy cars
+
+                H0 = mean(automatic)mpg < mean(manual)mpg
+                Ha = mean(automatic)mpg >= mean(manual)mpg
+
+
+                Q6 Are there any other models which have greater predictability that can be found through exploratory data analysis?
+
+                Q7 If so, were diagnisitic tests conducted to veriify their ability to provide better predictability and what were those results?
 ---
 
-## Q1R Which transmission types is associated with higher mpg ratings: automatic or manual?
 
-## Q2R What is the estimated mpg difference between the two types of transmissions?
-
-## Q3 What are the conficence levels or our estimates?
-## Q4 What are the associated confidence intervals of these estimates?
-
-
-Assumptions:
-Given data set for this analysis consists of independent and identically distrubuted random varialbles iid for 32 vehicles or subjects with 11 variables or observations
 
 
 

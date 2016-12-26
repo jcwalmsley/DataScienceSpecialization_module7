@@ -10,11 +10,19 @@ output:
 ---
 
 
-#       Executive Summary:  
+1       Executive Summary:  
         
-#       Problem Statement & Questions to Answer:  
-                ## Q1 “Is an automatic or manual transmission better for 'mpg'”  
-                ## Q2 "Quantify the MPG difference between automatic and manual transmissions"  
+2       Problem Statement & Questions to Answer:
+                Assumptions:
+                        The given data set (a sample of a larger population) for this analysis consists of (iid) independent and identically                                distrubuted random varialbles for 32 subjects (vehicles) of 11 observations or variables.
+                Questions off interest to the Motor Trend Magazine are:
+                Q1 “Is an automatic or manual transmission better for 'mpg'” 
+                        or which type of tramsmission is associated with better mph or gas mileage ratings?
+                Q2 "Quantify the MPG difference between automatic and manual transmissions"  
+                        or assuming there is an associated difference in mpg ratings between manual and automatic type transmissions then:
+                        What is the expected difference and how accurate is this estimate based on the given data?
+
+
 ---
 
 #       Analysis Considerations:
