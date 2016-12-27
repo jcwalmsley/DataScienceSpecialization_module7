@@ -148,18 +148,41 @@ Preliminary findings:
                         predictability using this set of regresssors
                 
         C Direction, Magnitude, Uncertainty
-                A. 
+                A.
+#       Multivarite Linear Model Finding Best Fit with Step function:
+```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, cache=TRUE, include=TRUE, results='asis'}
+library(stats);library(MASS)
+fstp <- lm(mpg ~ ., data = mtcars)
+stp <- step(fstp, trace = FALSE)
+coef(summary(stp))
+summary(stp)$r.squared
+par(mfrow = c(1, 1), mar = c(4,4,4,2))
+g <- ggplot(mtcars, aes(x = (wt + qsec + am), y = mpg),)
+g <- g + xlab("Model stp = (wt + qsec + am)")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", shape = factor(am)))
+g <- g + geom_point(aes(shape = factor(am), size=qsec, colour=wt))
+g
+```
         D Context
                 A. It should be noted that vehicle weight has a strong negative correlation
-                to mpg ratings and the weight of vehicle models with manual transmissions  
+                to mpg ratings (-86.76%) and the weight of vehicle models with manual transmissions  
                 range from 1.513tons to 3.570 tons and the weight of vehicles with automatic  
-                transmissions range from 2.465 tons to 5.424 tons
+                transmissions range from 2.465 tons to 5.424 tons 
                 
         E Implications - Congruence with existing knowledge?
                 A. Sedan, Sports, Luxury
+                Generally accepted expectations of mpg ratings are that sports and luxury models  
+                typically will have lower mpg ratings than sedans
 
 
-Diagnostics:                            √ ? more may be needed
+Diagnostics:                            √ 
+        Diagnostic tests were conducted on model results in accordance with the plan for analysis  
+        considerations. Besides several vehicle models exhibiting leverage on the model fit at the
+        high end of the qsec, and weight scales results were generally as expected with faster and  
+        or heavier vehilces of both manual and automatic transmissoin types getting lower mpg  
+        ratings and slower lighter vehicle models of both transmission types exhibiting better  
+        or higher mpg ratings.
 
 Hypothesis Test:                        ?
                 H0 = mean(automatic transmission)mpg  =   mean(manual transmission)mpg
@@ -175,6 +198,12 @@ Inference & Prediction:                 ?
 
 
 Interpretation of Results:              #
+
+
+
+
+
+
 
 Appendix A. Figures:                    √ need to review again possibly condense to one facet plot
 

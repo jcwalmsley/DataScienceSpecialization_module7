@@ -1,6 +1,5 @@
 library(car)
 library(datasets)
-attach(mtcars)
 library(dplyr)
 library(GGally)
 library(ggplot2)
