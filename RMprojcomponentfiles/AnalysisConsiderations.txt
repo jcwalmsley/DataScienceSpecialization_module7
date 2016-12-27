@@ -5,14 +5,9 @@ Descriptive - any(is.na()), str() & summary(),
 Exploratory - pairs_Plots(), histograms(), box_Plots(), bar_Plots() QQ_Plots & multiple plots
 
 Regression Models Analysis -
-        OLS, SLR, BiVariate Regression, Multivariate Linear Regression, Heatmaps,
-        HCL, PCA, SVD, Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),
-        simple linear regression, statistical linear regression, multivariable
-        regression, logit & model selection, adjustments, residuals (predict fit, residual
-        fit (-1)), hatvalues, variation, & dfbetas, R^2, diagnostics; ANOVA, GLMs &
-        Binary GLMs, coeficients, correlation, confidence intervals, Cooks Distance,
-        ChiSq-Test, VIF, binary, binomial, poisson, influence & leverage, Odds & OddRatio,
-        Inferential & Predictive, Causal ~ NA, Mechanistic ~ NA
+        SLR, BiVariate Regression, Multivariate Linear Regression, model selection,
+        adjustments, residuals (predict fit, residual fit (-1)), coeficients, correlation,
+        confidence intervals, influence & leverage,
 
 Diagnostics
         See section on Diagnostics

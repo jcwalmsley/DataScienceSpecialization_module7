@@ -52,14 +52,9 @@ Analysis Considerations:
         Descriptive - any(is.na()), str() & summary(),
         Exploratory - pairsPlots(), histograms(), boxPlots(), barPlots() QQ_Plots & multiple plots
         Regression Models Analysis -
-                OLS, SLR, BiVariate Regression, Multivariate Linear Regression, Heatmaps,
-                HCL, PCA, SVD, Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),
-                simple linear regression, statistical linear regression, multivariable
-                regression, logit & model selection, adjustments, residuals (predict fit, residual
-                fit (-1)), hatvalues, variation, & dfbetas, R^2, diagnostics; ANOVA, GLMs &
-                Binary GLMs, coeficients, correlation, confidence intervals, Cooks Distance,
-                ChiSq-Test, VIF, binary, binomial, poisson, influence & leverage, Odds & OddRatio,
-                Inferential & Predictive, Causal ~ NA, Mechanistic ~ NA
+                SLR, BiVariate Regression, Multivariate Linear Regression, model selection, 
+                adjustments, residuals (predict fit, residual fit (-1)), coeficients, correlation,  
+                confidence intervals, influence & leverage,
         Diagnostics
                 See section on Diagnostics
         Final Model Selection strategy
@@ -70,11 +65,7 @@ Analysis Considerations:
                 the results of the step(function), Choose the best fit which is understandable and easy to explian
         
 Technical Environment:                  
-        Environment:
-                System - session Info
-                Set the Working Directory
-                Record the System & Session Info
-                Check which packages have beeb installed
+        System - session Info; Set the Working Directory; Record the System & Session Info; Check for required packages
 
 ```{r, SetDirectory, echo=TRUE, eval=TRUE, include=FALSE, results='hide'}
 setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData");sessionInfo();installed.packages();date()
