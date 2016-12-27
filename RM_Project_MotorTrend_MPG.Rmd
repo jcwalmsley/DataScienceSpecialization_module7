@@ -16,7 +16,7 @@ Executive Summary:                      √
         multicollinearity which also produced a reasonably good fit with an R^2 value of 85.13%.
         It must also be noted that vehicle weight is highly correlated (-86.77%) with mpg ratings and
         transmission type is relatively highly correlated with vehicle wieght at (69%).
-        Problem Statement:                      √
+        Problem Statement:              √
                 Backround information, problem statement & questions of interest:
                 Background situation:
                         As a member of a team of data analysts for the Motor Trend Magazine we have been given  
@@ -205,7 +205,7 @@ Interpretation of Results:              #
 
 
 
-Appendix A. Figures:                    √ need to review again possibly condense to one facet plot
+Appendix A. Figures:                    √ need to review again possibly condense to one plot
 
 
 
