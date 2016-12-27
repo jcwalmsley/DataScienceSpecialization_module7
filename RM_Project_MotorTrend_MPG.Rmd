@@ -93,7 +93,7 @@ A data frame with 32 observations on 11 variables.
 
 Processed Data:                         
         Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) so there values can be used as levels
-```{r, ProcessData, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r, ProcessData, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars")
 for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);
 str(mtcars)
@@ -101,7 +101,7 @@ str(mtcars)
 
 Descriptive Statistics:                 
 
-```{r, DescriptiveStats, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 library(datasets);library(dplyr);data("mtcars")
 head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
 round(t.test(mtcars$mpg)$conf.int,3)
@@ -118,11 +118,11 @@ Exploratory Analysis:
         
 Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
-```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='asis'}
+```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='hide'}
 library(stats);library(MASS)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
-coef(summary(stp))
+table(coef(summary(stp)))
 summary(stp)$r.squared
 ```
 
