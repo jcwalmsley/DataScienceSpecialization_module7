@@ -1,14 +1,41 @@
-#Analysis considerations:
-# Descriptive - any(is.na()), dim(), head(), str() & summary(), mean(), median(), mode()
-#                 max(), min(), range(), length(), class(), names()
-#
-# Exploratory - pairs(), histograms(), boxplots(), barplot() QQ plots & multiple plots
-#
-# Analysis - OLS, SLR, BiVariate Regression, Multivariate Linear Regression, Heatmaps,
-#                 HCL, PCA, SVD, Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),
-#                 simple linear regression, statistical linear regression, multivariable
-#                 regression & model selection, adjustments, residuals (predict fit, residual
-#                 fit (-1)), hatvalues, variation, & dfbetas, R^2, diagnostics; ANOVA, GLMs &
-#                 Binary GLMs, coeficients, correlation, confidence intervals, Cooks Distance,
-#                 ChiSq-Test, VIF, binary, binomial, poisson, intercept, slope, influence &
-#                 leverage, Odds & OddRatio, Predictive, Causal ~ NA, Mechanistic ~ NA
+Analysis considerations:
+
+Descriptive - any(is.na()), str() & summary(),
+
+Exploratory - pairs_Plots(), histograms(), box_Plots(), bar_Plots() QQ_Plots & multiple plots
+
+Regression Models Analysis -
+        OLS, SLR, BiVariate Regression, Multivariate Linear Regression, Heatmaps,
+        HCL, PCA, SVD, Mean, T-Test, Z-Test, covariance, OLS, regression to mean (-1),
+        simple linear regression, statistical linear regression, multivariable
+        regression, logit & model selection, adjustments, residuals (predict fit, residual
+        fit (-1)), hatvalues, variation, & dfbetas, R^2, diagnostics; ANOVA, GLMs &
+        Binary GLMs, coeficients, correlation, confidence intervals, Cooks Distance,
+        ChiSq-Test, VIF, binary, binomial, poisson, influence & leverage, Odds & OddRatio,
+        Inferential & Predictive, Causal ~ NA, Mechanistic ~ NA
+
+Diagnostics
+        See section on Diagnostics
+
+Final Model Selection strategy
+        Beginning with the simmple linear regression using just one predictor (am)
+        Use a bivariate model
+        Use a multivariate model
+        Use an intercept adjusted multivariate model
+        Use a multivariate model removing a suspected key regressor
+        Use the nested multivariate process
+        Use the step(function) both directions process
+        Use diffent combinations and leave out from the results of the step(function)
+        Choose the simplest to explain
+
+
+
+
+
+
+
+
+
+
+
+

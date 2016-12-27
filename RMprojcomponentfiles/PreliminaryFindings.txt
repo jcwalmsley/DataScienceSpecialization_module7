@@ -7,10 +7,9 @@ A Revisit the Question
 
 B Primary result
         A. Are any other regressors significantly correlated with mpg rating?
-                a. weight - per thousand pounds
-                b. qsec - quarter mile distance time
-                c. am - transmission type
-        B.
+                a. model fnm6 = factor(am) + cyl + disp + hp + drat + wt
+        B. Further testing
+                a.
 
 C Direction, Magnitude, Uncertainty
         A. am - positive,
@@ -23,3 +22,12 @@ D Context
 E Implications - Congruence with existing knowledge?
         A. Sedan, Sports, Luxury
 
+
+To answer the question of whether automatic or manual transmissions are better for gas mileage
+we will look at vehicles with roughly the same design components  as possible using this given
+data set.  Such a comparison is best shown in figure XXXXX
+
+
+Our results of diagnostic testing that a small number of vehicles exhibit a degree of leverage
+and influence over the "MPG" analysis results at both ends of the ratings. The following
+vehicles!!!!!!!

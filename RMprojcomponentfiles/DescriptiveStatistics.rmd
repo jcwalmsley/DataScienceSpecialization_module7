@@ -1,0 +1,14 @@
+Descriptive Statistics: structure, summary
+
+```{r, DescriptiveStats, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+library(datasets);library(dplyr);data("mtcars");head(mtcars)
+head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
+t.test(mtcars$mpg);round(t.test(mtcars$mpg)$conf.int,3)
+mtcars0 <- mtcars[mtcars$am==0,];mtcars0;t.test(mtcars0$mpg)
+mtcars1 <- mtcars[mtcars$am==1,];mtcars1;t.test(mtcars1$mpg)
+c4 <- mtcars$mpg[mtcars$cyl==4];c4;t.test(c4,c6,var.equal = TRUE)
+c6 <- mtcars$mpg[mtcars$cyl==6];c6
+c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
+range(mtcars0$wt)
+range(mtcars1$w)
+```

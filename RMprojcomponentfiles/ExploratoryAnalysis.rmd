@@ -1,0 +1,165 @@
+#       Simple Linear Regression Plot:
+Examine the relationship between mpg ratings and transmission type; automatic vs manual
+```{r Fig.4_SimpleLR, echo=FALSE, eval=FALSE, fig.align='center',fig.height=4.0, fig.width=6.5, message=FALSE, warning=FALSE}
+library(dplyr);library(ggplot2)
+data("mtcars");head(mtcars)
+mtcars$am <- c("0" = "automatic", "1" = "manual")[as.character(mtcars$am)]
+mtcars
+f1 <- lm(mpg ~ factor(am), data = mtcars)
+coef(summary(f1))
+confint(f1)
+par(mfrow = c(1,1), mar = c(2,2,2,2)) # set margin
+g <- ggplot(mtcars, aes(x = factor(am), y = mpg),)
+g <- g + xlab("Transmission Type")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_point(size = 4.0, col = "blue", alpha = .45)
+g <- g + geom_abline(intercept = 9.91, slope = 7.24) # adjusted (-7.24) to fit grid
+g
+```
+
+
+#       Bivariate Linear Model:
+Examine the relationship between mpg & two variables: am & weight beacuse weight has an -86%
+negative correlation with mpg (the highest single variable correlation with mpg)
+```{r Fig.5a_BivariateLM, echo=FALSE, eval=FALSE, fig.align='center', fig.height=6.0, fig.width=7.5, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+library(car);data("mtcars")
+f2 <- lm(mpg ~ as.numeric(am) + wt, data = mtcars)
+hatvalues(f2);coef(summary(f2));vif(f2);sqrt(vif(f2))
+par(mfrow = c(2,2), mar = c(4,4,3,2)) # set margin
+plot(f2)
+```
+
+```{r Fig.5b_BivariateLM, echo=FALSE, eval=FALSE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+library(car);library(dplyr);library(ggplot2)
+f2 <- lm(mpg ~ as.numeric(am) + wt, data = mtcars)
+par(mfrow = c(1,1), mar = c(4,4,4,2))
+g <- ggplot(mtcars, aes(x = as.numeric(am) + wt , y = mpg),)
+g <- g + xlab("Transmission Type + Weight")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
+g <- g + geom_point(size = 3.5, col = "blue", alpha = .65)
+g
+```
+
+#       Multivariate Linear Model (all vars):
+
+The influence measures test indicates that the following vehicles exhibit
+substatial influence on the model fit; "Merc 230","Merc 280", "Honda Civic",
+"Camaro Z28","Porsche 914-2","ford Pantera L","ferrari Dino","Maserati Bora"
+based on the cov.r (covariance ratio) at 2.809 or above
+
+
+```{r Fig.6_MVLM(allvars), echo=FALSE, eval=c(1,2,4,7:19), fig.align='center', fig.height=7, fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+library(car);library(ggplot2)
+data("mtcars")
+as.numeric(unlist(mtcars))
+f3 <- lm(mpg ~ ., data = mtcars)
+coef(summary(f3))
+confint(f3)
+vif(f3)
+sqrt(vif(f3))
+par(mfrow = c(1, 1), mar = c(3,3,3,2))
+g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb), y = mpg),)
+g <- g + xlab("Inclusive of All Design Components with factor of am & cyl")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", se = FALSE))
+g <- g + geom_point(aes(shape = factor(am), size = 4.0))
+g <- g + geom_point(aes(colour = factor(cyl)))
+g
+```
+
+#       Multivariate Linear Model (all vars) Adjusted:
+```{r Fig.7a_MVLM(allvars,-1), echo=TRUE,  eval=TRUE, cache=TRUE, fig.align='center', fig.height=7,fig.width=9, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+library(car);library(ggplot2);library(dplyr);library(MASS)
+f6 <- lm(mpg ~ . -1, data = mtcars)
+coef(summary(f6))
+confint(f6)
+par(mfrow = c(1,1), mar = c(4,4,2,2)) # set margin
+g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb -1), y = mpg),)
+g <- g + xlab("Multivariate(allvars)- Adjusted to Intercept")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm"))
+g <- g + geom_point(aes(shape = factor(am), size = 4.0))
+g <- g + geom_point(aes(colour = factor(cyl)))
+g
+```
+
+
+
+#       Multivariate Linear Model (all vars - am):
+
+Remove the am variable from the multivariate linear regression to see what
+effect it has on the fit
+
+```{r Fig.7b_MVLM(allvars,-am), echo=TRUE, eval=TRUE, fig.height=4, fig.width=4, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+data("mtcars");library(ggplot2)
+f4 <- lm(mpg ~ . - am, data = mtcars)
+coef(summary(f4));vif(f4);sqrt(vif(f4));# plot(f3)
+par(mfrow = c(1, 1), mar = c(4,4,4,2))
+g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt + qsec + vs + gear + carb), y = mpg),)
+g <- g + xlab("All Design Components - am")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", se=FALSE))
+g <- g + geom_point(size = 2.5, col = "black", alpha = .85)
+g <- g + geom_point(aes(shape = factor(gear), size = 4.5, colour = "white"))
+g <- g + geom_point(aes(colour = factor(cyl), size = 3.5))
+g <- g + geom_point(aes(size = drat), alpha = .4)
+g
+# par(mfrow = c(2, 2), mar = c(4,4,4,2))
+# plot(f4)
+```
+
+
+##      Multivariate Nested LM & ANOVA table
+Using a nested model approach, followed by checking for variance inflation
+using the command vif we can see that cyl, disp & hp
+
+```{r Fig.8_MVLM_ANOVA_table.test, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+data("mtcars")
+mtcarsO <- mtcars[order(mtcars$mpg),]
+mtcarsO$am <- factor(mtcarsO$am);str(mtcarsO)
+fn1 <- lm(mpg ~ factor(am), data = mtcarsO)
+fnm2 <- update(fn1, mpg ~ cyl)
+fnm3 <- update(fn1, mpg ~ cyl + disp)
+fnm4 <- update(fn1, mpg ~ cyl + disp + hp)
+fnm5 <- update(fn1, mpg ~ cyl + disp + hp + drat)
+fnm6 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt)
+fnm7 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec) 
+fnm8 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs)
+fnm9 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs + gear)
+fnm10 <- update(fn1, mpg ~ cyl + disp + hp + drat + wt +  qsec + vs + gear + carb)
+anova(fn1, fnm2, fnm3, fnm4, fnm5, fnm6, fnm7, fnm8, fnm9, fnm10)
+anova(fnm3,fnm6)
+coef(summary(fnm6))
+confint(fnm6)
+summary(fnm6)$r.squared
+#par(mfrow = c(2,2), mar = c(4,4,4,2))
+par(mfrow = c(1, 1), mar = c(4,4,4,2))
+g <- ggplot(mtcars, aes(x = (cyl + disp + hp + drat + wt), y = mpg),)
+g <- g + xlab("Model fnm6 (cyl:wt + factor(am))")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", se=FALSE))
+g <- g + geom_point(size = 2.5, col = "black", alpha = .85)
+g <- g + geom_point(aes(shape = factor(gear), size = 4.5, colour = "white"))
+g <- g + geom_point(aes(colour = factor(cyl), size = 3.5))
+g <- g + geom_point(aes(size = drat), alpha = .4)
+g
+```
+
+
+#       Multivarite Linear Model Finding Best Fit with Step function:
+```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, cache=TRUE, include=TRUE, results='asis'}
+library(stats);library(MASS)
+fstp <- lm(mpg ~ ., data = mtcars)
+stp <- step(fstp, trace = FALSE)
+coef(summary(stp))
+summary(stp)$r.squared
+par(mfrow = c(1, 1), mar = c(4,4,4,2))
+g <- ggplot(mtcars, aes(x = (wt + qsec + am), y = mpg),)
+g <- g + xlab("Model stp = (wt + qsec + am)")
+g <- g + ylab("Miles per Gallon")
+g <- g + geom_smooth(aes(method = "lm", shape = factor(am)))
+g <- g + geom_point(aes(shape = factor(am), size=qsec, colour=wt))
+g
+```
+

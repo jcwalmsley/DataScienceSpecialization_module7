@@ -1,10 +1,10 @@
-2       Bakckround information, problem statement & questions of interest:
+2       Backround information, problem statement & questions of interest:
                 Background situation:
                         As a member of a team of data analysts for the Motor Trend Magazine we have been given a data set called "mtcars"
                         and asked to answer some questions of interest concerning differences between automatic and manual transmissoin types
                         in regards to associated mpg or miles per gallon ratings within the given data set.
                 Assumptions:
-                        The given data set (a sample of a larger population) for this analysis consists of (iid) independent and identically                                distrubuted random varialbles for 32 subjects (vehicles) of 11 observations or variables.
+                        The given data set (a sample of a larger population) for this analysis consists of (iid) independent and identically distrubuted random varialbles for 32 subjects (vehicles) of 11 observations or variables.
 
         Questions of interest for Motor Trend Magazine:
                 Q1 “Is an automatic or manual transmission better for 'mpg'”
@@ -13,7 +13,6 @@
                 Q2 "Quantify the MPG difference between automatic and manual transmissions"
                         or assuming there is an associated difference in mpg ratings between manual and automatic type transmissions then:
                         What is the expected difference and how accurate is this estimate based on the given data?
-
         Related questions:
 
                 Q3 What is the mean mpg for manual and for automatic transmissions?
@@ -25,28 +24,63 @@
                         or the standard error of these two estimates are: a & b
 
 
+
+--------------------------------------------------------------------------------
+
         Prediction:
                 Hypothesis
-                General knowledge indicates that:
+                General automotive industry knowledge indicates that:
                         typically luxury cars have automatic transmissions
                         typically luxury cards weigh more than other models
-                        typically luxury cars have lower mpg ratings than other cars
+                        typically luxury cars have lower mpg ratings than other models
                         typically sports cars are lighter
                         typically sports cars are faster
-                        typically sports cares have manual transmissions
+                        typically sports cars have manual transmissions
                         typically sports cars have lower mpg ratings than other models
                         typically sedans are family cars
                         typically sedans are slower than sports cars and lighter than luxury cars
                         typically sedans have either manual or automatic transmissions
-                        typically sedans have higher mpg ratings than sports cars or luxuruy cars
+                        typically sedans have higher mpg ratings than sports cars or luxury cars
 
-                H0 = mean(automatic)mpg < mean(manual)mpg
-                Ha = mean(automatic)mpg >= mean(manual)mpg
+                Based general automotive industry information we propose the following hypothesis:
+
+                H0 = mean(automatic transmission)mpg  <   mean(manual transmission)mpg
+                Ha = mean(automatic transmission)mpg  >=  mean(manual transmission)mpg
+
+                        qt = quantile
+                        confint = confidence intervals
+
 
 
                 Q6 Are there any other models which have greater predictability that can be found through exploratory data analysis?
+                        1) weight or (weight + am)
+                        2) qsec or (qsec + am)
+                        3) (weight + qsec) or (weight + qsec + am)
 
-                Q7 If so, were diagnisitic tests conducted to veriify their ability to provide better predictability and what were those results?
+
+
+                Q7 If so, were diagn0sitic tests conducted to veriify their ability to provide better predictability and what were those results?
+                        pValues
+                        df = degrees of freedom
+                        t value
+                        hatvalues
+                        residuals
+                        residuals vs fitted
+                        R^2
+                        QQ plots
+                        rstandard
+                        rstudent
+                        dffits
+                        dfbeta
+                        dfbestas
+                        covratio
+                        cook's distance
+                        influence.measures
+
+
+
+
+
 ---
 
 

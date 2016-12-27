@@ -1,0 +1,86 @@
+DIAGNOSTIC TESTS:
+       %pValues, degrees of freedom, t value, hatvalues,residuals
+        residuals vs fitted,R^2, QQ plots, rstandard, rstudent, dffits
+        dfbeta, dfbestas, covratio, cook's distance, influence.measures
+        
+
+This plot of Resid(fit) produces a random distribution with a single outlier at a 
+value slightly above 26, and checks out with a sum(e) of 5.995204e-15 or zero indicating 
+a good fit
+```{r Fig.D1_ResidFit, echo=TRUE, eval=TRUE, fig.align="center", fig.height=4.5, fig.width=4.5}
+x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
+y <- mtcars$mpg
+n <- length(y)
+fw <- lm(y ~ x, data = mtcars)
+coef(summary(fw))
+e <- resid(fw);sum(e)
+#par(mfrow = c(1,1), mar = c(4,4,4,3)) # set margin
+plot(x,e,
+     xlab = "wt + qsec + am",
+     ylab = "Residuals Fit (mpg)",
+     bg = "lightblue",
+     col = "black", cex = 2.5, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+sum(e)
+```
+
+
+
+The hatvalues plot does not exhibit any obvious patterns or trends
+```{r Fig.D2_hatvalues, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4.5, fig.width=4.5}
+par(mfrow = c(2,2), mar = c(4,4,4,3)) # set margin
+x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
+y <- mtcars$mpg
+n <- length(y)
+plot(hatvalues(lm(mpg ~ x, data = mtcars)))
+plot(hatvalues(lm(mpg ~ ., data = mtcars)))
+plot(hatvalues(fnm6)[order(hatvalues(fnm6), decreasing=TRUE)])
+```
+
+
+
+
+The dffits test shows evenly distributed random results above and
+below the center at zero with a single outlier at 6 with a 31 mmpg rating
+```{r Fig.D3_dft2, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4.5, fig.width=4.5}
+x <- (mtcars$wt + mtcars$qsec + mtcars$am)
+y <- mtcars$mpg
+n <- length(y)
+f2 <- lm(mpg ~ x, data = mtcars)
+plot(dffits(f2))
+```
+
+
+
+```{r Fig.D4_cooksDist, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4.5, fig.width=4.5}
+x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
+y <- mtcars$mpg
+n <- length(y)
+plot(cooks.distance(lm(mpg ~ x, data = mtcars)))
+```
+
+
+
+```{r Fig.D5_resid(fit)/(1-hatvalues(fit)), echo=TRUE, eval=TRUE, fig.align='center',fig.height=4.5, fig.width=4.5}
+data("mtcars")
+x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
+y <- mtcars$mpg
+n <- length(y)
+f2 <- lm(mpg ~ x, data = mtcars)
+pressResid1 <- resid(f2)/(1-hatvalues(f2));plot(pressResid1)
+```
+
+
+
+
+```{r Fig.D6_dfbeta, echo=TRUE, eval=TRUE, fig.align='center', fig.height=3.5, fig.width=3.5}
+x <- (mtcars$wt + mtcars$qsec + mtcars$am)
+y <- mtcars$mpg
+n <- length(y)
+plot(dfbeta(lm(mpg ~ x, data = mtcars, family = binomial)))
+```
+
+
+---
