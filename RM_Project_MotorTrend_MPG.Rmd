@@ -10,13 +10,14 @@ output:
   html_document: default
 ---
 Executive Summary:                      
-        Using a braod range of linear regressoin model variations including the step function to gauge
-        best model fit we idendified a model using (wt + qsec + am) that provides an 84.966 R^2 value
-        inidicating a reasonalby goo fit which practically matches a slightly different fit that was  
-        devloped using the manual nested approach followed by and anove table test to check for  
-        multicollinearity which also produced a reasonably good fit with an R^2 value of 85.13%.
-        It must also be noted that vehicle weight is highly correlated (-86.77%) with mpg ratings and
-        transmission type is relatively highly correlated with vehicle wieght at (69%).
+        
+        Using a broad range of linear regression model variations including the step function to gauge
+        model fit we idendified a model with (wt + qsec + am) that provides an 84.966 R^2 value
+        inidicating a reasonalby good and closeley matched a slightly different fit devloped using the  
+        manual nested approach followed by and anova table test to check for multicollinearity which  
+        also produced a reasonably good fit with an R^2 value of 85.13%. It must also be noted that  
+        vehicle weight is highly correlated (-86.77%) with mpg ratings and transmission type is  
+        relatively highly correlated with vehicle wieght at (69%).
         
         Problem Statement:              
                 Backround information, problem statement & questions of interest:
@@ -24,26 +25,29 @@ Executive Summary:
                         As a member of a team of data analysts for the Motor Trend Magazine we have been given  
                         a data set called "mtcars" and asked to answer some questions of interest concerning  
                         differences between automatic and  manual transmissoin types in regards to associated  
-                        mpg or miles per gallon ratings within the given data set. 
+                        mpg or miles per gallon ratings in this data set. 
                 Assumptions:
-                        The given data set (a sample of a larger population) for this analysis consists of (iid)  
-                        independent and identically distrubuted random varialbles for 32 subjects (vehicles) of  
-                        11 observations or variables.
+                        The given data set (a sample of a unknown larger population) for this analysis consists  
+                        of (iid) independent and identically distrubuted random varialbles for 32 subjects  
+                        (vehicles) of 11 observations or variables.
                 
                         Questions of interest for Motor Trend Magazine:
                 
                         Q1 “Is an automatic or manual transmission better for 'mpg'”
-                                or which type of tramsmission is associated with better mph or gas mileage ratings?
-                                A1. The mean "MPG" rating of all vehicle models including both transmission types  
-                                is 20.091 mpg with a 95% confint of 17.917mpg to 22.263mpg.
-                        Q2 "Quantify the MPG difference between automatic and manual transmissions"
-                                or assuming there is an associated difference in mpg ratings between manual and  
-                                automatic type transmissions then: What is the expected difference and how accurate  
+                                or which type of transmission is associated with better mpg or gas mileage ratings?
+                                
+                                A1. The mean "mpg" rating of all vehicle models including both transmission types  
+                                is 20.09 mpg with a 95% confidence interval of 17.92 mpg to 22.26 mpg.
+                                
+                        Q2 "Quantify the mpg difference between automatic and manual transmissions"
+                                What is the expected difference in mpg rating and how accurate  
                                 is this estimate based on the given data?
-                                A2. The mean "MPG"  of models with automatic transmisions is 17.147 mpg, and those  
-                                with manual transmisions 24.392 mpg for a difference of 7.24 mpg in favor of the  
-                                manual transmission in the given data set.
-
+                                
+                                A2. The mean "mpg" of models with automatic transmisions is 17.15 mpg, with a 95%  
+                                confidence interval of between 14.85 mpg to 19.44 mpg and vehicles with manual  
+                                transmisions have a mean of 24.39 mpg for a difference of 7.24 mpg with a 95 %  
+                                confidence interval of between 18.49 mpg and 30.29 mpg  
+                                
 Analysis Considerations:                 
         Descriptive - any(is.na()), str() & summary(),
         Exploratory - pairsPlots(), histograms(), boxPlots(), barPlots() QQ_Plots & multiple plots
@@ -106,12 +110,13 @@ str(mtcars)
 
 Descriptive Statistics:                 
 
-```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
-library(datasets);library(dplyr);data("mtcars");head(mtcars)
+```{r, DescriptiveStats, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+library(datasets);library(dplyr);data("mtcars")
 head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
-t.test(mtcars$mpg);round(t.test(mtcars$mpg)$conf.int,3)
+round(t.test(mtcars$mpg)$conf.int,3)
 mtcars0 <- mtcars[mtcars$am==0,];mtcars0;t.test(mtcars0$mpg)
 mtcars1 <- mtcars[mtcars$am==1,];mtcars1;t.test(mtcars1$mpg)
+c6 <- mtcars$mpg[mtcars$cyl==6];c6
 c4 <- mtcars$mpg[mtcars$cyl==4];c4;t.test(c4,c6,var.equal = TRUE)
 c6 <- mtcars$mpg[mtcars$cyl==6];c6
 c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
@@ -152,7 +157,7 @@ Preliminary findings:
         C Direction, Magnitude, Uncertainty
                 A.
 #       Multivarite Linear Model Finding Best Fit with Step function:
-```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, cache=TRUE, include=TRUE, results='asis'}
+```{r MVLM_Step_R^2, eval=TRUE, echo=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
