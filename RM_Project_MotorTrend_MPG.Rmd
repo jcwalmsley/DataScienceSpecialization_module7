@@ -1,14 +1,15 @@
 ---
-title: "Regression Models Course Project - Motor Trend Data Set - 'mtcars' Miles Per Gallon Ratings Analysis"
+title: Regression Models Course Project - Motor Trend Data Set - 'mtcars' Miles Per
+  Gallon Ratings Analysis
 author: "james c walmsley"
 date: "12/1/2016"
 output:
-  html_document: default
   pdf_document:
     fig_caption: yes
     fig_height: 5.5
+  html_document: default
 ---
-Executive Summary:                      √
+Executive Summary:                      
         Using a braod range of linear regressoin model variations including the step function to gauge
         best model fit we idendified a model using (wt + qsec + am) that provides an 84.966 R^2 value
         inidicating a reasonalby goo fit which practically matches a slightly different fit that was  
@@ -16,7 +17,8 @@ Executive Summary:                      √
         multicollinearity which also produced a reasonably good fit with an R^2 value of 85.13%.
         It must also be noted that vehicle weight is highly correlated (-86.77%) with mpg ratings and
         transmission type is relatively highly correlated with vehicle wieght at (69%).
-        Problem Statement:              √
+        
+        Problem Statement:              
                 Backround information, problem statement & questions of interest:
                 Background situation:
                         As a member of a team of data analysts for the Motor Trend Magazine we have been given  
@@ -42,7 +44,7 @@ Executive Summary:                      √
                                 with manual transmisions 24.392 mpg for a difference of 7.24 mpg in favor of the  
                                 manual transmission in the given data set.
 
-Analysis Considerations:                 √
+Analysis Considerations:                 
         Descriptive - any(is.na()), str() & summary(),
         Exploratory - pairsPlots(), histograms(), boxPlots(), barPlots() QQ_Plots & multiple plots
         Regression Models Analysis -
@@ -63,7 +65,7 @@ Analysis Considerations:                 √
                 Use the step(function) both directions process, Usee different combinations and leave out from  
                 the results of the step(function), Choose the best fit which is understandable and easy to explian
         
-Technical Environment:                  √
+Technical Environment:                  
         Environment:
                 System - session Info
                 Set the Working Directory
@@ -74,7 +76,7 @@ Technical Environment:                  √
 setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData");sessionInfo();installed.packages();date()
 ```
 
-Raw Data:                               √
+Raw Data:                               
         Clean up work space, import the data & check for missing values
         Overview: Motor Trend 'mtcars' data set:
 ```{r, Data_mtcars, include=FALSE, results='hide'}
@@ -94,7 +96,7 @@ A data frame with 32 observations on 11 variables.
 [,10]	gear	Number of forward gears (3:5)
 [,11]	carb	Number of carburetors (1:4,6,8)
 
-Processed Data:                         √
+Processed Data:                         
         Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) so there values can be used as levels
 ```{r, ProcessData, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars")
@@ -102,7 +104,7 @@ for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);
 str(mtcars)
 ```
 
-Descriptive Statistics:                 √
+Descriptive Statistics:                 
 
 ```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 library(datasets);library(dplyr);data("mtcars");head(mtcars)
@@ -115,10 +117,10 @@ c6 <- mtcars$mpg[mtcars$cyl==6];c6
 c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
 ```
 
-Exploratory Analysis:                   √
+Exploratory Analysis:                   
         See Appendix A. Figures (pairs-plot, histogram, box-plot)
         
-Statistical Modeling:                   √
+Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
 ```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='asis'}
 library(stats);library(MASS)
@@ -151,7 +153,7 @@ Preliminary findings:
                 A.
 #       Multivarite Linear Model Finding Best Fit with Step function:
 ```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, cache=TRUE, include=TRUE, results='asis'}
-library(stats);library(MASS)
+library(stats);library(MASS);library(ggplot2)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
 coef(summary(stp))
@@ -176,7 +178,7 @@ g
                 typically will have lower mpg ratings than sedans
 
 
-Diagnostics:                            √ 
+Diagnostics:                             
         Diagnostic tests were conducted on model results in accordance with the plan for analysis  
         considerations. Besides several vehicle models exhibiting leverage on the model fit at the
         high end of the qsec, and weight scales results were generally as expected with faster and  
@@ -205,7 +207,7 @@ Interpretation of Results:              #
 
 
 
-Appendix A. Figures:                    √ need to review again possibly condense to one plot
+Appendix A. Figures:                    need to review again possibly condense to one plot
 
 
 
