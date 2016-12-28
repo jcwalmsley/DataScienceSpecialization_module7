@@ -195,7 +195,6 @@ Diagnostics:
 ```{r, t.test_mpg, echo=TRUE, eval=TRUE,include=TRUE,results='asis'}
 t.test(mpg ~ factor(am), paired = FALSE, var.equal=FALSE, data = mtcars)
 ```
-
 	Welch Two Sample t-test
 
 data:  mpg by factor(am)
