@@ -1,12 +1,13 @@
 Executive Summary:
 
-Using a broad range of linear regression model variations including the step function to gauge
-model fit we identified a model with (wt + qsec + am) that provides an 84.966 R^2 value
-inidicating a reasonalby good fit and closeley matched a slightly different fit devloped using the
-manual nested approach followed by and anova table test to check for multicollinearity which
-also produced a reasonably good fit with an R^2 value of 85.13%. It must also be noted that
-vehicle weight is highly correlated (-86.77%) with mpg ratings and transmission type is
-relatively highly correlated with vehicle wieght at (69%).
+Using linear regression model variations, including the step function, to gauge model fit,
+we identified model fa <- lm(mpg ~ (wt + qsec + am), data= mtcars) that provides an 84.966
+R^2 value indicating a reasonalby good fit and another model fit fb <- lm(mpg ~ I(cyl + disp
++ hp + drat + wt + factor(am), data = mtcars) devloped using the multivariate nested approach
+followed by and anova table test to check for multicollinearity which also produced a reasonably
+good fit with an R^2 value of 85.13%. It must also be noted that vehicle weight is highly
+correlated (-86.77%) with mpg ratings and transmission type is relatively highly correlated
+with vehicle wieght at (69%).
 
 
 
