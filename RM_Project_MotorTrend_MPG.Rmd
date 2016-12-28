@@ -20,52 +20,22 @@ good fit with an R^2 value of 85.13%. It must also be noted that vehicle weight 
 correlated (-86.77%) with mpg ratings and transmission type is relatively highly correlated  
 with vehicle wieght at (69%).
         
-Problem Statement:              
-        Backround information, problem statement & questions of interest:
-        Background situation:
-                As a member of a team of data analysts for the Motor Trend Magazine we have been given  
-                a data set called "mtcars" and asked to answer some questions of interest concerning  
-                differences between automatic and  manual transmissoin types in regards to associated  
-                mpg or miles per gallon ratings in this data set. 
-        Assumptions:
-                The given data set (a sample of a unknown larger population) for this analysis consists  
-                of (iid) independent and identically distrubuted random varialbles for 32 subjects  
-                (vehicles) of 11 observations or variables.
-                
                 Questions of interest for Motor Trend Magazine:
                 
                 Q1 “Is an automatic or manual transmission better for 'mpg'”
                         or which type of transmission is associated with better mpg or gas mileage ratings?
-                                
-                        A1. The mean "mpg" rating of all vehicle models including both transmission types  
-                        is 20.09 mpg with a 95% confidence interval of 17.92 mpg to 22.26 mpg.
+                A1. The mean "mpg" rating of all vehicle models including both transmission types  
+                is 20.09 mpg with a 95% confidence interval of 17.92 mpg to 22.26 mpg.
                                 
                 Q2 "Quantify the mpg difference between automatic and manual transmissions"
-                        What is the expected difference in mpg rating and how accurate  
-                        is this estimate based on the given data?
+                What is the expected difference in mpg rating and how accurate  
+                is this estimate based on the given data?
                                 
-                        A2. The mean "mpg" of models with automatic transmisions is 17.15 mpg, with a 95%  
-                        confidence interval of between 14.85 mpg to 19.44 mpg and vehicles with manual  
-                        transmisions have a mean of 24.39 mpg for a difference of 7.24 mpg with a 95 %  
-                        confidence interval of between 18.49 mpg and 30.29 mpg  
+                A2. The mean "mpg" of models with automatic transmisions is 17.15 mpg, with a 95%  
+                confidence interval of between 14.85 mpg to 19.44 mpg and vehicles with manual  
+                transmisions have a mean of 24.39 mpg for a difference of 7.24 mpg with a 95 %  
+                confidence interval of between 18.49 mpg and 30.29 mpg  
                                 
-                                
-# Analysis Considerations:                 
-        Descriptive - any(is.na()), str() & summary(),
-        Exploratory - pairsPlots(), histograms(), boxPlots(), barPlots() QQ_Plots & multiple plots
-        Regression Models Analysis -
-                SLR, BiVariate Regression, Multivariate Linear Regression, model selection, 
-                adjustments, residuals (predict fit, residual fit (-1)), coeficients, correlation,  
-                confidence intervals, influence & leverage,
-        Diagnostics
-                See section on Diagnostics
-        Final Model Selection strategy
-                Beginning with the simmple linear regression using just one predictor (am),
-                Use a bivariate model, Use a multivariate model, Use an intercept adjusted multivariate model
-                Use a multivariate model removing a suspected key regressor, Use the nested multivariate process
-                Use the step(function) both directions process, Usee different combinations and leave out from  
-                the results of the step(function), Choose the best fit which is understandable and easy to explian
-        
 # Technical Environment:                  
         System - session Info; Set the Working Directory; Record the System & Session Info; Check for required packages
 
@@ -103,16 +73,10 @@ str(mtcars)
 
 # Descriptive Statistics:                 
 
-```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r, DescriptiveStats, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(datasets);library(dplyr);data("mtcars")
 head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
 round(t.test(mtcars$mpg)$conf.int,3)
-mtcars0 <- mtcars[mtcars$am==0,];mtcars0;t.test(mtcars0$mpg)
-mtcars1 <- mtcars[mtcars$am==1,];mtcars1;t.test(mtcars1$mpg)
-c6 <- mtcars$mpg[mtcars$cyl==6];c6
-c4 <- mtcars$mpg[mtcars$cyl==4];c4;t.test(c4,c6,var.equal = TRUE)
-c6 <- mtcars$mpg[mtcars$cyl==6];c6
-c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
 ```
 
 # Exploratory Analysis:                   
@@ -120,7 +84,7 @@ c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
         
 # Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
-```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE,  results='hide'}
+```{r ModelFitStep, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE,  results='hide'}
 library(stats);library(MASS);library(dplyr);data("mtcars")
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
@@ -150,7 +114,7 @@ anova(stp)
         C Direction, Magnitude, Uncertainty
                 A.
 # Multivarite Linear Model Finding Best Fit with Step function:
-```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r MVLM_Step_R^2, echo=FALSE, eval=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
@@ -165,52 +129,19 @@ g <- g + geom_smooth(aes(method = "lm", shape = factor(am)))
 g <- g + geom_point(aes(shape = factor(am), size=qsec, colour=wt))
 g
 ```
-        D Context
-                A. It should be noted that vehicle weight has a strong negative correlation
-                to mpg ratings (-86.76%) and the weight of vehicle models with manual transmissions  
-                range from 1.513tons to 3.570 tons and the weight of vehicles with automatic  
-                transmissions range from 2.465 tons to 5.424 tons 
-                
-        E Implications - Congruence with existing knowledge?
-                A. Sedan, Sports, Luxury
-                Generally accepted expectations of mpg ratings are that sports and luxury models  
-                typically will have lower mpg ratings than sedans
 
-
-Diagnostics:                             
+# Diagnostics:                             
         Diagnostic tests were conducted on model results in accordance with the plan for analysis  
-        considerations. Besides several vehicle models exhibiting influence as denoted in the  
-        Residuals vs Fitted plot such as the Chrysler Imperial, Fiat 128 & the Toyota Corrolla.  
+        considerations.  
         
-        In the Normal QQ plot of Theoretical Quantiles vs Standardized residuals the Ford Pantera L  
-        fell outside minus two standard deviations and the Chrysler Imperial and Fiat 128 fell  
-        outside the range of positive two standard deviations of the Theoretical Quantiles.
-        
-        Looking at the results of the Scale-LOcation plot of the sqrt of standardized residuals vs  
-        the Fitted Values three models exhibited notable results beyond 1.2 sd from center of fit.
-        
-        On the plot for cook's distance; Ford Panter L exhibits a significant cook's distance value            of between 0.5 and 1.0, in addition the Chrysler Imperial and Mercedes 230 sedan were noted  as         being somewhawt significant.
-
 # Hypothesis Test:                        
                 H0 = mean(mpg[am==automatic])  =   mean(mpg[am==manual]) (REJECT)
                 Ha = mean(automatic transmission)mpg  !=  mean(manual transmission)mpg (ACCEPT)
 ```{r, t.test_mpg, echo=TRUE, eval=TRUE,include=TRUE,results='asis'}
 t.test(mpg ~ factor(am), paired = FALSE, var.equal=FALSE, data = mtcars)
 ```
-	Welch Two Sample t-test
-
-data:  mpg by factor(am)
-t = -3.7671, df = 18.332, p-value = 0.001374
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -11.280194  -3.209684
-sample estimates:
-mean in group 0 mean in group 1 
-       17.14737        24.39231 
-
-
 # Inference & Prediction:                 
-```{r predict, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE}
+```{r predict, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE}
 data("mtcars")
 levels(mtcars$wt) <- 2
 fw <- lm(mpg ~ wt, data = mtcars)
@@ -222,24 +153,38 @@ predict(fw, newdata = data.frame(wt = new.weights))
 See Executive Summary
 
 # Appendix A: Figures: Exploratory Analysis
+Appendix A: Figures: Exploratory Analysis
 
+```{r Fig.1_Pairs, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE}
 
-```{r Fig.1_Multiplot, echo=FALSE, fig.align='center', fig.height=6, fig.width=6.5, message=FALSE, warning=FALSE}
-par(mfrow = c(2,2), mar = c(3,3,2,2)) # set margin
-##      Histograms:
-data("mtcars")
-pairs(mtcars, main = "mtcars data")
-coplot(mpg ~ wt + qsec | as.factor(am), data = mtcars,
-       panel = panel.smooth, rows = 1)
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+        usr <- par("usr"); on.exit(par(usr))
+        par(usr = c(0, 1, 0, 1))
+        r <- abs(cor(x, y))
+        txt <- format(c(r, 0.123456789), digits = digits)[1]
+        txt <- paste0(prefix, txt)
+        if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+        text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(mtcars[c(1,6,7,9)], lower.panel=panel.smooth, upper.panel = panel.cor, cex=1.5, pch=20, col="lightblue", cex.labels=2, font.lables =2, main = "MPG mtcars data")
+```
+
+```{r Fig.2_Hist, echo=FALSE, fig.align='center', fig.height=4.0, fig.width=6.5}
+data(mtcars)
+par(mfrow = c(2,2), mar = c(4,4,4,4)) # set margin
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 hist(mtcars$mpg[mtcars$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Frequency", main = "Automatic Transmission", col = "yellow", xlim = range(5:40))
 abline(v=mean(mtcars$mpg[mtcars$am=="Auto"]), col="red", lwd = 4)
 hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Frequency", main = "Manual Transmission", col="lightblue", xlim = range(5:40))
 abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 ##      Box Plot:
+#data("mtcars");par(mfrow = c(1,1), mar = c(4,4,4,4))
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
-boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission, Miles Per Gallon Ratings")
-``` 
+boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG vs Transmission Type")
+```
+
+
 ===
         END
 ===
