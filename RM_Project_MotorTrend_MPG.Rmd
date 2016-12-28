@@ -10,7 +10,7 @@ output:
   html_document: default
 ---
 # Executive Summary:                      
-        
+                                Interpretation of Results        
 Using linear regression model variations, including the step function, to gauge model fit,  
 we identified model fstp <- lm(mpg ~ (wt + qsec + am), data= mtcars) that provides an 84.966  
 R^2 value indicating a reasonalby good fit and another model fit fnm6 <- lm(mpg ~ I(cyl + disp  
@@ -49,7 +49,8 @@ Problem Statement:
                         transmisions have a mean of 24.39 mpg for a difference of 7.24 mpg with a 95 %  
                         confidence interval of between 18.49 mpg and 30.29 mpg  
                                 
-Analysis Considerations:                 
+                                
+# Analysis Considerations:                 
         Descriptive - any(is.na()), str() & summary(),
         Exploratory - pairsPlots(), histograms(), boxPlots(), barPlots() QQ_Plots & multiple plots
         Regression Models Analysis -
@@ -93,7 +94,7 @@ A data frame with 32 observations on 11 variables.
 [,11]	carb	Number of carburetors (1:4,6,8)
 
 # Processed Data:                         
-        Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) so there values can be used as levels
+        Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) into levels
 ```{r, ProcessData, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
 data("mtcars")
 for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);
@@ -119,10 +120,9 @@ c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
         
 # Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
-```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='hide'}
+```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE,  results='hide'}
 library(stats);library(MASS);library(dplyr);data("mtcars")
 fstp <- lm(mpg ~ ., data = mtcars)
-fstp
 stp <- step(fstp, trace = FALSE)
 summary(stp)$r.squared
 anova(stp)
@@ -149,12 +149,10 @@ anova(stp)
                 
         C Direction, Magnitude, Uncertainty
                 A.
-#       Multivarite Linear Model Finding Best Fit with Step function:
-```{r MVLM_Step_R^2, eval=TRUE, echo=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+# Multivarite Linear Model Finding Best Fit with Step function:
+```{r MVLM_Step_R^2, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
-stp
 fstp <- lm(mpg ~ ., data = mtcars)
-str(fstp)
 stp <- step(fstp, trace = FALSE)
 coef(summary(stp))
 summary(stp)$r.squared
@@ -211,7 +209,7 @@ mean in group 0 mean in group 1
        17.14737        24.39231 
 
 
-# Inference & Prediction:                 ?
+# Inference & Prediction:                 
 ```{r predict, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE}
 data("mtcars")
 levels(mtcars$wt) <- 2
@@ -220,18 +218,8 @@ new.weights <- c(1.750, 2.125, 2.750, 3.475, 4.125, 4.700)
 predict(fw, newdata = data.frame(wt = new.weights))
 ```
 
-
-
-
-
-
-# Interpretation of Results:              #
-
-
-
-
-
-
+# Interpretation of Results:              
+See Executive Summary
 
 # Appendix A. Figures:                    
 need to review again possibly condense to one plot
