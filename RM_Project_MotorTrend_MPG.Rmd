@@ -12,8 +12,8 @@ output:
 # Executive Summary:                      
         
 Using linear regression model variations, including the step function, to gauge model fit,  
-we identified model fa <- lm(mpg ~ (wt + qsec + am), data= mtcars) that provides an 84.966  
-R^2 value indicating a reasonalby good fit and another model fit fb <- lm(mpg ~ I(cyl + disp  
+we identified model fstp <- lm(mpg ~ (wt + qsec + am), data= mtcars) that provides an 84.966  
+R^2 value indicating a reasonalby good fit and another model fit fnm6 <- lm(mpg ~ I(cyl + disp  
 + hp + drat + wt + factor(am), data = mtcars) devloped using the multivariate nested approach  
 followed by and anova table test to check for multicollinearity which also produced a reasonably
 good fit with an R^2 value of 85.13%. It must also be noted that vehicle weight is highly  
@@ -177,15 +177,35 @@ g
 
 Diagnostics:                             
         Diagnostic tests were conducted on model results in accordance with the plan for analysis  
-        considerations. Besides several vehicle models exhibiting leverage on the model fit at the
-        high end of the qsec, and weight scales results were generally as expected with faster and  
-        or heavier vehilces of both manual and automatic transmissoin types getting lower mpg  
-        ratings and slower lighter vehicle models of both transmission types exhibiting better  
-        or higher mpg ratings.
+        considerations. Besides several vehicle models exhibiting influence as denoted in the  
+        Residuals vs Fitted plot such as the Chrysler Imperial, Fiat 128 & the Toyota Corrolla.  
+        
+        In the Normal QQ plot of Theoretical Quantiles vs Standardized residuals the Ford Pantera L  
+        fell outside minus two standard deviations and the Chrysler Imperial and Fiat 128 fell  
+        outside the range of positive two standard deviations of the Theoretical Quantiles.
+        
+        Looking at the results of the Scale-LOcation plot of the sqrt of standardized residuals vs  
+        the Fitted Values three models exhibited notable results beyond 1.2 sd from center of fit.
+        
+        On the plot for cook's distance; Ford Panter L exhibits a significant cook's distance value            of between 0.5 and 1.0, in addition the Chrysler Imperial and Mercedes 230 sedan were noted  as         being somewhawt significant.
 
-Hypothesis Test:                        ?
-                H0 = mean(automatic transmission)mpg  =   mean(manual transmission)mpg
-                Ha = mean(automatic transmission)mpg  !=  mean(manual transmission)mpg
+# Hypothesis Test:                        
+                H0 = mean(mpg[am==automatic])  =   mean(mpg[am==manual]) (REJECT)
+                Ha = mean(automatic transmission)mpg  !=  mean(manual transmission)mpg (ACCEPT)
+```{r, t.test_mpg, echo=TRUE, eval=TRUE,include=TRUE,results='asis'}
+t.test(mpg ~ factor(am), paired = FALSE, var.equal=FALSE, data = mtcars)
+```
+
+	Welch Two Sample t-test
+
+data:  mpg by factor(am)
+t = -3.7671, df = 18.332, p-value = 0.001374
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -11.280194  -3.209684
+sample estimates:
+mean in group 0 mean in group 1 
+       17.14737        24.39231 
 
 
 # Inference & Prediction:                 ?

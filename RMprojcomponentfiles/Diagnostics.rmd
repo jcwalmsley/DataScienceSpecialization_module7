@@ -1,12 +1,21 @@
-DIAGNOSTIC TESTS:
-       %pValues, degrees of freedom, t value, hatvalues,residuals
-        residuals vs fitted,R^2, QQ plots, rstandard, rstudent, dffits
-        dfbeta, dfbestas, covratio, cook's distance, influence.measures
+Diagnostics:                             
+        Diagnostic tests were conducted on model results in accordance with the plan for analysis  
+        considerations. Besides several vehicle models exhibiting influence as denoted in the  
+        Residuals vs Fitted plot such as the Chrysler Imperial, Fiat 128 & the Toyota Corrolla.  
         
+        In the Normal QQ plot of Theoretical Quantiles vs Standardized residuals the Ford Pantera L  
+        fell outside minus two standard deviations and the Chrysler Imperial and Fiat 128 fell  
+        outside the range of positive two standard deviations of the Theoretical Quantiles.
+        
+        Looking at the results of the Scale-LOcation plot of the sqrt of standardized residuals vs  
+        the Fitted Values three models exhibited notable results beyond 1.2 sd from center of fit.
+        
+        
+        On the plot for cook's distance; Ford Panter L exhibits a significant cook's distance value            of between 0.5 and 1.0, in addition the Chrysler Imperial and Mercedes 230 sedan were noted  as         being somewhawt significant.
 
-This plot of Resid(fit) produces a random distribution with a single outlier at a 
+The plot of Resid(fit) produces a random distribution with a single outlier at a 
 value slightly above 26, and checks out with a sum(e) of 5.995204e-15 or zero indicating 
-a good fit
+a good fit overall.
 ```{r Fig.D1_ResidFit, echo=TRUE, eval=TRUE, fig.align="center", fig.height=4.5, fig.width=4.5}
 x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
 y <- mtcars$mpg
