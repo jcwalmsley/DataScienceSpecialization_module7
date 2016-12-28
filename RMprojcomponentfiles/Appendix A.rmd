@@ -1,14 +1,5 @@
 Appendix A: Figures: Exploratory Analysis
 
-Pairs Plot:
-Interpretation: MPG decreases as the; no. of cylinders increases, the engine
-displacement increases, the horsepower increases, the weight increases, the rear
-axle ratio decreases, qsec time decreases, the engine is a V-block, no. of gears
-decreases, and the no. of carburators increases ~ conversely the MPG increases as
-the: rear axle ratio increases, qsec time increases, the engine is a
-Straight-block, transmission is manual, no. of gears increases and the no. of
-carburators decreases
-
 
 ```{r Fig.1_Pairs, echo=FALSE, fig.align='center', fig.height=5, fig.width=6.5, message=FALSE, warning=FALSE}
 panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)

@@ -103,7 +103,7 @@ str(mtcars)
 
 # Descriptive Statistics:                 
 
-```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(datasets);library(dplyr);data("mtcars")
 head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
 round(t.test(mtcars$mpg)$conf.int,3)
@@ -221,8 +221,29 @@ predict(fw, newdata = data.frame(wt = new.weights))
 # Interpretation of Results:              
 See Executive Summary
 
-# Appendix A. Figures:                    
-need to review again possibly condense to one plot
+# Appendix A: Figures: Exploratory Analysis
+
+
+```{r Fig.1_Multiplot, echo=FALSE, fig.align='center', fig.height=6, fig.width=6.5, message=FALSE, warning=FALSE}
+par(mfrow = c(2,2), mar = c(3,3,2,2)) # set margin
+##      Histograms:
+data("mtcars")
+pairs(mtcars, main = "mtcars data")
+coplot(mpg ~ wt + qsec | as.factor(am), data = mtcars,
+       panel = panel.smooth, rows = 1)
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+hist(mtcars$mpg[mtcars$am=="Auto"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Frequency", main = "Automatic Transmission", col = "yellow", xlim = range(5:40))
+abline(v=mean(mtcars$mpg[mtcars$am=="Auto"]), col="red", lwd = 4)
+hist(mtcars$mpg[mtcars$am=="Manual"], breaks=10, xlab = "Miles-Per-gallon", ylab = "Frequency", main = "Manual Transmission", col="lightblue", xlim = range(5:40))
+abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
+##      Box Plot:
+mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
+boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "Automatic vs Manual Transmission, Miles Per Gallon Ratings")
+``` 
+===
+        END
+===
+
 
 
 
