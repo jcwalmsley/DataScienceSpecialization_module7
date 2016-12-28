@@ -92,29 +92,8 @@ summary(stp)$r.squared
 anova(stp)
 ```
 
-# Preliminary findings: 
-        # Quesions of interest: & interpretation of results:
-        A Revisit the Question - Considering all regressors:
-                A. Is an automatic or manual transmission better for mpg
-                        The results of using multiple linear regression techniques  
-                        sugggest that manual transmissions are associated with better 
-                        mpg ratings than automatic transmissions
-                B. Quantify the MPG difference between automatic and manual transmissions
-                        On average manual transmissions provides 24.39 mpg which is 7.24 mpg
-                        more than the 17.15 mpg average of the automatic transmission models
-        B Primary result
-                A. Are any other regressors significantly correlated with mpg rating?
-                        a. model fnm6 = factor(am) + cyl + disp + hp + drat + wt
-                        this model has an R^2 value of 85.13% 
-                B. Further testing
-                        a. using the step function in both directions selects wt, qsec and am 
-                        as good predictors with an 84.96% R^2 value indicating very good 
-                        predictability using this set of regresssors
-                
-        C Direction, Magnitude, Uncertainty
-                A.
 # Multivarite Linear Model Finding Best Fit with Step function:
-```{r MVLM_Step_R^2, echo=FALSE, eval=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r MVLM_Step_R^2, echo=FALSE, eval=TRUE, fig.align='center', fig.height=3, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
@@ -131,8 +110,24 @@ g
 ```
 
 # Diagnostics:                             
-        Diagnostic tests were conducted on model results in accordance with the plan for analysis  
-        considerations.  
+```{r Fig.D1_ResidFit, echo=TRUE, eval=TRUE, fig.align="center", fig.height=4, fig.width=6.5}
+x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
+y <- mtcars$mpg
+n <- length(y)
+fw <- lm(y ~ x, data = mtcars)
+coef(summary(fw))
+e <- resid(fw);sum(e)
+#par(mfrow = c(1,1), mar = c(4,4,4,3)) # set margin
+plot(x,e,
+     xlab = "wt + qsec + am",
+     ylab = "Residuals Fit (mpg)",
+     bg = "lightblue",
+     col = "black", cex = .85, pch = 21, frame = FALSE)
+abline(h = 0, lwd = 2)
+for(i in 1:n)
+        lines(c(x[i], x[i]), c(e[i], 0), col = "red", lwd = 2)
+sum(e)
+```
         
 # Hypothesis Test:                        
                 H0 = mean(mpg[am==automatic])  =   mean(mpg[am==manual]) (REJECT)
@@ -155,7 +150,7 @@ See Executive Summary
 # Appendix A: Figures: Exploratory Analysis
 Appendix A: Figures: Exploratory Analysis
 
-```{r Fig.1_Pairs, echo=FALSE, fig.align='center', fig.height=3.5, fig.width=3.5, message=FALSE, warning=FALSE}
+```{r Fig.1_Pairs, echo=FALSE, eval=TRUE, fig.align='center', fig.height=3.5, fig.width=5.5, message=FALSE, warning=FALSE}
 
 panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 {
@@ -167,7 +162,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
         if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
         text(0.5, 0.5, txt, cex = cex.cor * r)
 }
-pairs(mtcars[c(1,6,7,9)], lower.panel=panel.smooth, upper.panel = panel.cor, cex=1.5, pch=20, col="lightblue", cex.labels=2, font.lables =2, main = "MPG mtcars data")
+pairs(mtcars[c(1,6,7,9)], lower.panel=panel.smooth, upper.panel = panel.cor, cex=.85, pch=20, col="lightblue", cex.labels=2, font.lables =2, main = "MPG mtcars data")
 ```
 
 ```{r Fig.2_Hist, echo=FALSE, fig.align='center', fig.height=4.0, fig.width=6.5}

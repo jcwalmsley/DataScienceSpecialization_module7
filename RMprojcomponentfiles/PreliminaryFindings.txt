@@ -1,3 +1,29 @@
+# Preliminary findings:
+        ### Questions of interest: & interpretation of results:
+            A Revisit the Question - Considering all regressors:
+                A. Is an automatic or manual transmission better for mpg
+                        The results of using multiple linear regression techniques
+                        sugggest that manual transmissions are associated with better
+                        mpg ratings than automatic transmissions
+                B. Quantify the MPG difference between automatic and manual transmissions
+                        On average manual transmissions provides 24.39 mpg which is 7.24 mpg
+                        more than the 17.15 mpg average of the automatic transmission models
+        B Primary result
+                A. Are any other regressors significantly correlated with mpg rating?
+                        a. model fnm6 = factor(am) + cyl + disp + hp + drat + wt
+                        this model has an R^2 value of 85.13%
+                B. Further testing
+                        a. using the step function in both directions selects wt, qsec and am
+                        as good predictors with an 84.96% R^2 value indicating very good
+                        predictability using this set of regresssors
+
+        C Direction, Magnitude, Uncertainty
+                A.
+
+-----
+
+
+
 Preliminary findings:
         # Quesions of interest: & interpretation of results:
         A Revisit the Question - Considering all regressors:
