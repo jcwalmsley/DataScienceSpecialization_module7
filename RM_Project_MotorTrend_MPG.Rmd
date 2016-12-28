@@ -120,11 +120,12 @@ c8 <- mtcars$mpg[mtcars$cyl==8];c8;t.test(c6,c8,var.equal = TRUE)
 # Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
 ```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='hide'}
-library(stats);library(MASS)
+library(stats);library(MASS);library(dplyr);data("mtcars")
 fstp <- lm(mpg ~ ., data = mtcars)
+fstp
 stp <- step(fstp, trace = FALSE)
-table(coef(summary(stp)))
 summary(stp)$r.squared
+anova(stp)
 ```
 
 # Preliminary findings: 
@@ -151,12 +152,15 @@ summary(stp)$r.squared
 #       Multivarite Linear Model Finding Best Fit with Step function:
 ```{r MVLM_Step_R^2, eval=TRUE, echo=TRUE, fig.align='center', fig.height=4, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
+stp
 fstp <- lm(mpg ~ ., data = mtcars)
+str(fstp)
 stp <- step(fstp, trace = FALSE)
 coef(summary(stp))
 summary(stp)$r.squared
+x <- (mtcars$wt + mtcars$qsec + mtcars$am)
 par(mfrow = c(1, 1), mar = c(4,4,4,2))
-g <- ggplot(mtcars, aes(x = (wt + qsec + am), y = mpg),)
+g <- ggplot(mtcars, aes(x = x, y = mpg),)
 g <- g + xlab("Model stp = (wt + qsec + am)")
 g <- g + ylab("Miles per Gallon")
 g <- g + geom_smooth(aes(method = "lm", shape = factor(am)))
@@ -208,7 +212,13 @@ mean in group 0 mean in group 1
 
 
 # Inference & Prediction:                 ?
-
+```{r predict, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE}
+data("mtcars")
+levels(mtcars$wt) <- 2
+fw <- lm(mpg ~ wt, data = mtcars)
+new.weights <- c(1.750, 2.125, 2.750, 3.475, 4.125, 4.700)
+predict(fw, newdata = data.frame(wt = new.weights))
+```
 
 
 

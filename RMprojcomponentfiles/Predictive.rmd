@@ -1,0 +1,9 @@
+```{r predict, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE}
+data("mtcars")
+levels(mtcars$wt) <- 2
+fw <- lm(mpg ~ wt, data = mtcars)
+new.weights <- c(1.750, 2.125, 2.750, 3.475, 4.125, 4.700)
+predict(fw, newdata = data.frame(wt = new.weights))
+```
+ 
+

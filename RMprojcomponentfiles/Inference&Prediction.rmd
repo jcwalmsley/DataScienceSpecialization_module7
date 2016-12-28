@@ -1,0 +1,18 @@
+
+
+```{r, Predict, echo=TRUE, eval=TRUE, cache=TRUE, include=TRUE, results='asis'}
+library(dplyr);library(stats);library(MASS);data("mtcars");mtcars
+for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i])
+fstp <- lm(mpg ~ , data = mtcars)
+stp <- step(fstp, direction = 'both', trace = TRUE, keep = TRUE)             
+nwt <- c(1.750, 2.125, 2.750, 3.475, 4.125, 4.700)
+predict(fstp, newdata = data.frame(wt = nwt))
+```
+
+
+
+
+
+
+
+
