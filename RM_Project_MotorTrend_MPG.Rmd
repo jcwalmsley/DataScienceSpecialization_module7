@@ -1,6 +1,5 @@
 ---
-title: Regression Models Course Project - Motor Trend Data = 'mtcars' Miles Per
-  Gallon Analysis
+title: "Regression Models Project - Motor Trend Data = 'mtcars' Miles Per Gallon Analysis"
 author: "james c walmsley"
 date: "12/1/2016"
 output:
@@ -15,57 +14,57 @@ Using linear regression model variations, including the step function, to gauge 
 we identified model fstp <- lm(mpg ~ (wt + qsec + am), data= mtcars) that provides an 84.966  
 R^2 value indicating a reasonalby good fit and another model fit fnm6 <- lm(mpg ~ I(cyl + disp  
 + hp + drat + wt + factor(am), data = mtcars) devloped using the multivariate nested approach  
-followed by and anova table test to check for multicollinearity which also produced a reasonably
-good fit with an R^2 value of 85.13%. It must also be noted that vehicle weight is highly  
-correlated (-86.77%) with mpg ratings and transmission type is relatively highly correlated  
-with vehicle wieght at (69%).
+followed by and anova table test to check for multicollinearity which also produced a  
+reasonably good fit with an R^2 value of 85.13%. 
         
-                Questions of interest for Motor Trend Magazine:
+        Questions of interest for Motor Trend Magazine:
                 
-                Q1 “Is an automatic or manual transmission better for 'mpg'”
-                        or which type of transmission is associated with better mpg or gas mileage ratings?
-                A1. The mean "mpg" rating of all vehicle models including both transmission types  
-                is 20.09 mpg with a 95% confidence interval of 17.92 mpg to 22.26 mpg.
+        Q1 “Is an automatic or manual transmission better for 'mpg'”  
+                
+        A1. The mean "mpg" of models with automatic transmisions is 17.15 mpg, with a 95%  
+        confidence interval of between 14.85 mpg to 19.44 mpg and vehicles with manual  
+        transmisions have a mean of 24.39 mpg with a 95 %  
+        confidence interval of between 18.49 mpg and 30.29 mpg 
                                 
-                Q2 "Quantify the mpg difference between automatic and manual transmissions"
-                What is the expected difference in mpg rating and how accurate  
-                is this estimate based on the given data?
-                                
-                A2. The mean "mpg" of models with automatic transmisions is 17.15 mpg, with a 95%  
-                confidence interval of between 14.85 mpg to 19.44 mpg and vehicles with manual  
-                transmisions have a mean of 24.39 mpg for a difference of 7.24 mpg with a 95 %  
-                confidence interval of between 18.49 mpg and 30.29 mpg  
+        Q2 "Quantify the mpg difference between automatic and manual transmissions"
+                                 
+        A2. The difference in "mpg" is on average 3.767 mpg and ranges between 3.21 mpg  
+        less and 11.28 mpg less for models having automatic transmissions than for those  
+        models having manual transmissions predicted at a 95% confidence level. 
                                 
 # Technical Environment:                  
-        System - session Info; Set the Working Directory; Record the System & Session Info; Check for required packages
-
-```{r, SetDirectory, echo=TRUE, eval=TRUE, include=FALSE, results='hide'}
-setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData");sessionInfo();installed.packages();date()
+        System - session Info; Set the Working Directory; Clean up work space,  
+        Record the System & Session Info & date; Check for required packages
+```{r, SetDirectory, echo=TRUE, eval=TRUE, include=TRUE, results='asis'}
+setwd("~/Desktop/Coursera_R/7_Regression Models/RM_proj_MPG_MotorTrendData")
+rm(list=ls())
+sessionInfo()
+date()
 ```
 
 # Raw Data:                               
-        Clean up work space, import the data & check for missing values
-        Overview: Motor Trend 'mtcars' data set:
-```{r, Data_mtcars, include=FALSE, results='hide'}
-rm(list=ls());library(car);library(dplyr);library(MASS);data("mtcars");any(is.na(mtcars))
+        Load the data from the dataset package & check  
+        for missing values. Overview: Motor Trend 'mtcars' data set:
+```{r, Data_mtcars, echo=TRUE, eval=FALSE, include=TRUE, results='asis'}
+library(car);library(dplyr);library(MASS);data("mtcars");any(is.na(mtcars))
 ```
 A data frame with 32 observations on 11 variables.
 
-[, 1]	mpg	Miles/(US) gallon
-[, 2]	cyl	Number of cylinders (4,6,8)
-[, 3]	disp	Displacement (cu.in.)
-[, 4]	hp	Gross horsepower
-[, 5]	drat	Rear axle ratio
-[, 6]	wt	Weight (1000 lbs)
-[, 7]	qsec	1/4 mile time
-[, 8]	vs	V/S (0 = vee-block, 1 = straight-block)
-[, 9]	am	Transmission (0 = automatic, 1 = manual)
-[,10]	gear	Number of forward gears (3:5)
-[,11]	carb	Number of carburetors (1:4,6,8)
-
+[, 1]	mpg	Miles/(US) gallon  
+[, 2]	cyl	Number of cylinders (4,6,8)  
+[, 3]	disp	Displacement (cu.in.)  
+[, 4]	hp	Gross horsepower  
+[, 5]	drat	Rear axle ratio  
+[, 6]	wt	Weight (1000 lbs)  
+[, 7]	qsec	1/4 mile time  
+[, 8]	vs	V/S (0 = vee-block, 1 = straight-block)  
+[, 9]	am	Transmission (0 = automatic, 1 = manual)  
+[,10]	gear	Number of forward gears (3:5)  
+[,11]	carb	Number of carburetors (1:4,6,8)  
+  
 # Processed Data:                         
         Factor columns 2 & 8:11 (cyl,vs,am,gear,carb) into levels
-```{r, ProcessData, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+```{r, ProcessData, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 data("mtcars")
 for(i in c(2,8:11))mtcars[,i] <- as.factor(mtcars[,i]);
 str(mtcars)
@@ -73,10 +72,11 @@ str(mtcars)
 
 # Descriptive Statistics:                 
 
-```{r, DescriptiveStats, echo=TRUE, eval=TRUE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r, DescriptiveStats, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(datasets);library(dplyr);data("mtcars")
 head(mtcars,4);mean(mtcars$mpg);sd(mtcars$mpg)
-round(t.test(mtcars$mpg)$conf.int,3)
+round(t.test(mtcars$mpg ~ am, data = mtcars,
+             var.equal =FALSE, paired = FALSE, conf.level = 0.95 )$conf.int,3)
 ```
 
 # Exploratory Analysis:                   
@@ -84,7 +84,7 @@ round(t.test(mtcars$mpg)$conf.int,3)
         
 # Statistical Modeling:                   
         Multivarite Linear Model Finding Best Fit with Step function:
-```{r ModelFitStep, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE, cache=TRUE, include=FALSE,  results='hide'}
+```{r ModelFitStep, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE,  results='asis'}
 library(stats);library(MASS);library(dplyr);data("mtcars")
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
@@ -93,7 +93,7 @@ anova(stp)
 ```
 
 # Multivarite Linear Model Finding Best Fit with Step function:
-```{r MVLM_Step_R^2, echo=FALSE, eval=TRUE, fig.align='center', fig.height=3, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
+```{r MVLM_Step_R^2, echo=TRUE, eval=FALSE, fig.align='center', fig.height=3, fig.width=7, message=FALSE, warning=FALSE, include=TRUE, results='asis'}
 library(stats);library(MASS);library(ggplot2)
 fstp <- lm(mpg ~ ., data = mtcars)
 stp <- step(fstp, trace = FALSE)
@@ -110,12 +110,11 @@ g
 ```
 
 # Diagnostics:                             
-```{r Fig.D1_ResidFit, echo=TRUE, eval=TRUE, fig.align="center", fig.height=4, fig.width=6.5}
+```{r Fig.D1_ResidFit, echo=TRUE, eval=TRUE, fig.align="center", fig.height=4, fig.width=6.5, include=TRUE, results='asis'}
 x <- (mtcars$wt + mtcars$qsec + as.numeric(mtcars$am))
 y <- mtcars$mpg
 n <- length(y)
 fw <- lm(y ~ x, data = mtcars)
-coef(summary(fw))
 e <- resid(fw);sum(e)
 #par(mfrow = c(1,1), mar = c(4,4,4,3)) # set margin
 plot(x,e,
@@ -135,20 +134,9 @@ sum(e)
 ```{r, t.test_mpg, echo=TRUE, eval=TRUE,include=TRUE,results='asis'}
 t.test(mpg ~ factor(am), paired = FALSE, var.equal=FALSE, data = mtcars)
 ```
-# Inference & Prediction:                 
-```{r predict, echo=TRUE, eval=FALSE, cache=TRUE, message=FALSE, warning=FALSE}
-data("mtcars")
-levels(mtcars$wt) <- 2
-fw <- lm(mpg ~ wt, data = mtcars)
-new.weights <- c(1.750, 2.125, 2.750, 3.475, 4.125, 4.700)
-predict(fw, newdata = data.frame(wt = new.weights))
-```
 
-# Interpretation of Results:              
-See Executive Summary
 
 # Appendix A: Figures: Exploratory Analysis
-Appendix A: Figures: Exploratory Analysis
 
 ```{r Fig.1_Pairs, echo=FALSE, eval=TRUE, fig.align='center', fig.height=3.5, fig.width=5.5, message=FALSE, warning=FALSE}
 
@@ -178,8 +166,6 @@ abline(v=mean(mtcars$mpg[mtcars$am=="Manual"]), col="blue", lwd = 4)
 mtcars$vs <- factor(mtcars$vs, labels = c("V-block", "S-block")); mtcars$am <- factor(mtcars$am, labels = c("Auto", "Manual")); mtcars$gear <- factor(mtcars$gear); mtcars$carb <- factor(mtcars$carb)
 boxplot(mpg ~ am, data = mtcars, col = (c("yellow","lightblue")), ylab = "Miles-Per-Gallon", xlab = "Transmission", main =  "MPG vs Transmission Type")
 ```
-
-
 ===
         END
 ===
